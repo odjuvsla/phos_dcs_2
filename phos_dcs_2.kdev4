@@ -1,0 +1,4 @@
+[Project]
+Name=phos_dcs_2
+Manager=KDevCMakeManager
+VersionControl=kdevgit
