@@ -1,3 +1,23 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 #ifndef PHOSDCSTYPES_H
 #define PHOSDCSTYPES_H
 
@@ -16,19 +36,23 @@ using namespace phosConstants;
 class Module_t
 {
 public:
+  
     /** Constructor checks value */
-    Module_t(short id)
+    Module_t(ushort_t id):
+    fModuleId(id)
     {
         if (id >= PHOS_MODS)
         {
             std::stringstream log;
 
-            log << "Mdoule number: " << id << " is too high (0 - 4 is allowed), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR);
+            log << "Module number: " << id << " is not valid (0 - 4 is allowed), exiting...";
+            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
         fModuleId = id;
     }
+    
+    virtual ~Module_t() {}
 
     short getModuleId() {
         return fModuleId;
@@ -47,14 +71,15 @@ class Rcu_t : public Module_t
 {
 public:
     /** Constructor checks value */
-    Rcu_t(short id, short modId) : Module_t(modId)
+    Rcu_t(ushort_t id, short modId) : Module_t(modId),
+    fRcuId(id)
     {
-        if (id >= BRANCHES_PER_RCU)
+        if (id >= RCUS_PER_MODULE)
         {
             std::stringstream log;
 
-            log << "Rcu number: " << id << " is too high (0 - 4 is allowed), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR);
+            log << "Rcu number: " << id << " is not valid (0 - 4 is allowed), exiting...";
+            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
         fRcuId = id;
@@ -76,14 +101,15 @@ class Branch_t : public Rcu_t
 {
 public:
     /** Constructor checks value */
-    Branch_t(ushort_t id, short rcuId = -1, short modId = -1) : Rcu_t(rcuId, modId)
+    Branch_t(ushort_t id, short rcuId, short modId) : Rcu_t(rcuId, modId),
+    fBranchId(id)
     {
         if (id >= BRANCHES_PER_RCU)
         {
             std::stringstream log;
 
-            log << "Branch number: " << id << " is too high (0 or 1 is allowed), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR);
+            log << "Branch number: " << id << " is not valid (0 or 1 is allowed), exiting...";
+            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
         fBranchId = id;
@@ -105,7 +131,8 @@ class Fec_t : public Branch_t
 {
 public:
 
-    Fec_t(ushort_t id, ushort_t branch, short rcu = -1, short mod = -1) : Branch_t(branch, rcu, mod)
+    Fec_t(ushort_t id, ushort_t branch, short rcu, short mod) : Branch_t(branch, rcu, mod),
+    fFecId(id)
     {
         if (id > CARDS_PER_BRANCH)
         {
@@ -134,7 +161,8 @@ class Chip_t : public Fec_t
 {
 public:
     /** Constructor checks value */
-    Chip_t(ushort_t id, ushort_t fecId, ushort_t branchId, short rcuId = -1, short modId = -1) : Fec_t(fecId, branchId, rcuId, modId)
+    Chip_t(ushort_t id, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Fec_t(fecId, branchId, rcuId, modId),
+    fChipId(id)
     {
         if (id > ALTROS_PER_FEE || id == 1)
         {
@@ -164,7 +192,8 @@ class AltroCh_t : public Chip_t
 
 public:
     /** Constructor checks value */
-    AltroCh_t(ushort_t id, ushort_t chipId, ushort_t fecId, ushort_t branchId, short rcuId = -1, short modId = -1) : Chip_t(chipId, fecId, branchId, rcuId, modId)
+    AltroCh_t(ushort_t id, ushort_t chipId, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Chip_t(chipId, fecId, branchId, rcuId, modId),
+    fChannelId(id)
     {
         if (id > CHANNELS_PER_ALTRO || id == 1)
         {
