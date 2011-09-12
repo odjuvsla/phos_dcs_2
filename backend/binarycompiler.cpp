@@ -1,3 +1,22 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #include "binarycompiler.h"
 #include "registermaps/RcuRegisterMap.h"
@@ -31,7 +50,7 @@ int binaryCompiler::MakeWriteReadRcuBlock(uint_t regAdd, std::vector<uint_t >& r
 
   binData.push_back ( regAdd );
 
-  for ( int i = 0; i < nVal; i++ )
+  for ( size_t i = 0; i < nVal; i++ )
     {
       binData.push_back ( regVal[i] );
     }
@@ -41,7 +60,7 @@ int binaryCompiler::MakeWriteReadRcuBlock(uint_t regAdd, std::vector<uint_t >& r
   MakeReadRcuBlock ( regAdd, binData, nVal );
 
   stringstream log;
-  for ( int i = 0; i < binData.size(); ++i )
+  for ( size_t i = 0; i < binData.size(); ++i )
     {
       log.str ( "" );
       log << "BinaryCompiler::MakeWriteReadRcuBlock: block data[" << i << "] = 0x" << hex << binData.at ( i ) << dec;
@@ -84,7 +103,7 @@ int binaryCompiler::MakeReadResultMemory ( vector<uint_t> & binData, uint_t nVal
   return MakeReadRcuBlock ( RcuRegisterMap::Result_MEM, binData, nVal );
 }
 
-int binaryCompiler::MakeWriteFecRegisters(int registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
 {
   int ret = 0;
 
@@ -96,7 +115,7 @@ int binaryCompiler::MakeWriteFecRegisters(int registerType, vector< uint_t > reg
 
       int j = 0;
 
-      for ( int i=0; i<nVals; i++ )
+      for ( uint_t i=0; i<nVals; i++ )
         {
           binData.push_back ( InstructionMaker::MakeMS20Instruction ( registerType, false, regAdds[i], channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
           binData.push_back ( InstructionMaker::MakeLS20Instruction ( false, regVals[j] ) );
@@ -108,7 +127,7 @@ int binaryCompiler::MakeWriteFecRegisters(int registerType, vector< uint_t > reg
       binData.push_back ( RcuRegisterMap::CE_CMD_TRAILER );
     }
   stringstream log;
-  for ( int i = 0; i < binData.size(); ++i )
+  for ( size_t i = 0; i < binData.size(); ++i )
     {
       log.str ( "" );
       log << "BinaryCompiler::MakeWriteReadFeeRegisterBinary: block data[" << i << "] = 0x" << hex << binData.at ( i ) << dec;
@@ -119,12 +138,12 @@ int binaryCompiler::MakeWriteFecRegisters(int registerType, vector< uint_t > reg
 
 }
 
-int binaryCompiler::MakeReadFecRegisters(int registerType, vector< uint_t > regAdds, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > regAdds, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
 {
   binData.push_back ( RcuRegisterMap::RCU_WRITE_MEMBLOCK| ( nVals+2 ) );
   binData.push_back ( RcuRegisterMap::Instruction_MEM );
 
-  for ( int i=0; i<nVals; i++ )
+  for ( uint_t i=0; i<nVals; i++ )
     {
       if ( registerType == REGTYPE_ALTRO )
         {
@@ -142,7 +161,7 @@ int binaryCompiler::MakeReadFecRegisters(int registerType, vector< uint_t > regA
   binData.push_back ( RcuRegisterMap::CE_CMD_TRAILER );
 
   stringstream log;
-  for ( int i = 0; i < binData.size(); ++i )
+  for ( size_t i = 0; i < binData.size(); ++i )
     {
       log.str ( "" );
       log << "BinaryCompiler::MakeReadFeeRegisterBinary: block data[" << i << "] = 0x" << hex << binData.at ( i ) << dec;
@@ -155,10 +174,10 @@ int binaryCompiler::MakeReadFecRegisters(int registerType, vector< uint_t > regA
 
 int binaryCompiler::MakeWriteReadAltroRegisters(vector< uint_t >& regAdds, std::vector<uint_t >& regVals, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
 {
-
+  return 0;
 }
 
 int binaryCompiler::MakeWriteReadBCRegisters(vector< uint_t > regAdds, vector< uint_t >& regVals, Fec_t card, vector< uint_t > binData, uint_t nVals)
 {
-
+  return 0;
 }

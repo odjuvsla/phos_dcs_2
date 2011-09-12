@@ -1,3 +1,22 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #ifndef PHOSREGISTERS_H
 #define PHOSREGISTERS_H
@@ -38,6 +57,8 @@ public:
   virtual int GetRegisterValue() = 0;
   virtual void SetByRegisterValue(int value) = 0;
   
+  virtual ~Register_t() {}
+  
 };
 
 class RcuALTROIF_t : public Register_t
@@ -46,6 +67,7 @@ class RcuALTROIF_t : public Register_t
 public:
 
     RcuALTROIF_t();
+    virtual ~RcuALTROIF_t() {}
     RcuALTROIF_t ( short nSamples, int sampleFreq = 10000000, short cstbDelay = 0, short instructionErrorCheck = 0 );
 
     RcuALTROIF_t ( const RcuALTROIF_t& v ) :
@@ -121,6 +143,8 @@ class RcuTRGCONF_t : public Register_t
 public:
 
     RcuTRGCONF_t();
+    
+    virtual ~RcuTRGCONF_t() {}
 
     RcuTRGCONF_t ( bool softwareTrigger, bool auxTrigger, bool ttcrxTrigger, bool phosTriggerMode = true, short latency = 0xfff );
 
@@ -129,7 +153,8 @@ public:
             fAuxTrigger ( v.IsAuxTriggerEnabled() ),
             fTTCrxTrigger ( v.IsTTCrxTriggerEnabled() ),
             fPHOSTriggerMode ( v.IsPHOSTriggerMode() ),
-            fL2LatencyWrtL1 ( v.GetL2LatencyWrtL1() )
+            fL2LatencyWrtL1 ( v.GetL2LatencyWrtL1() ),
+            fRegisterValue(0)
     {
 
     }
@@ -220,6 +245,8 @@ class RcuRDOMOD_t : public Register_t
 public:
 
     RcuRDOMOD_t();
+    virtual ~RcuRDOMOD_t() {}
+    
     RcuRDOMOD_t ( bool maskRDYRX, bool sparseReadoutEnabled, bool sparseReadoutEnabledRcu, bool executeSequencer, bool mebMode );
 
     RcuRDOMOD_t ( const RcuRDOMOD_t& v ) :
@@ -227,7 +254,9 @@ public:
             fSparseReadout ( v.IsSparseReadoutEnabled() ),
             fSparseReadoutRcu ( v.IsSparseReadoutRcuEnabled() ),
             fExecuteSequencer ( v.IsExecuteSequencerEnabled() ),
-            fMEBMode ( v.GetMEBMode() )
+            fMEBMode ( v.GetMEBMode() ),
+	    fRegisterValue(0)
+	    
     {
     }
 
@@ -303,13 +332,15 @@ class RcuALTROCFG1_t : public Register_t
 public:
 
     RcuALTROCFG1_t();
+    virtual ~RcuALTROCFG1_t() {}
     RcuALTROCFG1_t ( bool zsEnabled, bool automaticBS, short offset, short zsThreshold );
 
     RcuALTROCFG1_t ( const RcuALTROCFG1_t& v ) :
             fZeroSuppressionEnabled ( v.IsZeroSuppressionEnabled() ),
             fAutomaticBaselineSubtraction ( v.UsingAutomaticBaselineSubtraction() ),
             fOffset ( v.GetOffset() ),
-            fThreshold ( v.GetThreshold() )
+            fThreshold ( v.GetThreshold() ),
+            fRegisterValue(0)
     {
     }
 
@@ -388,6 +419,8 @@ public:
             ,fSparseReadout(false)
             ,fSampleFreq(10000000)
     {}
+    
+    virtual ~RcuALTROCFG2_t() {}
 
     RcuALTROCFG2_t ( short nAltroBuffers, short nPreSamples, short nSamples, bool sparseReadout, int sampleFreq);
 
@@ -530,19 +563,19 @@ class RcuL1MSGLAT_t : public Register_t
 
 public:
     RcuL1MSGLAT_t() :
-            fMinLatency ( 260 ),
-            fMaxLatency ( 3200 )
+            fMaxLatency ( 260 ),
+            fMinLatency ( 3200 )
     {
     }
 
     RcuL1MSGLAT_t ( short min, short max ) :
-            fMinLatency ( min ),
-            fMaxLatency ( max )
+            fMaxLatency ( min ),
+            fMinLatency ( max )
     {
     }
     RcuL1MSGLAT_t ( const RcuL1MSGLAT_t& v ) :
-            fMinLatency ( v.GetMinLatency() ),
-            fMaxLatency ( v.GetMaxLatency() )
+            fMaxLatency ( v.GetMinLatency() ),
+            fMinLatency ( v.GetMaxLatency() )
     {
     }
 
@@ -959,7 +992,18 @@ class ReadoutRegisters_t : public Register_t
 
 public:
 
-    ReadoutRegisters_t() {}
+    ReadoutRegisters_t() : Register_t(),
+     fRcuALTROIF ( 0 ),
+     fRcuRDOMOD (),
+     fRcuALTROCFG1 (),
+     fRcuALTROCFG2 (),
+     fRcuL1LAT (),
+     fRcuL1MSGLAT (),
+     fAltroZSTHR (),
+     fAltroTRCFG (),
+     fAltroDPCFG(),
+     fAltroDPCFG2()
+    {}
 
     ReadoutRegisters_t ( RcuALTROIF_t altroif, RcuRDOMOD_t rdoMod, RcuALTROCFG1_t altrocfg1,
                          RcuALTROCFG2_t altrocfg2, RcuL1LAT_t lOneLat, RcuL1MSGLAT_t lOneMsgLat );

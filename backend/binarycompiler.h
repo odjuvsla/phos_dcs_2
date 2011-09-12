@@ -1,3 +1,23 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 #ifndef BINARYCOMPILER_H
 #define BINARYCOMPILER_H
 
@@ -68,7 +88,7 @@ class binaryCompiler
      * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeWriteFecRegisters(int registerType, std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> binData, uint_t nVals);
+    int MakeWriteFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> binData, uint_t nVals);
     
     /**
      * Read several registers on a FEC and read back the result
@@ -79,7 +99,7 @@ class binaryCompiler
      * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeReadFecRegisters(int registerType, std::vector<uint_t> regAdds, AltroCh_t channel, vector<uint_t> binData, uint_t nVals);
+    int MakeReadFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, AltroCh_t channel, vector<uint_t> binData, uint_t nVals);
     
     /** 
      * Write to several ALTRO registers

@@ -1,3 +1,22 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #include "phosregisters.h"
 #include <iostream>
@@ -19,7 +38,18 @@ const bool ReadoutRegisters_t::fRcuVerify[] = {false, false, false, false, false
 const bool ReadoutRegisters_t::fAltroVerify[] = {false, false, false, false};
 
 ReadoutRegisters_t::ReadoutRegisters_t ( RcuALTROIF_t altroif, RcuRDOMOD_t rdoMod, RcuALTROCFG1_t altrocfg1,
-        RcuALTROCFG2_t altrocfg2, RcuL1LAT_t lOneLat, RcuL1MSGLAT_t lOneMsgLat )
+        RcuALTROCFG2_t altrocfg2, RcuL1LAT_t lOneLat, RcuL1MSGLAT_t lOneMsgLat ) :
+        fRcuALTROIF(),
+	fRcuRDOMOD(),
+	fRcuALTROCFG1(),
+	fRcuALTROCFG2(),
+	fRcuL1LAT(),
+	fRcuL1MSGLAT(),
+	fAltroZSTHR(),
+	fAltroTRCFG(),
+	fAltroDPCFG(),
+	fAltroDPCFG2()
+
 {
     SetRcuALTROIF ( altroif );
     SetRcuRDOMOD ( rdoMod );
@@ -143,7 +173,7 @@ int RcuALTROIF_t::GetRegisterValue()
     return ( fInstructionErrorCheck & 0x3 ) << 16 |
            ( fCstbDelay & 0x3 ) << 14 |
            ( sampleSetting & 0xf ) << 10 |
-           fNSamples & 0x2ff;
+           (fNSamples & 0x2ff);
 }
 
 void RcuALTROIF_t::SetByRegisterValue ( int value )
@@ -191,7 +221,8 @@ RcuTRGCONF_t::RcuTRGCONF_t() :
         fAuxTrigger ( false ),
         fTTCrxTrigger ( false ),
         fPHOSTriggerMode ( true ),
-        fL2LatencyWrtL1 ( 0xfff )
+        fL2LatencyWrtL1 ( 0xfff ),
+        fRegisterValue(0)
 {
 
 }
@@ -201,7 +232,8 @@ RcuTRGCONF_t::RcuTRGCONF_t ( bool softwareTrigger, bool auxTrigger, bool ttcrxTr
         fAuxTrigger ( auxTrigger ),
         fTTCrxTrigger ( ttcrxTrigger ),
         fPHOSTriggerMode ( phosTriggerMode ),
-        fL2LatencyWrtL1 ( latency )
+        fL2LatencyWrtL1 ( latency ),
+        fRegisterValue(0)
 {
 
 }
@@ -227,7 +259,7 @@ int RcuTRGCONF_t::GetRegisterValue()
 
     return ( triggerSource & 0x7 ) << 14 |
            ( fPHOSTriggerMode & 0x1 ) << 13 |
-           fL2LatencyWrtL1 & 0xfff;
+           (fL2LatencyWrtL1 & 0xfff);
 
 }
 
@@ -275,7 +307,8 @@ RcuRDOMOD_t::RcuRDOMOD_t() :
         fSparseReadout ( false ),
         fSparseReadoutRcu( false),
         fExecuteSequencer ( false ),
-        fMEBMode ( false )
+        fMEBMode ( false ),
+        fRegisterValue(0)
 {
 
 }
@@ -285,7 +318,8 @@ RcuRDOMOD_t::RcuRDOMOD_t ( bool maskRDYRX, bool sparseReadoutEnabled, bool spars
         fSparseReadout ( sparseReadoutEnabled ),
         fSparseReadoutRcu( sparseReadoutRcuEnabled),
         fExecuteSequencer ( executeSequencer ),
-        fMEBMode ( mebMode )
+        fMEBMode ( mebMode ),
+        fRegisterValue(0)
 {
 }
 
@@ -329,7 +363,8 @@ RcuALTROCFG1_t::RcuALTROCFG1_t() :
         fZeroSuppressionEnabled ( false ),
         fAutomaticBaselineSubtraction ( false ),
         fOffset ( 0 ),
-        fThreshold ( 0 )
+        fThreshold ( 0 ),
+        fRegisterValue(0)
 {
 }
 
@@ -338,6 +373,7 @@ RcuALTROCFG1_t::RcuALTROCFG1_t ( bool zsEnabled, bool automaticBS, short offset,
         fAutomaticBaselineSubtraction ( automaticBS ),
         fOffset ( offset ),
         fThreshold ( zsThreshold )
+	,fRegisterValue(0)
 {
 
 }
@@ -347,7 +383,7 @@ int RcuALTROCFG1_t::GetRegisterValue()
     return ( fZeroSuppressionEnabled & 0x1 ) << 15 |
            ( fAutomaticBaselineSubtraction & 0x1 ) << 14 |
            ( fOffset & 0xf ) << 10 |
-           fThreshold & 0x3ff;
+           (fThreshold & 0x3ff);
 }
 
 void RcuALTROCFG1_t::SetByRegisterValue ( int value )

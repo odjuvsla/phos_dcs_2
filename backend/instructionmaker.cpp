@@ -1,13 +1,33 @@
+/*
+    Library for controlling and configuring the electronics for the PHOS
+    detector at the ALICE Experiment
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #include "instructionmaker.h"
 #include "phosconstants.h"
 #include "../logger/phosdcslogging.h"
+#include <phosdcstypes.h>
 
 using namespace phosConstants;
 using namespace std;
 
 unsigned long
-InstructionMaker::MakeMS20Instruction ( const int registerType,   const bool read,
+InstructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool read,
                                         const unsigned long reg,  const unsigned long branch,
                                         const unsigned long card,  const unsigned long chip,
                                         const unsigned long channel )
@@ -71,7 +91,7 @@ InstructionMaker::MakeMS20Instruction ( const int registerType,   const bool rea
   << tmp_broadcast << ", branch: " << branch << ", card: " << card << ", channel: " << channel << ", register: " << reg << dec << endl;
   log << hex << "Command: " << command << endl;
 
-  phosDcsLogging::Instance()->Logging ( log.str(), LOG_LEVEL_EXTREME_VERBOSE );
+  phosDcsLogging::Instance()->Logging ( log.str(), LOG_LEVEL_EXTREME_VERBOSE, __FILE__, __LINE__ );
 
 
   return ( tmpCommand << CMD_TYPE ) | ( tmpParity << PAR ) | ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
