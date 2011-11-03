@@ -19,9 +19,9 @@
 */
 
 #include "phosdcslogging.h"
-#pragma GCC diagnostic ignored "-Weffc++"
+//#pragma GCC diagnostic ignored "-Weffc++"
 #include "qmutex.h"
-#pragma GCC diagnostic pop
+//#pragma GCC diagnostic pop
 #include <iostream>
 #include <fstream>
 #include <sstream>

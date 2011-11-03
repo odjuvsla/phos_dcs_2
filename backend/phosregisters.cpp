@@ -178,7 +178,7 @@ int RcuALTROIF_t::GetRegisterValue()
 
 void RcuALTROIF_t::SetByRegisterValue ( int value )
 {
-    fNSamples = value & 0x2ff;
+    fNSamples = value & 0x3ff;
     int samplesetting = ( value >> 10 ) & 0x3;
     fCstbDelay = ( value >> 14 ) & 0x3;
     fInstructionErrorCheck = ( value >> 16 ) & 0x3;
