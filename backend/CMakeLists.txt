@@ -5,7 +5,7 @@ set(FEECLIENT $ENV{FEECLIENT})
 find_library(FEELIB FeeClient ${FEECLIENT}/lib)
 find_library(DIMLIB dim ${FEECLIENT}/lib)
 
-set(phosDcsBackend_SRCS fec.cpp rcu.cpp phosDcsInterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp instructionmaker.cpp)
+set(phosDcsBackend_SRCS fec.cpp rcu.cpp phosdcsinterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp instructionmaker.cpp)
 qt4_automoc(${phosDcsBackend_SRCS})
 add_library(PhosDcsBackend ${phosDcsBackend_SRCS})
 
