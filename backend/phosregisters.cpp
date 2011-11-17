@@ -173,12 +173,12 @@ int RcuALTROIF_t::GetRegisterValue()
     return ( fInstructionErrorCheck & 0x3 ) << 16 |
            ( fCstbDelay & 0x3 ) << 14 |
            ( sampleSetting & 0xf ) << 10 |
-           (fNSamples & 0x2ff);
+           (fNSamples & 0x3ff);
 }
 
 void RcuALTROIF_t::SetByRegisterValue ( int value )
 {
-    fNSamples = value & 0x2ff;
+    fNSamples = value & 0x3ff;
     int samplesetting = ( value >> 10 ) & 0x3;
     fCstbDelay = ( value >> 14 ) & 0x3;
     fInstructionErrorCheck = ( value >> 16 ) & 0x3;

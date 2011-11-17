@@ -23,7 +23,10 @@
 
 #include "registermaps/RcuRegisterMap.h"
 #include "registermaps/AltroRegisterMap.h"
+#include "registermaps/BcRegisterMap.h"
 #include <iostream>
+#include <bitset>
+#include <phosdcstypes.h>
 
 class RcuALTROIF_t;
 class RcuRDOMOD_t;
@@ -51,15 +54,47 @@ public:
 
 class Register_t
 {
-public: 
-  
-  virtual int GetRegisterAddress() const = 0;
-  virtual int GetRegisterValue() = 0;
-  virtual void SetByRegisterValue(int value) = 0;
-  
-  virtual ~Register_t() {}
-  
+public:
+
+    virtual int GetRegisterAddress() const = 0;
+    virtual int GetRegisterValue() = 0;
+    virtual void SetByRegisterValue(int value) = 0;
+
+    virtual ~Register_t() {}
+
 };
+
+class RcuACTFECLIST_t : public Register_t
+{
+public:
+    
+    RcuACTFECLIST_t();
+    virtual ~RcuACTFECLIST_t();
+    
+    RcuACTFECLIST_t ( const RcuACTFECLIST_t& v) :
+    _registerValue(v.GetRegisterBits())
+    {
+    }
+    
+    std::bitset<32> GetRegisterBits() const { return _registerValue; } 
+    
+    int GetRegisterValue() { return _registerValue.to_ulong(); }
+    
+    void SetRegisterValue(std::bitset<32> value) { _registerValue = value; }
+    
+    void SetByRegisterValue(int value) { _registerValue = value; }
+    
+    int GetRegisterAddress() const { return _regAddress; }
+    
+private:
+  
+  std::bitset<32> _registerValue;
+ 
+  static const int _regAddress = RcuRegisterMap::ALTROIF; // 0x5101
+
+    
+};
+
 
 class RcuALTROIF_t : public Register_t
 {
@@ -119,9 +154,11 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::ALTROIF; // 0x5101
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-   
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 
 private:
 
@@ -143,7 +180,7 @@ class RcuTRGCONF_t : public Register_t
 public:
 
     RcuTRGCONF_t();
-    
+
     virtual ~RcuTRGCONF_t() {}
 
     RcuTRGCONF_t ( bool softwareTrigger, bool auxTrigger, bool ttcrxTrigger, bool phosTriggerMode = true, short latency = 0xfff );
@@ -223,8 +260,10 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::TRCFG; //0x5102
-    
-    int GetRegisterAddress() const { return fRegAddress; }
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
 
 private:
 
@@ -246,7 +285,7 @@ public:
 
     RcuRDOMOD_t();
     virtual ~RcuRDOMOD_t() {}
-    
+
     RcuRDOMOD_t ( bool maskRDYRX, bool sparseReadoutEnabled, bool sparseReadoutEnabledRcu, bool executeSequencer, bool mebMode );
 
     RcuRDOMOD_t ( const RcuRDOMOD_t& v ) :
@@ -255,8 +294,8 @@ public:
             fSparseReadoutRcu ( v.IsSparseReadoutRcuEnabled() ),
             fExecuteSequencer ( v.IsExecuteSequencerEnabled() ),
             fMEBMode ( v.GetMEBMode() ),
-	    fRegisterValue(0)
-	    
+            fRegisterValue(0)
+
     {
     }
 
@@ -268,9 +307,9 @@ public:
     {
         return fSparseReadout;
     }
-    bool IsSparseReadoutRcuEnabled() const 
+    bool IsSparseReadoutRcuEnabled() const
     {
-       return fSparseReadoutRcu;
+        return fSparseReadoutRcu;
     }
     bool IsExecuteSequencerEnabled() const
     {
@@ -293,7 +332,7 @@ public:
     }
     void SetSparseReadoutRcu ( bool value = true )
     {
-       fSparseReadoutRcu = value;
+        fSparseReadoutRcu = value;
     }
     void SetExecuteSeqencer ( bool value = true )
     {
@@ -309,9 +348,11 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::RDOMOD; //0x5103
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 private:
 
     bool fMaskRDYRX;
@@ -348,17 +389,17 @@ public:
     {
         return fZeroSuppressionEnabled;
     }
-    
+
     bool UsingAutomaticBaselineSubtraction() const
     {
         return fAutomaticBaselineSubtraction;
     }
-    
+
     short GetOffset() const
     {
         return fOffset;
     }
-    
+
     short GetThreshold() const
     {
         return fThreshold;
@@ -370,7 +411,7 @@ public:
     {
         fZeroSuppressionEnabled = zs;
     }
-    
+
     void SetAutomaticBaselineSubtractionEnabled ( bool abs = true )
     {
         fAutomaticBaselineSubtraction = abs;
@@ -380,7 +421,7 @@ public:
     {
         fOffset = offset;
     }
-    
+
     void SetThreshold ( short threshold )
     {
         fThreshold = threshold;
@@ -391,9 +432,11 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::ALTROCFG1; // 0x5104
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 private:
 
     bool fZeroSuppressionEnabled; // 1 bit reserved
@@ -413,75 +456,77 @@ class RcuALTROCFG2_t : public Register_t
 public:
 
     RcuALTROCFG2_t() :
-    fNAltroBuffers()
+            fNAltroBuffers()
             ,fNPreSamples ( 11 )
             ,fNSamples(51)
             ,fSparseReadout(false)
             ,fSampleFreq(10000000)
     {}
-    
+
     virtual ~RcuALTROCFG2_t() {}
 
     RcuALTROCFG2_t ( short nAltroBuffers, short nPreSamples, short nSamples, bool sparseReadout, int sampleFreq);
 
     RcuALTROCFG2_t ( const RcuALTROCFG2_t& v ) :
-    fNAltroBuffers(v.GetNAltroBuffers())
-      ,fNPreSamples(v.GetNPreSamples())
-      ,fNSamples(v.GetNSamples())
-      ,fSparseReadout(v.IsSparseReadoutEnabled())
-      ,fSampleFreq(v.GetSampleFrequency())
+            fNAltroBuffers(v.GetNAltroBuffers())
+            ,fNPreSamples(v.GetNPreSamples())
+            ,fNSamples(v.GetNSamples())
+            ,fSparseReadout(v.IsSparseReadoutEnabled())
+            ,fSampleFreq(v.GetSampleFrequency())
     {
     }
 
-   short GetNAltroBuffers() const
-   {
-	 return fNAltroBuffers;
-   }
+    short GetNAltroBuffers() const
+    {
+        return fNAltroBuffers;
+    }
 
     short GetNPreSamples() const
     {
         return fNPreSamples;
     }
 
-    short GetNSamples() const 
-      {
-	return fNSamples;
-      }
-    
-    short IsSparseReadoutEnabled() const 
+    short GetNSamples() const
     {
-       return fSparseReadout;
+        return fNSamples;
     }
 
-   int GetSampleFrequency() const 
-   {
-      return fSampleFreq;
-   }
+    short IsSparseReadoutEnabled() const
+    {
+        return fSparseReadout;
+    }
+
+    int GetSampleFrequency() const
+    {
+        return fSampleFreq;
+    }
 
     int GetRegisterValue();
 
     void SetNAltroBuffers(short nAltroBuffers);
-    
+
     void SetNPreSamples ( short nPreSamples )
     {
         fNPreSamples = nPreSamples;
     }
 
-   void SetSparseReadout(bool sparseReadout)
-   {
-      fSparseReadout = sparseReadout;
-   }
+    void SetSparseReadout(bool sparseReadout)
+    {
+        fSparseReadout = sparseReadout;
+    }
 
-   void SetSampleFrequency(int sampleFreq);
+    void SetSampleFrequency(int sampleFreq);
 
     void SetByRegisterValue ( int value );
 
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::ALTROCFG2; // 0x5105
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 private:
     short  fNAltroBuffers; //1 bit, (0 = 4 buffers, 1 = 8 buffers
     short fNPreSamples; // 4 bits reserved
@@ -543,10 +588,14 @@ public:
 
     static const int fRegAddress = RcuRegisterMap::L1_LATENCY;
 
-    int GetRegisterAddress() const { return fRegAddress; }
-    
-    int GetRegisterValue() {return 0;}
-    
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
+    int GetRegisterValue() {
+        return 0;
+    }
+
 private:
 
     short fLatency; //12 bits
@@ -609,11 +658,15 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = RcuRegisterMap::L1_MSG_LATENCY;
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
-    int GetRegisterValue() {return 0;}
-    
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
+    int GetRegisterValue() {
+        return 0;
+    }
+
 private:
 
     short fMaxLatency; // 16 bits
@@ -673,10 +726,14 @@ public:
 
     static const int fRegAddress = AltroRegisterMap::ZSTHR;
 
-    int GetRegisterValue() {return 0;}
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
+    int GetRegisterValue() {
+        return 0;
+    }
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 private:
 
     short fThreshold; //10 bits
@@ -753,9 +810,13 @@ public:
 
     static const int fRegAddress = AltroRegisterMap::TRCFG;
 
-    int GetRegisterValue() {return 0;}
+    int GetRegisterValue() {
+        return 0;
+    }
 
-    int GetRegisterAddress() const { return fRegAddress; }
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
 
 private:
 
@@ -849,9 +910,9 @@ public:
         else
         {
             fFirstBaselineCorrection = AltroSettings_t::fBSFixedMode;
-	}
+        }
     }
-    
+
     void SetFixedBaselineSubtraction ( bool value )
     {
         if ( value )
@@ -880,10 +941,14 @@ public:
 
     static const int fRegAddress = AltroRegisterMap::DPCFG;
 
-    int GetRegisterValue() {return 0;}
+    int GetRegisterValue() {
+        return 0;
+    }
 
-    int GetRegisterAddress() const { return fRegAddress; }
-    
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
 private:
 
     short fFirstBaselineCorrection; /* First Baseline Correction Mode - 4 bits*/
@@ -972,11 +1037,15 @@ public:
     void Print ( std::ostream& stream, std::string level = std::string ( "" ) );
 
     static const int fRegAddress = AltroRegisterMap::DPCFG2;
-    
-    int GetRegisterAddress() const { return fRegAddress; }
-    
-    int GetRegisterValue() { return 0; }
-    
+
+    int GetRegisterAddress() const {
+        return fRegAddress;
+    }
+
+    int GetRegisterValue() {
+        return 0;
+    }
+
 private:
 
     short fNPreTriggerSamples;
@@ -993,16 +1062,16 @@ class ReadoutRegisters_t : public Register_t
 public:
 
     ReadoutRegisters_t() : Register_t(),
-     fRcuALTROIF ( 0 ),
-     fRcuRDOMOD (),
-     fRcuALTROCFG1 (),
-     fRcuALTROCFG2 (),
-     fRcuL1LAT (),
-     fRcuL1MSGLAT (),
-     fAltroZSTHR (),
-     fAltroTRCFG (),
-     fAltroDPCFG(),
-     fAltroDPCFG2()
+            fRcuALTROIF ( 0 ),
+            fRcuRDOMOD (),
+            fRcuALTROCFG1 (),
+            fRcuALTROCFG2 (),
+            fRcuL1LAT (),
+            fRcuL1MSGLAT (),
+            fAltroZSTHR (),
+            fAltroTRCFG (),
+            fAltroDPCFG(),
+            fAltroDPCFG2()
     {}
 
     ReadoutRegisters_t ( RcuALTROIF_t altroif, RcuRDOMOD_t rdoMod, RcuALTROCFG1_t altrocfg1,
@@ -1145,6 +1214,39 @@ private:
 
 };
 
+class BcRegister_t : public Register_t
+{
+  public:
+    
+    BcRegister_t() {}
+    virtual ~BcRegister_t() {}
+    
+    BcRegister_t ( const BcRegister_t& v) :
+    _registerValue(v.GetValue())
+    {
+    }
+    
+    int GetRegisterValue() { return _registerValue; }
+    
+    int GetValue() const { return _registerValue; }
+    
+    void SetByRegisterValue(int value) { _registerValue = value; }
+    
+    int GetRegisterAddress() const { return _regAddress; }
+    
+    void SetRegisterAddress(int add) { _regAddress = add; }
+    
+protected:
+  
+  int _registerValue;
+ 
+  int _regAddress;
+    
+};
 
-
+class BcBCVERSION_t : public BcRegister_t
+{
+public:
+    BcBCVERSION_t() {_regAddress = BcRegisterMap::BCVERSION; }
+};
 #endif
