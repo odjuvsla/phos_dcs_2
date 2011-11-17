@@ -31,12 +31,12 @@
 #include "widgets/branch.h"
 #include "widgets/rcu.h"
 
-#pragma GCC diagnostic ignored "-Weffc++"
+//#pragma GCC diagnostic ignored "-Weffc++"
 #include <qdebug.h>
 #include "widgets/module.h"
 #include "widgets/moduleTabs.h"
 #include <QVBoxLayout>
-#pragma GCC diagnostic pop
+//#pragma GCC diagnostic pop
 
 phosGui::phosGui ( QWidget* parent, Qt::WindowFlags flags ) : QMainWindow ( parent, flags )
 ,_tabWidget(0)
@@ -69,9 +69,9 @@ void phosGui::setupWidgets()
   
   moduleTabs *tabs = new moduleTabs(this);
   setCentralWidget(tabs);
-  QVBoxLayout *tabsLayout = new QVBoxLayout(mainLayout);
-  tabsLayout->addWidget(tabs);
-  tabsLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
+  // QVBoxLayout *tabsLayout = new QVBoxLayout(mainLayout);
+  // tabsLayout->addWidget(tabs);
+  // tabsLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
   
   //Rcu_t rcu0(0, 0);
   //rcu *r0 = new rcu(rcu0, this);
