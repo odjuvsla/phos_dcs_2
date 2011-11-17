@@ -21,7 +21,10 @@
 #ifndef MODULETABS_H
 #define MODULETABS_H
 
+//#pragma GCC diagnostic ignored "-Weffc++"
 #include <QtGui/qwidget.h>
+
+
 
 
 class moduleTabs : public QWidget
@@ -41,5 +44,5 @@ private:
     moduleTabs& operator=(const moduleTabs& other);
     bool operator==(const moduleTabs& other) const;
 };
-
+//#pragma GCC diagnostic error "-Weffc++"
 #endif // MODULETABS_H

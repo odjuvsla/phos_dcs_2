@@ -29,14 +29,24 @@ class fec
 
 public:
   
-    fec(Fec_t fec);
+    fec(Fec_t &fec);
     virtual ~fec();  
+    
+    fec(const fec& other);
+    fec& operator=(const fec& other);
+    
+    Fec_t getFecId() const { return _fecId; }
+    
+    uint_t getCardNumber() { return _fecId.getFecId(); }
+    
+    
+    
 private:
+  
+    Fec_t _fecId;
   
   /** Prohibited */
     fec();
-    fec(const fec& other);
-    fec& operator=(const fec& other);
     bool operator==(const fec& other) const;
 };
 }

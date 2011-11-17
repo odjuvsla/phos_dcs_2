@@ -25,8 +25,8 @@ feeCard::feeCard (Fec_t card, QWidget* parent) : QPushButton ( parent )
 ,_kWidth(15)
 ,_kHeight(80)
 {
-  setFixedHeight(80);
-  setFixedWidth(15);
+  setFixedHeight(_kHeight);
+  setFixedWidth(_kWidth);
   QString hexId;
   hexId = hexId.setNum(card.getFecId(), 16);
   setText(hexId.toUpper());

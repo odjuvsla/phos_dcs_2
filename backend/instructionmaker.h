@@ -22,23 +22,23 @@
 #define INSTRUCTIONMAKER_H
 #include <phosdcstypes.h>
 
-class InstructionMaker
+class instructionMaker
   {
   public:
 
-    InstructionMaker() {}
-    ~InstructionMaker() {}
+    instructionMaker() {}
+    ~instructionMaker() {}
 
     /** changed for RCU_fw2 (maybe incomplete/incorrect) */
-    static unsigned long  MakeMS20Instruction ( const uint_t registerType, const bool read,
-        const unsigned long reg, const unsigned long  branch = 0,
-        const unsigned long card = 0, const unsigned long chip = 0, const unsigned long channel = 0 );
+    static ulong_t  MakeMS20Instruction ( const uint_t registerType, const bool read,
+        const ulong_t reg, const ulong_t  branch = 0,
+        const ulong_t card = 0, const ulong_t chip = 0, const ulong_t channel = 0 );
 
 
     /**
      * @param read flag if this is a read operation
      * @param registerValue the value too write
      */
-    static unsigned long  MakeLS20Instruction ( const bool read,  const unsigned long registerValue );
+    static ulong_t  MakeLS20Instruction ( const bool read,  const ulong_t registerValue );
   };
 #endif

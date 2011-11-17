@@ -23,7 +23,8 @@
 
 using namespace phosDcs;
 
-fec::fec(Fec_t fec)
+fec::fec(Fec_t& fec) :
+_fecId(fec)
 {
 
 }
@@ -33,3 +34,14 @@ fec::~fec()
 
 }
 
+fec::fec(const phosDcs::fec& other) :
+_fecId(other.getFecId())
+{
+  
+}
+
+fec& fec::operator=(const phosDcs::fec& other) 
+
+{
+  return *this;
+}

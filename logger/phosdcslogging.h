@@ -25,7 +25,9 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+//#pragma GCC diagnostic ignored "-Weffc++"
 #include <QObject>
+//#pragma GCC diagnostic error "-Weffc++"
 
 class QMutex;
 
@@ -56,19 +58,19 @@ class phosDcsLogging : public QObject
     /** Set the logging level for the file output */
     void SetFileLoggingLevel ( unsigned int level )
     {
-      fFileLogLevel = level;
+      _fileLogLevel = level;
     }
 
     /** Set the logging level for the terminal */
     void SetTerminalOutputLevel ( unsigned int level )
     {
-      fTerminalLogLevel = level;
+      _terminalLogLevel = level;
     }
 
     /** Set the logging level for the log viewer */
     void SetLogViewerLevel ( unsigned int level )
     {
-      fLogViewerLevel = level;
+      _logViewerLevel = level;
     }
 
     /** Get the log viewer string */
@@ -98,28 +100,28 @@ class phosDcsLogging : public QObject
     void AddFileAndLine(std::string filename, int line, std::string &logmsg);
 
     /** Pointer to the logging instance */
-    static phosDcsLogging* fInstance;
+    static phosDcsLogging* _instance;
 
     /** The log level for the log file */
-    unsigned int fFileLogLevel;
+    unsigned int _fileLogLevel;
 
     /** The log level for the terminal */
-    unsigned int fTerminalLogLevel;
+    unsigned int _terminalLogLevel;
 
     /** The log level for the log viewer */
-    unsigned int fLogViewerLevel;
+    unsigned int _logViewerLevel;
 
     /** The stream to the log file */
-    std::ofstream fLogFile;
+    std::ofstream _logFile;
 
     /** The log viewer stream */
-    std::stringstream fLogViewerStringStream;
+    std::stringstream _logViewerStringStream;
 
     /** Vector containing strings corresponding to the different log levels */
-    std::vector<std::string> fLogLevels;
+    std::vector<std::string> _logLevels;
     
     /** Mutex */
-    QMutex *fMutexLock;
+    QMutex *_mutexLock;
 
     /** Copy constructor - not implemented */
     phosDcsLogging ( const phosDcsLogging & );

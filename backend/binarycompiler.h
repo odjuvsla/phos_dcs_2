@@ -85,10 +85,9 @@ class binaryCompiler
      * @param regVals contains the values we will write
      * @param channel is the channel ID we want to write to (contains only the FEC ID if BC reg)
      * @param binData will contain the generated code
-     * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeWriteFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> binData, uint_t nVals);
+    int MakeWriteFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> &binData);
     
     /**
      * Read several registers on a FEC and read back the result
@@ -96,10 +95,9 @@ class binaryCompiler
      * @param regAdds contains the addresses we will write
      * @param channel is the channel ID we want to write to (contains only the FEC ID if BC reg)
      * @param binData will contain the generated code
-     * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeReadFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, AltroCh_t channel, vector<uint_t> binData, uint_t nVals);
+    int MakeReadFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, AltroCh_t channel, vector<uint_t> &binData);
     
     /** 
      * Write to several ALTRO registers
@@ -107,21 +105,27 @@ class binaryCompiler
      * @param regVals contains the values we will write
      * @param channel is the channel ID we want to write to
      * @param binData will contain the generated code
-     * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeWriteReadAltroRegisters(std::vector<uint_t>& regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> binData, uint_t nVals);
+    int MakeWriteReadAltroRegisters(std::vector<uint_t>& regAdds, std::vector<uint_t>& regVals, AltroCh_t channel, std::vector<uint_t> &binData);
     
     /** 
      * Write to several board controller registers
      * @param regAdds contains the addresses we will write
      * @param regVals contains the values we will write
      * @param binData will contain the generated code
-     * @param nVals is the number of registers to write
      * @return 0 if success
      */
-    int MakeWriteReadBCRegisters(std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, Fec_t card, std::vector<uint_t> binData, uint_t nVals);
+    int MakeWriteReadBCRegisters(std::vector<uint_t> regAdds, std::vector<uint_t>& regVals, Fec_t card, std::vector<uint_t> &binData);
     
+    /**
+     * Read several BC registers on a FEC and read back the result
+     * @param regAdds contains the addresses we want to write
+     * @param channel is the channel ID we want to write to (contains only the FEC ID if BC reg)
+     * @param binData will contain the generated code
+     * @return 0 if success
+     */
+    int MakeReadBcRegister(std::vector<uint_t> regAdds, Fec_t card, vector<uint_t> &binData);
     
   private:
 

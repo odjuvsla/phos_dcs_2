@@ -24,9 +24,11 @@
 #include "phosregisters.h"
 #include "phosdcstypes.h"
 #include "binarycompiler.h"
-#pragma GCC diagnostic ignored "-Weffc++"
+//#pragma GCC diagnostic ignored "-Weffc++"
 #include "FeeSampleClient.hpp"
-#pragma GCC diagnostic pop
+//#pragma GCC diagnostic error "-Weffc++"
+
+class QMutex;
 
 using namespace dcs;
 using namespace dcs::fee;
@@ -37,24 +39,42 @@ class phosDcsClient : public FeeSampleClient
 public:
 
     /** Default constructor */
-    phosDcsClient();
+    phosDcsClient(QString feeServerName);
 
     /** Destructor */
     virtual ~phosDcsClient();
 
     /** Write an RCU register */
-    int writeRcuRegister(Register_t *reg = 0);
+    int writeRcuRegister(Register_t *reg);
 
     /** Write a FEC register */
-    int writeFecRegister(Register_t *reg = 0, AltroCh_t *ch = 0);
+    int writeFecRegister(Register_t *reg, AltroCh_t *ch = 0);
+
+    /** Read an RCU register */
+    int readRcuRegister(Register_t *reg);
+
+    /** Read a FEC register */
+    int readFecRegister(Register_t *reg, AltroCh_t *ch = 0);
+
+    /** Read a board contoller register on a FEC */
+    int readBcRegister(Register_t *reg, Fec_t *fec = 0);
 
 private:
 
-    int ExecuteBinary( const char* feeServerName, const vector<unsigned long> & binData, vector<unsigned long> &  resultBuffer );
+    int executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer );
+    
+    /** Mutex lock */
+    QMutex *_mutex;
 
     /** Binary compiler */
-    binaryCompiler *fBinaryCompiler;
-
+    binaryCompiler *_binaryCompiler;
+    
+    /** FEE server name */
+    QString _feeServerName;
+      
+    /** Default constructor, prohibited */
+    phosDcsClient();
+    
     /** Copy constructor, prohibited */
     phosDcsClient(const phosDcsClient& other);
 

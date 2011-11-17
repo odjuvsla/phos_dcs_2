@@ -21,19 +21,97 @@
 #ifndef RCU_H
 #define RCU_H
 #include <phosdcstypes.h>
+#include "phosdcsclient.h"
+#include "fec.h"
+#include <QThread>
 
 namespace phosDcs
 {
 class rcu
 {
 public:
+  
     rcu(Rcu_t rcu);
     virtual ~rcu();
+    
+    /** Initialise the FEE client */
+    int init(QString feeServerName);
+    
+    /** Turn on the RCU */
+    int turnOn(bool on = true);
+    
+    /** Turn on the RCU */
+    int turnOff() { turnOn(false); }
+    
+signals:
+  
+    void cardChangedState(phosDcs::fec card, int state);
+    
 private:
+  
 
+    class turnOnFecs : public QThread
+    {
+      Q_OBJECT
+    public:
+      
+      /** Set FEE client to use */
+      void setFeeClient(phosDcsClient *client) { _client = client; }
+	
+      /** Set the branches */
+      void setBranches(std::vector<phosDcs::fec>* branchA, std::vector<phosDcs::fec>* branchB) 
+      { _branchA = branchA;  _branchB  = branchB; }
+      
+      /** on is false if we turn off... */
+      void setOn(bool on) { _on = on; }
+      
+      void run();
 
+    signals:
+  
+    void cardChangedState(Fec_t card, int state);
+      
+    private:
+      
+      phosDcsClient *_client;
+      
+      std::vector<phosDcs::fec> *_branchA;
+      std::vector<phosDcs::fec> *_branchB;
+      
+      bool _on;
+      
+    };
+
+    class turnOnTrus : public QThread
+    {
+      Q_OBJECT
+    public:
+      void run();
+
+      /** Set FEE client to use */
+      void setFeeClient(phosDcsClient *client) { _client = client; }
+      
+    private:
+      
+      phosDcsClient *_client;
+      
+    };
+
+    
+    /** The RCU id */
+    Rcu_t _rcuId;
+  
+    /** DCS client */
+    phosDcsClient *_feeClient;
+    
+    /** Vector with the FECs on branch A */
+    std::vector<phosDcs::fec> _fecsBranchA;
+  
+    /** Vector with the FECs on branch B */
+    std::vector<phosDcs::fec> _fecsBranchB;
+  
+    /** Prohibited */
     rcu();
-
     rcu(const rcu& other);
     rcu& operator=(const rcu& other);
     bool operator==(const rcu& other) const;

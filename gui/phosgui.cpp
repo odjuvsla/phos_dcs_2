@@ -59,8 +59,8 @@ void phosGui::init()
 
 void phosGui::setupWidgets()
 {
-//  setupTabs();
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
+//  setupTabs();
 //  setCentralWidget(_tabWidget);
  
   //Module_t module0(0);
@@ -69,9 +69,10 @@ void phosGui::setupWidgets()
   
   moduleTabs *tabs = new moduleTabs(this);
   setCentralWidget(tabs);
-  // QVBoxLayout *tabsLayout = new QVBoxLayout(mainLayout);
-  // tabsLayout->addWidget(tabs);
-  // tabsLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
+
+//  QVBoxLayout *tabsLayout = new QVBoxLayout(tabsLayout);
+  mainLayout->addWidget(tabs);
+  mainLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
   
   //Rcu_t rcu0(0, 0);
   //rcu *r0 = new rcu(rcu0, this);

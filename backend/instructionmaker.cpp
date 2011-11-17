@@ -26,11 +26,11 @@
 using namespace phosConstants;
 using namespace std;
 
-unsigned long
-InstructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool read,
-                                        const unsigned long reg,  const unsigned long branch,
-                                        const unsigned long card,  const unsigned long chip,
-                                        const unsigned long channel )
+ulong_t
+instructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool read,
+                                        const ulong_t reg,  const ulong_t branch,
+                                        const ulong_t card,  const ulong_t chip,
+                                        const ulong_t channel )
 {
 
   stringstream log;
@@ -72,7 +72,7 @@ InstructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool 
     }
 
   // Calculating parity (1 if odd, 0 if even)
-  unsigned int tmpInstruction = 0;
+  uint_t tmpInstruction = 0;
   int tmpParity = 0;
   tmpInstruction = ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
 
@@ -100,8 +100,8 @@ InstructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool 
 }
 
 
-unsigned long
-InstructionMaker::MakeLS20Instruction ( const bool read, const unsigned long registerValue )
+ulong_t
+instructionMaker::MakeLS20Instruction ( const bool read, const unsigned long registerValue )
 {
   int tmpCommand = 0;
   //int tmp_rw = 0;

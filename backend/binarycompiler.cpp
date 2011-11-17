@@ -103,22 +103,22 @@ int binaryCompiler::MakeReadResultMemory ( vector<uint_t> & binData, uint_t nVal
   return MakeReadRcuBlock ( RcuRegisterMap::Result_MEM, binData, nVal );
 }
 
-int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroCh_t channel, vector< uint_t > &binData)
 {
   int ret = 0;
 
   if ( ( registerType == REGTYPE_BC ) || ( registerType ==  REGTYPE_ALTRO ) || ( registerType == REGTYPE_TRU ) )
     {
   
-      binData.push_back ( ( RcuRegisterMap::RCU_WRITE_MEMBLOCK | ( nVals*2+2 ) ) );
+      binData.push_back ( ( RcuRegisterMap::RCU_WRITE_MEMBLOCK | ( regAdds.size()*2+2 ) ) );
       binData.push_back ( RcuRegisterMap::Instruction_MEM );
 
       int j = 0;
 
-      for ( uint_t i=0; i<nVals; i++ )
+      for ( uint_t i=0; i<regAdds.size(); i++ )
         {
-          binData.push_back ( InstructionMaker::MakeMS20Instruction ( registerType, false, regAdds[i], channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
-          binData.push_back ( InstructionMaker::MakeLS20Instruction ( false, regVals[j] ) );
+          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, false, regAdds[i], channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
+          binData.push_back ( instructionMaker::MakeLS20Instruction ( false, regVals[j] ) );
           j++;
         }
       
@@ -138,20 +138,20 @@ int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > 
 
 }
 
-int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > regAdds, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > regAdds, AltroCh_t channel, vector< uint_t > &binData)
 {
-  binData.push_back ( RcuRegisterMap::RCU_WRITE_MEMBLOCK| ( nVals+2 ) );
+  binData.push_back ( RcuRegisterMap::RCU_WRITE_MEMBLOCK| ( regAdds.size()+2 ) );
   binData.push_back ( RcuRegisterMap::Instruction_MEM );
 
-  for ( uint_t i=0; i<nVals; i++ )
+  for ( uint_t i=0; i<regAdds.size(); i++ )
     {
       if ( registerType == REGTYPE_ALTRO )
         {
-          binData.push_back ( InstructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i],  channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
+          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i],  channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
         }
       else
         {
-          binData.push_back ( InstructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i], channel.getBranchId(), channel.getFecId()));
+          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i], channel.getBranchId(), channel.getFecId()));
         }
 
     }
@@ -172,12 +172,18 @@ int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > r
 
 }
 
-int binaryCompiler::MakeWriteReadAltroRegisters(vector< uint_t >& regAdds, std::vector<uint_t >& regVals, AltroCh_t channel, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeWriteReadAltroRegisters(vector< uint_t >& regAdds, std::vector<uint_t >& regVals, AltroCh_t channel, vector< uint_t > &binData)
 {
   return 0;
 }
 
-int binaryCompiler::MakeWriteReadBCRegisters(vector< uint_t > regAdds, vector< uint_t >& regVals, Fec_t card, vector< uint_t > binData, uint_t nVals)
+int binaryCompiler::MakeWriteReadBCRegisters(vector< uint_t > regAdds, vector< uint_t >& regVals, Fec_t card, vector< uint_t > &binData)
 {
   return 0;
+}
+
+int binaryCompiler::MakeReadBcRegister(vector< uint_t > regAdds, Fec_t card, vector< uint_t >& binData)
+{
+  AltroCh_t channel(0, 0, card.getFecId(), card.getBranchId(), card.getRcuId(), card.getModuleId());
+  return MakeReadFecRegisters(REGTYPE_BC, regAdds, channel, binData);
 }

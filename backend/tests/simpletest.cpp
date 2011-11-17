@@ -23,7 +23,7 @@
 
 int main()
 {
-  phosDcsClient cl;
+  phosDcsClient cl("FEESERVER");
   
   AltroCh_t ch(3, 2, 1, 0, 0, 0);
  

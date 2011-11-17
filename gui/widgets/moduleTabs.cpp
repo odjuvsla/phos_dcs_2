@@ -20,6 +20,7 @@
 
 #include "moduleTabs.h"
 #include <QTabWidget>
+
 #include "module.h"
 
 moduleTabs::moduleTabs(QWidget *parent) : QWidget(parent)
@@ -28,9 +29,11 @@ moduleTabs::moduleTabs(QWidget *parent) : QWidget(parent)
   module *newMod = 0;
   for(uint_t m = 0; m < PHOS_MODS; m++)
   {
+    QString moduleName = QString("Module %1").arg(m);
+    
     Module_t mod(m);
     newMod = new module(mod);
-    tabs->addTab(newMod, QString("Module"));
+    tabs->addTab(newMod, moduleName);
   }
   tabs->setGeometry(10, 10, newMod->width()+10, newMod->height()+20);
 }

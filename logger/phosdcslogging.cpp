@@ -21,7 +21,6 @@
 #include "phosdcslogging.h"
 //#pragma GCC diagnostic ignored "-Weffc++"
 #include "qmutex.h"
-//#pragma GCC diagnostic pop
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -35,27 +34,27 @@
 
 using namespace std;
 
-phosDcsLogging* phosDcsLogging::fInstance = 0;
+phosDcsLogging* phosDcsLogging::_instance = 0;
 
 phosDcsLogging::phosDcsLogging() : QObject()
-        ,fFileLogLevel ( LOG_LEVEL_EXTREME_VERBOSE )
-        ,fTerminalLogLevel ( LOG_LEVEL_VERBOSE )
-        ,fLogViewerLevel ( LOG_LEVEL_DEFAULT )
-        ,fLogFile()
-        ,fLogViewerStringStream()
-        ,fLogLevels(0)
-        ,fMutexLock ( 0 )
+        ,_fileLogLevel ( LOG_LEVEL_EXTREME_VERBOSE )
+        ,_terminalLogLevel ( LOG_LEVEL_VERBOSE )
+        ,_logViewerLevel ( LOG_LEVEL_DEFAULT )
+        ,_logFile()
+        ,_logViewerStringStream()
+        ,_logLevels(0)
+        ,_mutexLock ( 0 )
 {
 
-    fMutexLock = new QMutex;
+    _mutexLock = new QMutex;
 
-    fLogLevels.push_back ( string ( "NONE" ) );
-    fLogLevels.push_back ( string ( "ERROR" ) );
-    fLogLevels.push_back ( string ( "WARNING" ) );
-    fLogLevels.push_back ( string ( "INFO" ) );
-    fLogLevels.push_back ( string ( "VERBOSE" ) );
-    fLogLevels.push_back ( string ( "VERY_VERBOSE" ) );
-    fLogLevels.push_back ( string ( "EXTREME_VERBOSE" ) );
+    _logLevels.push_back ( string ( "NONE" ) );
+    _logLevels.push_back ( string ( "ERROR" ) );
+    _logLevels.push_back ( string ( "WARNING" ) );
+    _logLevels.push_back ( string ( "INFO" ) );
+    _logLevels.push_back ( string ( "VERBOSE" ) );
+    _logLevels.push_back ( string ( "VERY_VERBOSE" ) );
+    _logLevels.push_back ( string ( "EXTREME_VERBOSE" ) );
 
     stringstream filename;
     stringstream timestamp;
@@ -73,10 +72,10 @@ phosDcsLogging::phosDcsLogging() : QObject()
     GetTimeStamp ( timestamp, datestamp );
     filename << "log/" << datestamp.str() << "_" << timestamp.str() << ".log";
 
-    fLogFile.open ( filename.str().c_str() );
+    _logFile.open ( filename.str().c_str() );
     //fLogFile.open("log/test.log");
 
-    if ( fLogFile.is_open() == false )
+    if ( _logFile.is_open() == false )
     {
         cerr << "Could not open log file!" << endl;
         cerr << "Check permissions and if log/ directory exists in current directory (should be automatic)" << endl;
@@ -90,40 +89,40 @@ phosDcsLogging::phosDcsLogging() : QObject()
 
 phosDcsLogging::~phosDcsLogging()
 {
-    fLogFile.close();
+    _logFile.close();
 }
 
 phosDcsLogging* phosDcsLogging::Instance()
 {
-    if ( !fInstance )
+    if ( !_instance )
     {
-        fInstance = new phosDcsLogging();
+        _instance = new phosDcsLogging();
     }
-    return fInstance;
+    return _instance;
 }
 
 void phosDcsLogging::Logging ( string logmsg, unsigned int level, std::string filename, int line )
 {
-    fMutexLock->lock();
-    string tmplogmsg = fLogLevels[level] + ": " += logmsg;
-    if ( level <= fFileLogLevel )
+  
+    QMutexLocker locker(_mutexLock);
+    string tmplogmsg = _logLevels[level] + ": " += logmsg;
+    if ( level <= _fileLogLevel )
     {
         string outmsg = tmplogmsg;
         AddFileAndLine ( filename, line, outmsg );
         LogFile ( outmsg );
     }
-    if ( level <= fTerminalLogLevel )
+    if ( level <= _terminalLogLevel )
     {
         string outmsg = tmplogmsg;
         AddFileAndLine ( filename, line, outmsg );
         LogTerminal ( outmsg );
     }
-    if ( level <= fLogViewerLevel )
+    if ( level <= _logViewerLevel )
     {
         LogViewer ( tmplogmsg );
     }
     emit(LoggingReceived());
-    fMutexLock->unlock();
 }
 
 void phosDcsLogging::LogFile ( string logmsg )
@@ -131,7 +130,7 @@ void phosDcsLogging::LogFile ( string logmsg )
     stringstream timestamp;
     stringstream datestamp;
     GetTimeStamp ( timestamp, datestamp );
-    fLogFile << timestamp.str() << ": " << logmsg << endl;
+    _logFile << timestamp.str() << ": " << logmsg << endl;
 }
 
 void phosDcsLogging::LogTerminal ( string logmsg )
@@ -144,13 +143,13 @@ void phosDcsLogging::LogViewer ( string logmsg )
     stringstream timestamp;
     stringstream datestamp;
     GetTimeStamp ( timestamp, datestamp );
-    fLogViewerStringStream << timestamp.str() << ": " << logmsg << endl;
+    _logViewerStringStream << timestamp.str() << ": " << logmsg << endl;
 }
 
 string phosDcsLogging::GetLogViewerString()
 {
-    string tmpstring = fLogViewerStringStream.str();
-    fLogViewerStringStream.str ( " " );
+    string tmpstring = _logViewerStringStream.str();
+    _logViewerStringStream.str ( " " );
     return tmpstring;
 }
 

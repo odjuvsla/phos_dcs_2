@@ -36,10 +36,10 @@ using namespace phosConstants;
 class Module_t
 {
 public:
-  
+
     /** Constructor checks value */
     Module_t(ushort_t id):
-    fModuleId(id)
+            fModuleId(id)
     {
         if (id >= PHOS_MODS)
         {
@@ -51,7 +51,7 @@ public:
         }
         fModuleId = id;
     }
-    
+
     virtual ~Module_t() {}
 
     short getModuleId() {
@@ -72,7 +72,7 @@ class Rcu_t : public Module_t
 public:
     /** Constructor checks value */
     Rcu_t(ushort_t id, short modId) : Module_t(modId),
-    fRcuId(id)
+            fRcuId(id)
     {
         if (id >= RCUS_PER_MODULE)
         {
@@ -102,7 +102,7 @@ class Branch_t : public Rcu_t
 public:
     /** Constructor checks value */
     Branch_t(ushort_t id, short rcuId, short modId) : Rcu_t(rcuId, modId),
-    fBranchId(id)
+            fBranchId(id)
     {
         if (id >= BRANCHES_PER_RCU)
         {
@@ -132,7 +132,7 @@ class Fec_t : public Branch_t
 public:
 
     Fec_t(ushort_t id, ushort_t branch, short rcu, short mod) : Branch_t(branch, rcu, mod),
-    fFecId(id)
+            fFecId(id)
     {
         if (id > CARDS_PER_BRANCH)
         {
@@ -150,11 +150,35 @@ public:
     }
 
 private:
-
+  
     ushort_t fFecId;
 
     /** Default constructor disallowed */
     Fec_t();
+};
+
+class Tru_t : public Fec_t
+{
+public:
+    Tru_t(ushort_t id, short rcu, short mod) : Fec_t(id*(CARDS_PER_BRANCH+2), id, rcu, mod),
+            fTruId(id)
+    {
+        if (id >= TRUS_PER_RCU)
+        {
+            std::stringstream log;
+            log << "TRU number: " << id << " is too high (there are " << TRUS_PER_RCU << " TRUs per RCU, card 0 is TRU), exiting...";
+            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
+            exit(-1);
+        }
+    }
+    ushort_t getTruId() {
+        return fTruId;
+    }
+private:
+
+    ushort_t fTruId;
+
+    Tru_t();
 };
 
 class Chip_t : public Fec_t
@@ -162,7 +186,7 @@ class Chip_t : public Fec_t
 public:
     /** Constructor checks value */
     Chip_t(ushort_t id, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Fec_t(fecId, branchId, rcuId, modId),
-    fChipId(id)
+            fChipId(id)
     {
         if (id > ALTROS_PER_FEE || id == 1)
         {
@@ -193,7 +217,7 @@ class AltroCh_t : public Chip_t
 public:
     /** Constructor checks value */
     AltroCh_t(ushort_t id, ushort_t chipId, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Chip_t(chipId, fecId, branchId, rcuId, modId),
-    fChannelId(id)
+            fChannelId(id)
     {
         if (id > CHANNELS_PER_ALTRO || id == 1)
         {
@@ -219,5 +243,14 @@ private:
     AltroCh_t();
 
 };
-  
+
+struct FeeServer_t
+{
+    std::string fName;
+    int fModId;
+    int fRcuId;
+    int fZ;
+    int fX;
+};
+
 #endif
