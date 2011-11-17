@@ -19,15 +19,70 @@
 */
 
 #include "phosdcsinterface.h"
+#include "phosdcstypes.h"
+#include "rcu.h"
 
-phosDcsInterface::phosDcsInterface()
+using namespace phosDcs;
+
+phosDcsInterface::phosDcsInterface(Rcu_t rcu, QString feeServerName) :
+_rcuId(rcu)
+,_rcu(0)
+,_feeClient(0)
+,_feeServerName(feeServerName)
 {
-
+  _rcu = new phosDcs::rcu(_rcuId);
 }
 
 phosDcsInterface::~phosDcsInterface()
 {
+}
+
+int phosDcsInterface::init()
+{
+  return _rcu->init(_feeServerName);
+}
+
+int phosDcsInterface::turnOnRcu()
+{
+  return _rcu->turnOn();
+}
+
+int phosDcsInterface::turnOnFec(const Fec_t& fec)
+{
 
 }
 
+int phosDcsInterface::turnOnTru(const Tru_t& fec)
+{
 
+}
+
+int phosDcsInterface::turnOffRcu()
+{
+
+}
+
+int phosDcsInterface::turnOffFec(const Fec_t& fec)
+{
+
+}
+
+int phosDcsInterface::turnOffTru(const Tru_t& tru)
+{
+
+}
+
+int phosDcsInterface::toggleRcu()
+{
+
+}
+
+int phosDcsInterface::toggleFec(const Fec_t& fec)
+{
+
+}
+
+int phosDcsInterface::toggleTru(const Tru_t& tru)
+{
+
+}
