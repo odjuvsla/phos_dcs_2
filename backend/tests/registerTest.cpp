@@ -27,9 +27,10 @@ using namespace std;
 int main()
 {
   Register* reg = new ACTFECLIST(0x1234);
+  assert( 0x5100 == ACTFECLIST::Address );
   assert( ACTFECLIST::Address == reg->GetAddress() );
   assert( ACTFECLIST::Access  == reg->GetAccess() );
-  assert( RegisterTraits::RCU  == reg->GetType() );
+  assert( Register::RCU  == reg->GetType() );
   assert( 0x1234 == reg->GetValue() );
   
   reg->SetValue(0x4321);

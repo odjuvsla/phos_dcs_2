@@ -30,21 +30,22 @@
 class ACTFECLIST : public Register
 {
 public:
-    ACTFECLIST(RegisterTraits::Value value) : _bits(value) {;}
+    ACTFECLIST(Register::Value value) : _bits(value) {;}
     virtual ~ACTFECLIST() {;}
   
-    RegisterTraits::Access GetAccess() const {return Access;}
-    RegisterTraits::Address GetAddress() const {return Address;}
-    RegisterTraits::Type GetType() const {return Type;}
-    RegisterTraits::Value GetValue() const {return _bits.to_ulong();}
-    void SetValue(RegisterTraits::Value value) {_bits = value;}
+    // Register members:
+    Register::Access GetAccess() const {return Access;}
+    Register::Address GetAddress() const {return Address;}
+    Register::Type GetType() const {return Type;}
+    Register::Value GetValue() const {return _bits.to_ulong();}
+    void SetValue(Register::Value value) {_bits = value;}
     
+    // ACTFECLIST specific parameters
+    static const Register::Access Access = Register::RW;
+    static const Register::Address Address = 0x5100;
+    static const Register::Type Type = Register::RCU;
     
-    static const RegisterTraits::Access Access = RegisterTraits::RW;
-    static const RegisterTraits::Address Address = 0x5100;
-    static const RegisterTraits::Type Type = RegisterTraits::RCU;
-    
-    // ACTFECLIST specifics:
+    // ACTFECLIST specific members:
     bool IsFECActive(int branch, int index);
     bool SetFECActive(int branch, int index, bool value = true);
     

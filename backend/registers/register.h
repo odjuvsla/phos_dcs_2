@@ -25,24 +25,25 @@
 #define REGISTER_H
 #include <sys/types.h>
 
-namespace RegisterTraits {
- enum Access { R=4, RW=6};
- enum Type { ALTRO, BC, RCU, TRU};
- typedef int16_t Address;
- typedef int32_t Value;
-}
-
 class Register
 {
   public:
     virtual ~Register() {;}
     
-    virtual RegisterTraits::Access GetAccess() const = 0;
-    virtual RegisterTraits::Address GetAddress() const = 0;
-    virtual RegisterTraits::Type GetType() const = 0;
-    virtual RegisterTraits::Value GetValue() const = 0;
-    virtual void SetValue(RegisterTraits::Value value) = 0;
-        
+    // Register namespace types
+    enum Access { R=4, RW=6};
+    enum Type { ALTRO, BC, RCU, TRU};
+    typedef int16_t Address;
+    typedef int32_t Value;
+    
+    // Register Interface:
+    virtual Register::Access GetAccess() const = 0;
+    virtual Register::Address GetAddress() const = 0;
+    virtual Register::Type GetType() const = 0;
+    virtual Register::Value GetValue() const = 0;
+    virtual void SetValue(Register::Value value) = 0;
+    
+    
 };
 
 #endif // REGISTER_H
