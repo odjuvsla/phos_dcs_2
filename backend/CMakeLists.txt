@@ -9,7 +9,7 @@ set(phosDcsBackend_SRCS registers/actfeclist.cpp registers/register.cpp fec.cpp 
 qt4_automoc(${phosDcsBackend_SRCS})
 add_library(PhosDcsBackend ${phosDcsBackend_SRCS})
 
-target_link_libraries(PhosDcsBackend ${FEELIB} ${DIMLIB} PhosDcsLogging ${QT_QTCORE_LIBRARY} )
+target_link_libraries(PhosDcsBackend ${FEELIB} ${DIMLIB} PhosDcsLogging PiLogger ${QT_QTCORE_LIBRARY} )
 
 add_subdirectory(registermaps)
 include_directories(registermaps)

@@ -21,6 +21,7 @@
 #include "phosdcsclient.h"
 #include "binarycompiler.h"
 #include "../logger/phosdcslogging.h"
+#include "../pilogger/backend/pilogger.h"
 #include <sstream>
 #include <cstdio>
 #include <QMutex>
@@ -45,7 +46,8 @@ int phosDcsClient::writeRcuRegister(Register_t* reg)
     {
 	std::stringstream log;
 	log << hex << "Writing RCU register: 0x" << reg->GetRegisterAddress() << " with value: 0x" << reg->GetRegisterValue() << dec;
-        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
+	PIDEBUG("%s", log.str().c_str());
+//        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	
@@ -66,7 +68,8 @@ int phosDcsClient::writeFecRegister(Register_t* reg, AltroCh_t* ch)
     {
         std::stringstream log;
         log << "ALTRO channel: " << ch->getChId() << ", chip: " << ch->getChipId() << ", FEC: " << ch->getFecId() << ", branch: " << ch->getBranchId();
-        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
+	PIDEBUG("%s", log.str().c_str());
+        //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 	return 0;
     }
     return -1;
@@ -84,7 +87,8 @@ int phosDcsClient::readRcuRegister(Register_t* reg)
     {
 	std::stringstream log;
 	log << hex << "Reading RCU register: 0x" << reg->GetRegisterAddress() << dec;
-        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
+	PIDEBUG("%s", log.str().c_str());
+        //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	
@@ -107,7 +111,8 @@ QMutexLocker locker(_mutex);
     {
 	std::stringstream log;
 	log << hex << "Reading BC register: 0x" << reg->GetRegisterAddress() << dec;
-        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
+	PIDEBUG("%s", log.str().c_str());
+        //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	vector<uint_t> regAdds;
@@ -151,7 +156,8 @@ int phosDcsClient::executeBinary(const vector<uint_t> & binData, vector<uint_t> 
 
       log.str ( "" );
       log << "PhosFeeClient::ExecuteBinary result data[" << i << "] = 0x" << hex << data[i] << dec;
-      phosDcsLogging::Instance()->Logging ( log.str(), LOG_LEVEL_EXTREME_VERBOSE, __FILE__, __LINE__ );
+      PIDEBUG("%s", log.str().c_str());
+      //phosDcsLogging::Instance()->Logging ( log.str(), LOG_LEVEL_EXTREME_VERBOSE, __FILE__, __LINE__ );
 
       resultBuffer.push_back ( data[i] );
     }
