@@ -5,7 +5,7 @@ cmake_minimum_required( VERSION 2.6 )
 find_package ( Qt4 REQUIRED )
 include ( ${QT_USE_FILE} )
 
-include_directories (
+include_directories (SYSTEM
 		      ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
 		    )
 
