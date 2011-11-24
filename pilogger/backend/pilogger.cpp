@@ -35,7 +35,8 @@ PiLogger* PiLogger::getInstance()
   }
   if(!instance)
   {
-    QTextStream(stderr) << "Cannot create instance of logger!\n";
+    QTextStream(stderr) << "Cannot create instance of logger! Exiting...\n";
+    exit(-1);
 
   }
   return instance;
