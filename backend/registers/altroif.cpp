@@ -30,7 +30,6 @@ int ALTROIF::GetCSTBDelay() const
  * This is the delay between the assertion of “cstb” and altro bus to avoid any possibility of glitch on hand shake
  * signals due to 40 bit ALTRO bus driving.
  */
-
   return Register::ReadValue<14,15>(fBits);
 }
 
@@ -63,7 +62,6 @@ void ALTROIF::SetIECS(const std::bitset<2>& value)
  * “10”:= Contents of Instruction Memory will be checked against PHOS instruction set.
  * “11”:= Contents of Instruction Memory will be checked against FMD instruction set
  */
-
   Register::InsertValue<16>(fBits, value);
 }
 
@@ -99,7 +97,6 @@ void ALTROIF::SetNSamples(const std::bitset< 10 >& value)
 {
   // Nr. Samples / channel ≡ [9:0]
   Register::InsertValue<0>(fBits, value);
-
 }
 
 
