@@ -5,7 +5,7 @@ include_directories(${FEECLIENT}/include)
 find_library(FEELIB FeeClient ${FEECLIENT}/lib)
 find_library(DIMLIB dim ${FEECLIENT}/lib)
 
-set(phosDcsBackend_SRCS registers/trgconf.cpp registers/altroif.cpp registers/actfeclist.cpp registers/register.cpp fec.cpp rcu.cpp phosdcsinterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp instructionmaker.cpp)
+set(phosDcsBackend_SRCS registers/rdomod.cpp registers/trgconf.cpp registers/altroif.cpp registers/actfeclist.cpp registers/register.cpp fec.cpp rcu.cpp phosdcsinterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp instructionmaker.cpp)
 qt4_automoc(${phosDcsBackend_SRCS})
 add_library(PhosDcsBackend ${phosDcsBackend_SRCS})
 
