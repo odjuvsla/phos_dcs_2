@@ -31,9 +31,9 @@
 bool ACTFECLIST::IsFECActive(int branch, int index)
 {
   if( branch ) // if branch B:
-    return _bits[16+index];
+    return fBits[16+index];
   else // if branch A:
-    return _bits[index];
+    return fBits[index];
 }
 
 
@@ -46,9 +46,9 @@ bool ACTFECLIST::SetFECActive(int branch, int index, bool value)
 {
   
   if( branch ) // if branch B:
-    return _bits[16+index] = value;
+    return fBits[16+index] = value;
   else // if branch A:
-    return _bits[index] = value;
+    return fBits[index] = value;
 
 }
 

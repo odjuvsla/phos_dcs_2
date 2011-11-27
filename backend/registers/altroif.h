@@ -3,7 +3,7 @@
     the PHOS detector at the ALICE Experiment
 
     Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
-                        Henrik Qvigstad <henrik.qvigstad@cern.com>
+                                       Henrik Qvigstad <henrik.qvigstad@cern.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -21,42 +21,53 @@
 */
 
 
-#ifndef ACTFECLIST_H
-#define ACTFECLIST_H
+#ifndef ALTROIF_H
+#define ALTROIF_H
 
-#include "register.h"
+#include <register.h>
 #include <bitset>
 
-class ACTFECLIST : public Register
+class ALTROIF : public Register
 {
 public:
-  ACTFECLIST(Register::Value value) : fBits(value) {;}
-  ACTFECLIST(const ACTFECLIST& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~ACTFECLIST() {;}
+  ALTROIF(Register::Value value) : fBits(value) {;}
+  ALTROIF(const ALTROIF& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~ALTROIF() {;}
 
-  const ACTFECLIST& operator= (const ACTFECLIST& other) {        fBits = other.fBits; return *this;}
-  bool operator== (const ACTFECLIST& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const ALTROIF& operator= (const ALTROIF& other) {        fBits = other.fBits; return *this;}
+  bool operator== (const ALTROIF& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<32>& GetBits() const {return fBits;}
+  const std::bitset<18>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {        fBits = value;}
-  void SetBits(const std::bitset<32>& bits) {        fBits = bits;}
+  void SetBits(const std::bitset<18>& bits) {        fBits = bits;}
 
-  // ACTFECLIST specific parameters
+  // ALTROIF specific parameters
   static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5100;
+  static const Register::Address Address = 0x5101;
   static const Register::Type Type = Register::RCU;
 
-  // ACTFECLIST specific members:
-  bool IsFECActive(int branch, int index);
-  bool SetFECActive(int branch, int index, bool value = true);
+
+  // ALTROIF specific members:
+  int GetCSTBDelay() const; // CSTB programmable Delay
+  void SetCSTBDelay(const std::bitset< 2 >& value );
+
+  int GetIECS() const; // Instruction Error Check Selection
+  void SetIECS(const std::bitset<2>& value);
+
+  int GetSCDR() const; // Sampeling Clock Dividing Ratio
+  void SetSCDR(const std::bitset<4>& value); // in practice 2 bits
+
+  int GetNSamples() const;
+  void SetNSamples(const std::bitset<10>& value);
+
 
 private:
-  std::bitset<32> fBits;
+  std::bitset<18> fBits;
 };
 
-#endif // ACTFECLIST_H
+#endif // ALTROIF_H

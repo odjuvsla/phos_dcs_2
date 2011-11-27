@@ -21,21 +21,49 @@
 */
 
 #include "actfeclist.h"
-#include <cassert>
+#include <iostream>
+#include <stdlib.h>
+#include <bitset>
 using namespace std;
+
+void assert(bool val, const char* mes = "")
+{
+  if( ! val )
+  {
+    cout <<"error motherfucker: " <<  mes << endl;
+    exit(1);
+  }
+}
 
 int main()
 {
+
   Register* reg = new ACTFECLIST(0x1234);
   assert( 0x5100 == ACTFECLIST::Address );
   assert( ACTFECLIST::Address == reg->GetAddress() );
   assert( ACTFECLIST::Access  == reg->GetAccess() );
   assert( Register::RCU  == reg->GetType() );
   assert( 0x1234 == reg->GetValue() );
-  
+
   reg->SetValue(0x4321);
   assert( 0x4321 == reg->GetValue() );
-  
-  
+
+  // testing ReadValue & InsertValue
+  bitset<18> bits(string("1110111"));
+  bitset<3> stripped = Register::ReadValue<2,4>(bits);
+  assert( stripped == bitset<3>(string("101")) );
+
+  bitset<18> bits2(string("0010100"));
+  bitset<3> stripped2 = Register::ReadValue<2,4>(bits2);
+  assert( stripped2 == bitset<3>(string("101")) );
+
+  bitset<3> insert(string("010"));
+  bitset<18> inserted = Register::InsertValue<2>(bits, insert);
+  assert( inserted.to_ulong() == bitset<7>(string("1101011")).to_ulong());
+
+  bitset<3> insert2(string("111"));
+  bitset<18> inserted2 = Register::InsertValue<2>(bits2, insert2);
+  assert( inserted2.to_ulong() == bitset<7>(string("0011100")).to_ulong());
+
   return 0;
 }
