@@ -24,7 +24,7 @@
 #include "altroif.h"
 #include "assert.h"
 
-int ALTROIF::GetCSTBDelay() const
+unsigned long ALTROIF::GetCSTBDelay() const
 {
 /* CSTB programmable delay, [0,3].
  * This is the delay between the assertion of “cstb” and altro bus to avoid any possibility of glitch on hand shake
@@ -43,7 +43,7 @@ void ALTROIF::SetCSTBDelay(const std::bitset< 2 >& value)
   Register::InsertValue<14>(fBits, value);
 }
 
-int ALTROIF::GetIECS() const
+unsigned long ALTROIF::GetIECS() const
 {
 /* Instruction error check selection ≡ [17:16]
  * “00”:= Contents of Instruction memory are not Checked
@@ -65,7 +65,7 @@ void ALTROIF::SetIECS(const std::bitset<2>& value)
   Register::InsertValue<16>(fBits, value);
 }
 
-int ALTROIF::GetSCDR() const
+unsigned long ALTROIF::GetSCDR() const
 {
 /* Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
  * “00”:= divide by 2; Period of sampling clock = 50nsec
@@ -87,7 +87,7 @@ void ALTROIF::SetSCDR(const std::bitset<4>& value)
   Register::InsertValue<10>(fBits, value);
 }
 
-int ALTROIF::GetNSamples() const
+unsigned long ALTROIF::GetNSamples() const
 {
   // Nr. Samples / channel ≡ [9:0]
   return Register::ReadValue<0,9>(fBits);

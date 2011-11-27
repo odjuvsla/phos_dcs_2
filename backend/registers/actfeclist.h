@@ -52,8 +52,8 @@ public:
   static const Register::Type Type = Register::RCU;
 
   // ACTFECLIST specific members:
-  bool IsFECActive(int branch, int index);
-  bool SetFECActive(int branch, int index, bool value = true);
+  bool IsFECActive(size_t branch, size_t index) const;
+  void SetFECActive(size_t branch, size_t index, bool value = true);
 
 private:
   std::bitset<32> fBits;

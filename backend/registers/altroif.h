@@ -53,16 +53,16 @@ public:
 
 
   // ALTROIF specific members:
-  int GetCSTBDelay() const; // CSTB programmable Delay
+  unsigned long GetCSTBDelay() const; // CSTB programmable Delay
   void SetCSTBDelay(const std::bitset< 2 >& value );
 
-  int GetIECS() const; // Instruction Error Check Selection
+  unsigned long GetIECS() const; // Instruction Error Check Selection
   void SetIECS(const std::bitset<2>& value);
 
-  int GetSCDR() const; // Sampeling Clock Dividing Ratio
+  unsigned long GetSCDR() const; // Sampeling Clock Dividing Ratio
   void SetSCDR(const std::bitset<4>& value); // in practice 2 bits
 
-  int GetNSamples() const;
+  unsigned long GetNSamples() const;
   void SetNSamples(const std::bitset<10>& value);
 
 

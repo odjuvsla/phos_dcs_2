@@ -28,7 +28,7 @@
  * @param index [0,13], TODO: Figure out the indexing
  * @param value value of bit, true equals on.
  */
-bool ACTFECLIST::IsFECActive(int branch, int index)
+bool ACTFECLIST::IsFECActive(unsigned long branch, unsigned long index) const
 {
   if( branch ) // if branch B:
     return fBits[16+index];
@@ -42,13 +42,13 @@ bool ACTFECLIST::IsFECActive(int branch, int index)
  * @param index [0,13], TODO: Figure out the indexing
  * @param value value of bit, true equals on.
  */
-bool ACTFECLIST::SetFECActive(int branch, int index, bool value)
+void ACTFECLIST::SetFECActive(unsigned long branch, unsigned long index, bool value)
 {
   
   if( branch ) // if branch B:
-    return fBits[16+index] = value;
+    fBits[16+index] = value;
   else // if branch A:
-    return fBits[index] = value;
+    fBits[index] = value;
 
 }
 
