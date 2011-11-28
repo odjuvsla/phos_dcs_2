@@ -39,7 +39,7 @@ private:
   
   
   /** Prohibited */
-    moduleTabs();
+    //moduleTabs();
     moduleTabs(const moduleTabs& other);
     moduleTabs& operator=(const moduleTabs& other);
     bool operator==(const moduleTabs& other) const;

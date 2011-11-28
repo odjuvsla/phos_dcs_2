@@ -37,6 +37,10 @@ int LogElement::getId() const{ return this->id; }
 QDateTime LogElement::getDateTime() const{ return this->dateTime; }
 QString LogElement::getText() const{ return this->text; }
 const LogState LogElement::getState() const{ return this->state; }
+QString LogElement::getFilename() const{ return this->filename; }
+int LogElement::getLineNumber() const{ return this->lineNumber; }
+
+
 
 // = operator
 LogElement& LogElement::operator=(const LogElement &obj){

@@ -35,6 +35,8 @@
 #include <qdebug.h>
 #include "widgets/module.h"
 #include "widgets/moduleTabs.h"
+#include "../pilogger/gui/logviewer.h"
+#include "../pilogger/backend/pilogger.h"
 #include <QVBoxLayout>
 //#pragma GCC diagnostic pop
 
@@ -59,7 +61,7 @@ void phosGui::init()
 
 void phosGui::setupWidgets()
 {
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  QVBoxLayout *mainLayout = new QVBoxLayout;
 //  setupTabs();
 //  setCentralWidget(_tabWidget);
  
@@ -67,12 +69,19 @@ void phosGui::setupWidgets()
   //module *mod0 = new module(module0, this);
   //mod0->setGeometry(10, menuBar()->y() + menuBar()->height());
   
-  moduleTabs *tabs = new moduleTabs(this);
-  setCentralWidget(tabs);
+  moduleTabs *tabs = new moduleTabs();
+ // setCentralWidget(tabs);
 
+  _logViewer = new LogViewer();
+  
 //  QVBoxLayout *tabsLayout = new QVBoxLayout(tabsLayout);
   mainLayout->addWidget(tabs);
-  mainLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
+  mainLayout->addWidget(_logViewer);
+  
+//  mainLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
+  
+  this->setLayout(mainLayout);
+  
   
   //Rcu_t rcu0(0, 0);
   //rcu *r0 = new rcu(rcu0, this);
@@ -84,7 +93,8 @@ void phosGui::setupConnections()
 {
   connect(phosDcsLogging::Instance(), SIGNAL(LoggingReceived()), this, SLOT(log()));
   phosDcsLogging::Instance()->Logging ( std::string ( "Connected..." ), LOG_LEVEL_INFO );
-
+  connect ( PiLogger::getInstance(), SIGNAL ( newLog ( LogElement ) ), _logViewer, SLOT ( addElement ( LogElement ) ) );
+  PIERROR("Starting Logger...");
 }
 
 void phosGui::setupMenuBar()

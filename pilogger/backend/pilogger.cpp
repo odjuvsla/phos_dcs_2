@@ -35,8 +35,7 @@ PiLogger* PiLogger::getInstance()
   }
   if(!instance)
   {
-    QTextStream(stderr) << "Cannot create instance of logger! Exiting...\n";
-    exit(-1);
+    QTextStream(stderr) << "Cannot create instance of logger!\n";
 
   }
   return instance;
@@ -110,7 +109,6 @@ quint16 PiLogger::setLogMinLevel(const LogState &state, quint16 &value)
     {
       value = value|(0x1<<(i-1));
     }
-    
   }
   return value;
 }

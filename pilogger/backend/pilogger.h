@@ -17,58 +17,58 @@
 #define LOGFATAL	1
 
 // Please do not call this, but use the macros for the specific log levels
-#define PIDOLOG(state, text, args...) { 									\
-					QString s; 								\
-					s.sprintf(text, ## args);						\
-					PiLogger::getInstance()->logging(s, state, __FILE__, __LINE__);		\
+#define PIDOLOG(state, text, args...) { 										\
+					QString s; 									\
+					s.sprintf(text, ## args);\
+					PiLogger::getInstance()->logging(s, state, __FILE__, __LINE__);	\
 				      }
 				      
-#define PIDEBUG(text, args...) {										\
-				  if(LOGDEBUG) {								\
-				    PIDOLOG(LogState::DEBUG, text, ## args);					\
-				  }										\
+#define PIDEBUG(text, args...) {											\
+				  if(LOGDEBUG) {									\
+				    PIDOLOG(LogState::DEBUG, text, ## args);						\
+				  }											\
 				}
 
-#define PIINFO(text, args...) {											\
-				  if(LOGINFO) {									\
-				    PIDOLOG(LogState::INFORMATION, text, ## args);				\
-				  }										\
+#define PIINFO(text, args...) {												\
+				  if(LOGINFO) {										\
+				    PIDOLOG(LogState::INFORMATION, text, ## args);					\
+				  }											\
 				}
 
-#define PINORMAL(text, args...) {										\
-				  if(LOGNORMAL) {								\
-				    PIDOLOG(LogState::NORMAL, text, ## args);					\
-				  }										\
+#define PINORMAL(text, args...) {											\
+				  if(LOGNORMAL) {									\
+				    PIDOLOG(LogState::NORMAL, text, ## args);						\
+				  }											\
 				}
 
-#define PISUCCESS(text, args...) {										\
-				  if(LOGSUCCESS) {								\
-				    PIDOLOG(LogState::SUCCESS, text, ## args);					\
-				  }										\
+#define PISUCCESS(text, args...) {											\
+				  if(LOGSUCCESS) {									\
+				    PIDOLOG(LogState::SUCCESS, text, ## args);						\
+				  }											\
 				}
 
-#define PIWARNING(text, args...) {										\
-				  if(LOGWARNING) {								\
-				    PIDOLOG(LogState::WARNING, text, ## args);					\
-				  }										\
+#define PIWARNING(text, args...) {											\
+				  if(LOGWARNING) {									\
+				    PIDOLOG(LogState::WARNING, text, ## args);						\
+				  }											\
 				}
 
-#define PIERROR(text, args...) {										\
-				  if(LOGERROR) {								\
-				    PIDOLOG(LogState::ERROR, text, ## args);					\
-				  }										\
+#define PIERROR(text, args...) {											\
+				  if(LOGERROR) {									\
+				    PIDOLOG(LogState::ERROR, text, ## args);						\
+				  }											\
 				}
 
-#define PICRIT(text, args...) {											\
-				  if(LOGCRITICAL) {								\
-				    PIDOLOG(LogState::CRITICAL, text, ## args);					\
-				  }										\
+#define PICRIT(text, args...) {												\
+				  if(LOGCRITICAL) {									\
+				    PIDOLOG(LogState::CRITICAL, text, ## args);						\
+				  }											\
 				}
 
-#define PIFATAL(text, args...) {										\
-				  if(LOGFATAL) {								\
-				    PIDOLOG(LogState::FATAL, text, ## args);					\
-				  }										\
+#define PIFATAL(text, args...) {											\
+				  if(LOGFATAL) {									\
+				    PIDOLOG(LogState::FATAL, text, ## args);						\
+				  }											\
 				}
 
 
