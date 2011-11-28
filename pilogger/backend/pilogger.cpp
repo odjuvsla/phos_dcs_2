@@ -109,7 +109,6 @@ quint16 PiLogger::setLogMinLevel(const LogState &state, quint16 &value)
     {
       value = value|(0x1<<(i-1));
     }
-    
   }
   return value;
 }

@@ -24,6 +24,7 @@
 #include <QtGui/QMainWindow>
 
 class QTabWidget;
+class LogViewer;
 
 class phosGui : public QMainWindow
 {
@@ -60,7 +61,9 @@ private:
   
   /** Tab widget */
   QTabWidget *_tabWidget;
-    
+
+  LogViewer *_logViewer;
+
   phosGui(const phosGui& );
   phosGui operator=(const phosGui&);
   

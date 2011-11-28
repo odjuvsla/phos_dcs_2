@@ -1,7 +1,7 @@
 
 
 set(FEECLIENT $ENV{FEECLIENT})
-include_directories(${FEECLIENT}/include)
+include_directories(SYSTEM ${FEECLIENT}/include)
 find_library(FEELIB FeeClient ${FEECLIENT}/lib)
 find_library(DIMLIB dim ${FEECLIENT}/lib)
 

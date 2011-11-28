@@ -18,10 +18,12 @@ void LogViewer::setupSignals(){
 void LogViewer::initializeLog(){
     rowCount = 0;
     showState = 0;
-    this->setColumnCount(3);
+    this->setColumnCount(4);
     this->setHorizontalHeaderItem(0, new QTableWidgetItem("Level"));
     this->setHorizontalHeaderItem(1, new QTableWidgetItem("Time"));
     this->setHorizontalHeaderItem(2, new QTableWidgetItem("Subject"));
+    this->setHorizontalHeaderItem(3, new QTableWidgetItem("File"));
+    this->setColumnWidth(2, 800);
     this->horizontalHeaderItem(1)->setTextAlignment(Qt::AlignLeft);
     this->horizontalHeader()->setVisible(true);
     this->verticalHeader()->setVisible(false);
@@ -56,12 +58,35 @@ bool LogViewer::addElement(const LogElement &element){
     
     QTableWidgetItem* levelItem = new QTableWidgetItem(element.getState().name);
 
+    QString lineNo;
+    lineNo.sprintf("%d", element.getLineNumber());
+    QTableWidgetItem* fileItem = new QTableWidgetItem(element.getFilename()+":" + lineNo) ;
+
     /*dateTimeItem->setFont(QFont("Arial", 10));
     textItem->setFont(QFont("Arial", 10));*/
-    if(element.getState() == LogState::WARNING) textItem->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxWarning));
+    if(element.getState() == LogState::WARNING) 
+    {
+       textItem->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxWarning));
+       
+    }
+    if(element.getState() == LogState::ERROR) 
+    {
+      levelItem->setBackgroundColor(Qt::yellow);
+      textItem->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxWarning));
+    }
+    if(element.getState() == LogState::FATAL) 
+    {
+      levelItem->setBackgroundColor(Qt::red);
+      textItem->setIcon(this->style()->standardIcon(QStyle::SP_MessageBoxCritical));
+    }
+    
     textItem->setTextColor(colors[element.getState().id]);
-    this->setItem(rowCount, 0, dateTimeItem);
-    this->setItem(rowCount, 1, textItem);
+
+    this->setItem(rowCount, 0, levelItem);
+    this->setItem(rowCount, 1, dateTimeItem);
+    this->setItem(rowCount, 2, textItem);
+    this->setItem(rowCount, 3, fileItem);
+    
     allElements.append(element);
     rowCount++;
     return true;
