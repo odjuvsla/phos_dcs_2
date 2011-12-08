@@ -83,7 +83,7 @@ QTextStream& operator<<(QTextStream& out, const LogElement& obj)
 	out << " : ";
 	QString format("yyyy-MM-dd : hh:mm:ss");
 	out << obj.dateTime.toString(format);
-	out << " : Message: ";
+	out << " : ";//Message: ";
         out << obj.text;
 	if(obj.filename != "") 
 	{
