@@ -81,7 +81,7 @@ public slots:
     int applyReadoutSettings(const ReadoutSettings_t &readoutSettings ) const;
     
     /** Read an  RCU register */
-    int readRegister(Register_t *r) {}
+    int readRegister(Register_t *r) const;
     
 private:
 

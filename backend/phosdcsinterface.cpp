@@ -21,6 +21,8 @@
 #include "phosdcsinterface.h"
 #include "phosdcstypes.h"
 #include "rcu.h"
+#include "../pilogger/backend/pilogger.h"
+
 
 using namespace phosDcs;
 
@@ -85,4 +87,13 @@ int phosDcsInterface::toggleFec(const Fec_t& fec)
 int phosDcsInterface::toggleTru(const Tru_t& tru)
 {
 
+}
+
+int phosDcsInterface::readRegister(Register_t* r) const
+{
+  if(_rcu)
+  {
+    return _rcu->readRegister(r);
+  }
+  PIFATAL("RCU object not initialized.");
 }

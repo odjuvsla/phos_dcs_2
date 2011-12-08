@@ -19,6 +19,8 @@
 */
 
 #include "rcu.h"
+#include "../pilogger/backend/pilogger.h"
+
 using namespace phosDcs;
 
 
@@ -140,4 +142,14 @@ void rcu::turnOnTrus::run()
   usleep(500000);
   actList.GetRegisterBits().set(TRU_B);
   _client->writeRcuRegister(&actList);
+}
+
+int rcu::readRegister(Register_t* reg) const
+{
+  if(_feeClient)
+  {
+    return _feeClient->readRcuRegister(reg);
+  }
+  PIFATAL("RCU object not initialized.");
+  return -1;
 }

@@ -43,6 +43,9 @@ public:
     /** Turn on the RCU */
     int turnOff() { turnOn(false); }
     
+    /** Read a register */
+    int readRegister(Register_t *reg) const;
+    
 signals:
   
     void cardChangedState(phosDcs::fec card, int state);
