@@ -10,5 +10,6 @@
 #include <rcuid.h>
 #include <rdomod.h>
 #include <trgconf.h>
+#include <fecerra.h>
 
 #endif
