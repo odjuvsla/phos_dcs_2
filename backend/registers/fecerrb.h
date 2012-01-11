@@ -21,21 +21,21 @@
 */
 
 
-#ifndef FECERRA_H
-#define FECERRA_H
+#ifndef FECERRB_H
+#define FECERRB_H
 
 #include <register.h>
 
 
-class FECERRA : public Register
+class FECERRB : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
-  FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~FECERRA() {;}
+  FECERRB(Register::Value value) : fBits(value) {;}
+  FECERRB(const FECERRB& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~FECERRB() {;}
 
-  const FECERRA& operator= (const FECERRA& other) {fBits = other.fBits; return* this;}
-  bool operator== (const FECERRA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const FECERRB& operator= (const FECERRB& other) {fBits = other.fBits; return* this;}
+  bool operator== (const FECERRB& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
@@ -46,19 +46,16 @@ public:
   void SetValue(Register::Value value) {fBits = value;}
   void SetBits(const std::bitset<20>& bits) {fBits = bits;}
 
-  // FECERRA specific parameters
+  // FECERRB specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5110;
+  static const Register::Address Address = 0x5111;
   static const Register::Type Type = Register::RCU;
 
-  // FECERRA specific members:
-  unsigned long GetAltroError() const;
-  void SetAltroError(std::bitset<1> value);
+  // FECERRB specific members:
   // TODO: implement FECERRB specific members
-  
 
 private:
   std::bitset<20> fBits;
 };
 
-#endif // FECERRA_H
+#endif // FECERRB_H

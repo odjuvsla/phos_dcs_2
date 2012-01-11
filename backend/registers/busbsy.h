@@ -21,44 +21,41 @@
 */
 
 
-#ifndef FECERRA_H
-#define FECERRA_H
+#ifndef BUSBSY_H
+#define BUSBSY_H
 
 #include <register.h>
 
 
-class FECERRA : public Register
+class BUSBSY : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
-  FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~FECERRA() {;}
+  BUSBSY(Register::Value value) : fBits(value) {;}
+  BUSBSY(const BUSBSY& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~BUSBSY() {;}
 
-  const FECERRA& operator= (const FECERRA& other) {fBits = other.fBits; return* this;}
-  bool operator== (const FECERRA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const BUSBSY& operator= (const BUSBSY& other) {fBits = other.fBits; return* this;}
+  bool operator== (const BUSBSY& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<20>& GetBits() const {return fBits;}
+  const std::bitset<2>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<20>& bits) {fBits = bits;}
+  void SetBits(const std::bitset<2>& bits) {fBits = bits;}
 
-  // FECERRA specific parameters
+  // BUSBSY specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5110;
+  static const Register::Address Address = 0x5116;
   static const Register::Type Type = Register::RCU;
 
-  // FECERRA specific members:
-  unsigned long GetAltroError() const;
-  void SetAltroError(std::bitset<1> value);
-  // TODO: implement FECERRB specific members
-  
+  // BUSBSY specific members:
+  // TODO: implement BUSBSY specific members
 
 private:
-  std::bitset<20> fBits;
+  std::bitset<2> fBits;
 };
 
-#endif // FECERRA_H
+#endif // BUSBSY_H

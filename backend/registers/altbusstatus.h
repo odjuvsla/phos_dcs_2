@@ -21,44 +21,41 @@
 */
 
 
-#ifndef FECERRA_H
-#define FECERRA_H
+#ifndef ALTBUSSTATUS_H
+#define ALTBUSSTATUS_H
 
 #include <register.h>
 
 
-class FECERRA : public Register
+class ALTBUSSTATUS : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
-  FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~FECERRA() {;}
+  ALTBUSSTATUS(Register::Value value) : fBits(value) {;}
+  ALTBUSSTATUS(const ALTBUSSTATUS& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~ALTBUSSTATUS() {;}
 
-  const FECERRA& operator= (const FECERRA& other) {fBits = other.fBits; return* this;}
-  bool operator== (const FECERRA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const ALTBUSSTATUS& operator= (const ALTBUSSTATUS& other) {fBits = other.fBits; return* this;}
+  bool operator== (const ALTBUSSTATUS& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<20>& GetBits() const {return fBits;}
+  const std::bitset<8>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<20>& bits) {fBits = bits;}
+  void SetBits(const std::bitset<8>& bits) {fBits = bits;}
 
-  // FECERRA specific parameters
+  // ALTBUSSTATUS specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5110;
+  static const Register::Address Address = 0x5114;
   static const Register::Type Type = Register::RCU;
 
-  // FECERRA specific members:
-  unsigned long GetAltroError() const;
-  void SetAltroError(std::bitset<1> value);
-  // TODO: implement FECERRB specific members
-  
+  // ALTBUSSTATUS specific members:
+  // TODO: implement ALTBUSSTATUS specific members
 
 private:
-  std::bitset<20> fBits;
+  std::bitset<8> fBits;
 };
 
-#endif // FECERRA_H
+#endif // ALTBUSSTATUS_H

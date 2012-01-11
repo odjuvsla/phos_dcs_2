@@ -21,21 +21,21 @@
 */
 
 
-#ifndef FECERRA_H
-#define FECERRA_H
+#ifndef TTCL2_RCNT_H
+#define TTCL2_RCNT_H
 
 #include <register.h>
 
 
-class FECERRA : public Register
+class TTCL2_RCNT : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
-  FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~FECERRA() {;}
+  TTCL2_RCNT(Register::Value value) : fBits(value) {;}
+  TTCL2_RCNT(const TTCL2_RCNT& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~TTCL2_RCNT() {;}
 
-  const FECERRA& operator= (const FECERRA& other) {fBits = other.fBits; return* this;}
-  bool operator== (const FECERRA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const TTCL2_RCNT& operator= (const TTCL2_RCNT& other) {fBits = other.fBits; return* this;}
+  bool operator== (const TTCL2_RCNT& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
@@ -46,19 +46,16 @@ public:
   void SetValue(Register::Value value) {fBits = value;}
   void SetBits(const std::bitset<20>& bits) {fBits = bits;}
 
-  // FECERRA specific parameters
+  // TTCL2_RCNT specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5110;
+  static const Register::Address Address = 0x511f;
   static const Register::Type Type = Register::RCU;
 
-  // FECERRA specific members:
-  unsigned long GetAltroError() const;
-  void SetAltroError(std::bitset<1> value);
-  // TODO: implement FECERRB specific members
-  
+  // TTCL2_RCNT specific members:
+  // TODO: implement TTCL2_RCNT specific members
 
 private:
   std::bitset<20> fBits;
 };
 
-#endif // FECERRA_H
+#endif // TTCL2_RCNT_H

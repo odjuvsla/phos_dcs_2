@@ -21,44 +21,41 @@
 */
 
 
-#ifndef FECERRA_H
-#define FECERRA_H
+#ifndef RDOERR_H
+#define RDOERR_H
 
 #include <register.h>
 
 
-class FECERRA : public Register
+class RDOERR : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
-  FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~FECERRA() {;}
+  RDOERR(Register::Value value) : fBits(value) {;}
+  RDOERR(const RDOERR& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~RDOERR() {;}
 
-  const FECERRA& operator= (const FECERRA& other) {fBits = other.fBits; return* this;}
-  bool operator== (const FECERRA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const RDOERR& operator= (const RDOERR& other) {fBits = other.fBits; return* this;}
+  bool operator== (const RDOERR& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<20>& GetBits() const {return fBits;}
+  const std::bitset<9>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<20>& bits) {fBits = bits;}
+  void SetBits(const std::bitset<9>& bits) {fBits = bits;}
 
-  // FECERRA specific parameters
+  // RDOERR specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5110;
+  static const Register::Address Address = 0x5112;
   static const Register::Type Type = Register::RCU;
 
-  // FECERRA specific members:
-  unsigned long GetAltroError() const;
-  void SetAltroError(std::bitset<1> value);
-  // TODO: implement FECERRB specific members
-  
+  // RDOERR specific members:
+  // TODO: implement RDOERR specific members
 
 private:
-  std::bitset<20> fBits;
+  std::bitset<9> fBits;
 };
 
-#endif // FECERRA_H
+#endif // RDOERR_H
