@@ -1,4 +1,4 @@
-f/*
+/*
     Library for controlling and configuring the electronics for
     the PHOS detector at the ALICE Experiment
 
