@@ -1,4 +1,4 @@
-/*
+f/*
     Library for controlling and configuring the electronics for
     the PHOS detector at the ALICE Experiment
 
@@ -75,9 +75,9 @@ template<size_t from, size_t N, size_t M>
 unsigned long Register::InsertValue(std::bitset<N>& bits, const std::bitset<M>& inserts)
 {
   // inserts @param inserts into @param bits, at @param from
-  // IMPORTANT: defined behavior requires: 64 >= N > from,  N => from+M,.
+  // IMPORTANT: defined behavior requires: 32 >= N > from,  N => from+M,.
 
-  const std::bitset<N> ones(0xFFFFFFFFFFFFFFFF);
+  const std::bitset<N> ones(0xFFFFFFFF);
   const std::bitset<N> wipeset( (ones << from+M)  |  ( ones >> (N-from))); // 0 at insert, 1 elsewere
   const std::bitset<N> insertset( std::bitset<N>(inserts.to_ulong()) << from); // inserts at insert, 0 elsewere
   bits = ( (bits & wipeset) | insertset); // wipe insert, and insert inserts at insert
