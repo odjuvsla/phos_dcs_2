@@ -5,9 +5,17 @@ include_directories(SYSTEM ${FEECLIENT}/include)
 find_library(FEELIB FeeClient ${FEECLIENT}/lib)
 find_library(DIMLIB dim ${FEECLIENT}/lib)
 
-set(phosDcsBackend_SRCS registers/rcuid.cpp registers/bp_version.cpp registers/rcu_version.cpp registers/altrocfg2.cpp registers/altrocfg1.cpp registers/rdomod.cpp registers/trgconf.cpp registers/altroif.cpp registers/actfeclist.cpp registers/register.cpp fec.cpp rcu.cpp phosdcsinterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp instructionmaker.cpp)
-qt4_automoc(${phosDcsBackend_SRCS})
-add_library(PhosDcsBackend ${phosDcsBackend_SRCS})
+set(phosDcsBackend_SRCS registers/rcuid.cpp registers/bp_version.cpp registers/rcu_version.cpp registers/altrocfg2.cpp 
+registers/altrocfg1.cpp registers/rdomod.cpp registers/trgconf.cpp registers/altroif.cpp registers/actfeclist.cpp 
+registers/register.cpp fec.cpp rcu.cpp phosdcsinterface.cpp phosdcsclient.cpp phosregisters.cpp binarycompiler.cpp 
+instructionmaker.cpp)
+
+set(Backend_MOC_HDRS phosdcsinterface.h)
+
+QT4_WRAP_CPP(Backend_MOC_SRCS ${Backend_MOC_HDRS})
+
+#qt4_automoc(${phosDcsBackend_SRCS})
+add_library(PhosDcsBackend ${phosDcsBackend_SRCS} ${Backend_MOC_SRCS})
 
 target_link_libraries(PhosDcsBackend ${FEELIB} ${DIMLIB} PhosDcsLogging PiLogger ${QT_QTCORE_LIBRARY} )
 
