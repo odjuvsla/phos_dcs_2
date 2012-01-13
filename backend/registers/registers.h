@@ -12,4 +12,9 @@
 #include <rcu/trgconf.h>
 #include <rcu/fecerra.h>
 
+#include <rcu/rdomod.h>
+
+
+#include <bc/bcversion.h>
+
 #endif

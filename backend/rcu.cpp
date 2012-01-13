@@ -20,6 +20,7 @@
 
 #include "rcu.h"
 #include "../pilogger/backend/pilogger.h"
+#include <registers.h>
 
 using namespace phosDcs;
 
@@ -68,29 +69,28 @@ int rcu::turnOn(bool on)
 
 void rcu::turnOnFecs::run()
 {
-  RcuACTFECLIST_t actList;
-  
-  actList.GetRegisterBits().reset();
+  ACTFECLIST actList;
   
   std::vector<phosDcs::fec>::iterator it;
   for(it = _branchA->begin(); it < _branchA->end(); ++it)
   {
+    unsigned int fecCardNumber = (*it).getCardNumber(); // card number pr branch
     _client->readRcuRegister(&actList);
-    actList.GetRegisterBits().set((*it).getCardNumber(), _on);
+    //actList.GetRegisterBits().set((*it).getCardNumber(), _on);
+    actList.SetFECActive(0, fecCardNumber); // branch 0/A 
     _client->writeRcuRegister(&actList);
     usleep(500000);
     Fec_t f = (*it).getFecId();
-    BcBCVERSION_t reg;
-    reg.SetByRegisterValue(0);
+    BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 
     int state = FEE_STATE_UNKNOWN;
     
-    if(reg.GetRegisterValue() == PCMVERSION)
+    if(reg.GetValue() == PCMVERSION)
     {
 	state = FEE_STATE_ON;
     }
-    else if(reg.GetRegisterValue() == OLD_PCMVERSION)
+    else if(reg.GetValue() == OLD_PCMVERSION)
     {
       state = FEE_STATE_WARNING;
     }
@@ -101,23 +101,24 @@ void rcu::turnOnFecs::run()
   }
   for(it = _branchB->begin(); it < _branchB->end(); ++it)
   {
+    unsigned int fecCardNumber = (*it).getCardNumber(); // card number pr branch
     _client->readRcuRegister(&actList);
-    actList.GetRegisterBits().set((*it).getCardNumber(), _on);
+    //actList.GetRegisterBits().set((*it).getCardNumber(), _on);
+    actList.SetFECActive(1, fecCardNumber); // branch 0/A
     _client->writeRcuRegister(&actList);
     usleep(500000);
     Fec_t f = (*it).getFecId();
-    BcBCVERSION_t reg;
-    reg.SetByRegisterValue(0);
+    BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 
     int state = FEE_STATE_UNKNOWN;
     
-    if(reg.GetRegisterValue() == PCMVERSION)
+    if(reg.GetValue() == PCMVERSION)
     {
 	state = FEE_STATE_ON;
 	
     }
-    else if(reg.GetRegisterValue() == OLD_PCMVERSION)
+    else if(reg.GetValue() == OLD_PCMVERSION)
     {
       state = FEE_STATE_WARNING;
     }
@@ -132,19 +133,20 @@ void rcu::turnOnFecs::run()
 
 void rcu::turnOnTrus::run()
 {
-  RcuACTFECLIST_t actList;
+  ACTFECLIST actList;
   
-  actList.GetRegisterBits().reset();
   _client->readRcuRegister(&actList);
 
-  actList.GetRegisterBits().set(TRU_A);
+  //actList.GetRegisterBits().set(TRU_A);
+  actList.SetFECActive(BRANCH_A, TRU_SLOT);
   _client->writeRcuRegister(&actList);
   usleep(500000);
-  actList.GetRegisterBits().set(TRU_B);
+  //actList.GetRegisterBits().set(TRU_B);
+  actList.SetFECActive(BRANCH_B, TRU_SLOT); // branch A==0, FECCARD
   _client->writeRcuRegister(&actList);
 }
 
-int rcu::readRegister(Register_t* reg) const
+int rcu::readRegister(Register* reg) const
 {
   if(_feeClient)
   {
