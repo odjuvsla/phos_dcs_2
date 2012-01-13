@@ -31,7 +31,7 @@
 class ALTBSST_TRSF : public Register
 {
 public:
-  ALTBSST_TRSF(Register::Value value) : fBits(value) {;}
+  ALTBSST_TRSF(Register::Value value = 0x0) : fBits(value) {;}
   ALTBSST_TRSF(const ALTBSST_TRSF& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ALTBSST_TRSF() {;}
 

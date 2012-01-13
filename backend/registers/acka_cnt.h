@@ -30,7 +30,7 @@
 class ACKA_CNT : public Register
 {
 public:
-  ACKA_CNT(Register::Value value) : fBits(value) {;}
+  ACKA_CNT(Register::Value value = 0x0) : fBits(value) {;}
   ACKA_CNT(const ACKA_CNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ACKA_CNT() {;}
 

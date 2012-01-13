@@ -30,7 +30,7 @@
 class AUXTRGCNT : public Register
 {
 public:
-  AUXTRGCNT(Register::Value value) : fBits(value) {;}
+  AUXTRGCNT(Register::Value value = 0x0) : fBits(value) {;}
   AUXTRGCNT(const AUXTRGCNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~AUXTRGCNT() {;}
 

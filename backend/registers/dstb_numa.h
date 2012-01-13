@@ -30,7 +30,7 @@
 class DSTB_NUMA : public Register
 {
 public:
-  DSTB_NUMA(Register::Value value) : fBits(value) {;}
+  DSTB_NUMA(Register::Value value = 0x0) : fBits(value) {;}
   DSTB_NUMA(const DSTB_NUMA& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~DSTB_NUMA() {;}
 

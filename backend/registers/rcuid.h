@@ -31,7 +31,7 @@
 class RCUID : public Register
 {
 public:
-  RCUID(Register::Value value) : fBits(value) {;}
+  RCUID(Register::Value value = 0x0) : fBits(value) {;}
   RCUID(const RCUID& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~RCUID() {;}
   

@@ -30,7 +30,7 @@
 class INSSEQPR_ST : public Register
 {
 public:
-  INSSEQPR_ST(Register::Value value) : fBits(value) {;}
+  INSSEQPR_ST(Register::Value value = 0x0) : fBits(value) {;}
   INSSEQPR_ST(const INSSEQPR_ST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~INSSEQPR_ST() {;}
 

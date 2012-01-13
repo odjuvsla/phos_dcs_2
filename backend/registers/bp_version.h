@@ -30,7 +30,7 @@
 class BP_VERSION : public Register
 {
 public:
-  BP_VERSION(Register::Value value) : fBits(value) {;}
+  BP_VERSION(Register::Value value = 0x0) : fBits(value) {;}
   BP_VERSION(const BP_VERSION& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~BP_VERSION() {;}
   

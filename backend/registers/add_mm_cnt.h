@@ -30,7 +30,7 @@
 class ADD_MM_CNT : public Register
 {
 public:
-  ADD_MM_CNT(Register::Value value) : fBits(value) {;}
+  ADD_MM_CNT(Register::Value value = 0x0) : fBits(value) {;}
   ADD_MM_CNT(const ADD_MM_CNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ADD_MM_CNT() {;}
 

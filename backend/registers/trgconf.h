@@ -31,7 +31,7 @@
 class TRGCONF : public Register
 {
 public:
-  TRGCONF(Register::Value value) : fBits(value) {;}
+  TRGCONF(Register::Value value = 0x0) : fBits(value) {;}
   TRGCONF(const TRGCONF& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~TRGCONF() {;}
   

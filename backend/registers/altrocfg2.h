@@ -31,7 +31,7 @@
 class ALTROCFG2 : public Register
 {
 public:
-  ALTROCFG2(Register::Value value) : fBits(value) {;}
+  ALTROCFG2(Register::Value value = 0x0) : fBits(value) {;}
   ALTROCFG2(const ALTROCFG2& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ALTROCFG2() {;}
   

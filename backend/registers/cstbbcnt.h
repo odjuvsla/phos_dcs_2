@@ -30,7 +30,7 @@
 class CSTBBCNT : public Register
 {
 public:
-  CSTBBCNT(Register::Value value) : fBits(value) {;}
+  CSTBBCNT(Register::Value value = 0x0) : fBits(value) {;}
   CSTBBCNT(const CSTBBCNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~CSTBBCNT() {;}
 

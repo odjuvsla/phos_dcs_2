@@ -30,7 +30,7 @@
 class EVMNGPR_ST : public Register
 {
 public:
-  EVMNGPR_ST(Register::Value value) : fBits(value) {;}
+  EVMNGPR_ST(Register::Value value = 0x0) : fBits(value) {;}
   EVMNGPR_ST(const EVMNGPR_ST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~EVMNGPR_ST() {;}
 

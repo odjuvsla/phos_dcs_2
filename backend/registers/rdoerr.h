@@ -30,7 +30,7 @@
 class RDOERR : public Register
 {
 public:
-  RDOERR(Register::Value value) : fBits(value) {;}
+  RDOERR(Register::Value value = 0x0) : fBits(value) {;}
   RDOERR(const RDOERR& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~RDOERR() {;}
 

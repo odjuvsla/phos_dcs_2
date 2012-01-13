@@ -30,7 +30,7 @@
 class ALTROIF : public Register
 {
 public:
-  ALTROIF(Register::Value value) : fBits(value) {;}
+  ALTROIF(Register::Value value = 0x0) : fBits(value) {;}
   ALTROIF(const ALTROIF& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ALTROIF() {;}
 

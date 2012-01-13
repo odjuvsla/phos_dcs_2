@@ -30,7 +30,7 @@
 class ACTFECLIST : public Register
 {
 public:
-  ACTFECLIST(Register::Value value) : fBits(value) {;}
+  ACTFECLIST(Register::Value value = 0x0) : fBits(value) {;}
   ACTFECLIST(const ACTFECLIST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ACTFECLIST() {;}
 

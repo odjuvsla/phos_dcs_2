@@ -30,7 +30,7 @@
 class RDOFSMPR_ST : public Register
 {
 public:
-  RDOFSMPR_ST(Register::Value value) : fBits(value) {;}
+  RDOFSMPR_ST(Register::Value value = 0x0) : fBits(value) {;}
   RDOFSMPR_ST(const RDOFSMPR_ST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~RDOFSMPR_ST() {;}
 

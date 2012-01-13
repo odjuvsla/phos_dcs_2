@@ -30,7 +30,7 @@
 class CSTBACNT : public Register
 {
 public:
-  CSTBACNT(Register::Value value) : fBits(value) {;}
+  CSTBACNT(Register::Value value = 0x0) : fBits(value) {;}
   CSTBACNT(const CSTBACNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~CSTBACNT() {;}
 

@@ -30,7 +30,7 @@
 class DA_FSM : public Register
 {
 public:
-  DA_FSM(Register::Value value) : fBits(value) {;}
+  DA_FSM(Register::Value value = 0x0) : fBits(value) {;}
   DA_FSM(const DA_FSM& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~DA_FSM() {;}
 

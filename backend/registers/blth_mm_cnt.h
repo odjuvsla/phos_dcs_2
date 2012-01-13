@@ -30,7 +30,7 @@
 class BLTH_MM_CNT : public Register
 {
 public:
-  BLTH_MM_CNT(Register::Value value) : fBits(value) {;}
+  BLTH_MM_CNT(Register::Value value = 0x0) : fBits(value) {;}
   BLTH_MM_CNT(const BLTH_MM_CNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~BLTH_MM_CNT() {;}
 

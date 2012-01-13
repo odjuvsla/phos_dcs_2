@@ -30,7 +30,7 @@
 class TTCL2_ACNT : public Register
 {
 public:
-  TTCL2_ACNT(Register::Value value) : fBits(value) {;}
+  TTCL2_ACNT(Register::Value value = 0x0) : fBits(value) {;}
   TTCL2_ACNT(const TTCL2_ACNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~TTCL2_ACNT() {;}
 

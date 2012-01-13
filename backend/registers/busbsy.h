@@ -30,7 +30,7 @@
 class BUSBSY : public Register
 {
 public:
-  BUSBSY(Register::Value value) : fBits(value) {;}
+  BUSBSY(Register::Value value = 0x0) : fBits(value) {;}
   BUSBSY(const BUSBSY& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~BUSBSY() {;}
 

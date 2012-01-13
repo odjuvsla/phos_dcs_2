@@ -30,7 +30,7 @@
 class MEBSTCNT : public Register
 {
 public:
-  MEBSTCNT(Register::Value value) : fBits(value) {;}
+  MEBSTCNT(Register::Value value = 0x0) : fBits(value) {;}
   MEBSTCNT(const MEBSTCNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~MEBSTCNT() {;}
 

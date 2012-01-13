@@ -30,7 +30,7 @@
 class FECERRA : public Register
 {
 public:
-  FECERRA(Register::Value value) : fBits(value) {;}
+  FECERRA(Register::Value value = 0x0) : fBits(value) {;}
   FECERRA(const FECERRA& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~FECERRA() {;}
 

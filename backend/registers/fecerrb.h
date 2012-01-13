@@ -30,7 +30,7 @@
 class FECERRB : public Register
 {
 public:
-  FECERRB(Register::Value value) : fBits(value) {;}
+  FECERRB(Register::Value value = 0x0) : fBits(value) {;}
   FECERRB(const FECERRB& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~FECERRB() {;}
 

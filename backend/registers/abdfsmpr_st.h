@@ -30,7 +30,7 @@
 class ABDFSMPR_ST : public Register
 {
 public:
-  ABDFSMPR_ST(Register::Value value) : fBits(value) {;}
+  ABDFSMPR_ST(Register::Value value = 0x0) : fBits(value) {;}
   ABDFSMPR_ST(const ABDFSMPR_ST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ABDFSMPR_ST() {;}
 

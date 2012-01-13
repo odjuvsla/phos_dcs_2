@@ -30,7 +30,7 @@
 class ALTBUSSTATUS : public Register
 {
 public:
-  ALTBUSSTATUS(Register::Value value) : fBits(value) {;}
+  ALTBUSSTATUS(Register::Value value = 0x0) : fBits(value) {;}
   ALTBUSSTATUS(const ALTBUSSTATUS& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ALTBUSSTATUS() {;}
 

@@ -30,7 +30,7 @@
 class Control : public Register
 {
 public:
-  Control(Register::Value value) : fBits(value) {;}
+  Control(Register::Value value = 0x0) : fBits(value) {;}
   Control(const Control& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~Control() {;}
 

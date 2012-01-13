@@ -30,7 +30,7 @@
 class TRSFBCNT : public Register
 {
 public:
-  TRSFBCNT(Register::Value value) : fBits(value) {;}
+  TRSFBCNT(Register::Value value = 0x0) : fBits(value) {;}
   TRSFBCNT(const TRSFBCNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~TRSFBCNT() {;}
 

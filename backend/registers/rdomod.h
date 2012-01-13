@@ -31,7 +31,7 @@
 class RDOMOD : public Register
 {
 public:
-  RDOMOD(Register::Value value) : fBits(value) {;}
+  RDOMOD(Register::Value value = 0x0) : fBits(value) {;}
   RDOMOD(const RDOMOD& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~RDOMOD() {;}
   

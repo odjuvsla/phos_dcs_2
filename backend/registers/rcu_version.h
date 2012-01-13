@@ -31,7 +31,7 @@
 class RCU_VERSION : public Register
 {
 public:
-  RCU_VERSION(Register::Value value) : fBits(value) {;}
+  RCU_VERSION(Register::Value value = 0x0) : fBits(value) {;}
   RCU_VERSION(const RCU_VERSION& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~RCU_VERSION() {;}
   

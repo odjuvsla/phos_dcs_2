@@ -30,7 +30,7 @@
 class SWTTRGCNT : public Register
 {
 public:
-  SWTTRGCNT(Register::Value value) : fBits(value) {;}
+  SWTTRGCNT(Register::Value value = 0x0) : fBits(value) {;}
   SWTTRGCNT(const SWTTRGCNT& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~SWTTRGCNT() {;}
 
