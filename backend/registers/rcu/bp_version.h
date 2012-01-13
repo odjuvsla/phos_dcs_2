@@ -21,42 +21,41 @@
 */
 
 
-#ifndef RCUID_H
-#define RCUID_H
+#ifndef BP_VERSION_H
+#define BP_VERSION_H
 
 #include <register.h>
 
 
-
-class RCUID : public Register
+class BP_VERSION : public Register
 {
 public:
-  RCUID(Register::Value value) : fBits(value) {;}
-  RCUID(const RCUID& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~RCUID() {;}
+  BP_VERSION(Register::Value value = 0x0) : fBits(value) {;}
+  BP_VERSION(const BP_VERSION& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~BP_VERSION() {;}
   
-  const RCUID& operator= (const RCUID& other) {fBits = other.fBits; return* this;}
-  bool operator== (const RCUID& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const BP_VERSION& operator= (const BP_VERSION& other) {fBits = other.fBits; return* this;}
+  bool operator== (const BP_VERSION& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
   
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}	
-  const std::bitset<9>& GetBits() const {return fBits;}
+  const std::bitset<1>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<9>& bits) {fBits = bits;}
+  void SetBits(const std::bitset<1>& bits) {fBits = bits;}
   
-  // RCUID specific parameters
-  static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5108;
+  // BP_VERSION specific parameters
+  static const Register::Access Access = Register::R;
+  static const Register::Address Address = 0x5107;
   static const Register::Type Type = Register::RCU;
   
-  // RCUID specific members:
-  // TODO: implement RCUID specific members.
+  // BP_VERSION specific members:
+  // TODO: implement BP_VERSION specific members
   
 private:
-  std::bitset<9> fBits;
+  std::bitset<1> fBits;
 };
 
-#endif // RCUID_H
+#endif // BP_VERSION_H

@@ -3,7 +3,7 @@
     the PHOS detector at the ALICE Experiment
 
     Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
-                        Henrik Qvigstad <henrik.qvigstad@cern.com>
+                                       Henrik Qvigstad <henrik.qvigstad@cern.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -21,42 +21,41 @@
 */
 
 
-#ifndef ACTFECLIST_H
-#define ACTFECLIST_H
+#ifndef ACKA_CNT_H
+#define ACKA_CNT_H
 
-#include "register.h"
-#include <bitset>
+#include <register.h>
 
-class ACTFECLIST : public Register
+
+class ACKA_CNT : public Register
 {
 public:
-  ACTFECLIST(Register::Value value) : fBits(value) {;}
-  ACTFECLIST(const ACTFECLIST& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~ACTFECLIST() {;}
+  ACKA_CNT(Register::Value value = 0x0) : fBits(value) {;}
+  ACKA_CNT(const ACKA_CNT& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~ACKA_CNT() {;}
 
-  const ACTFECLIST& operator= (const ACTFECLIST& other) {        fBits = other.fBits; return *this;}
-  bool operator== (const ACTFECLIST& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  const ACKA_CNT& operator= (const ACKA_CNT& other) {fBits = other.fBits; return* this;}
+  bool operator== (const ACKA_CNT& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
 
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
   Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<32>& GetBits() const {return fBits;}
-  void SetValue(Register::Value value) {        fBits = value;}
-  void SetBits(const std::bitset<32>& bits) {        fBits = bits;}
+  const std::bitset<12>& GetBits() const {return fBits;}
+  void SetValue(Register::Value value) {fBits = value;}
+  void SetBits(const std::bitset<12>& bits) {fBits = bits;}
 
-  // ACTFECLIST specific parameters
-  static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5100;
+  // ACKA_CNT specific parameters
+  static const Register::Access Access = Register::R;
+  static const Register::Address Address = 0x5124;
   static const Register::Type Type = Register::RCU;
 
-  // ACTFECLIST specific members:
-  bool IsFECActive(size_t branch, size_t index) const;
-  void SetFECActive(size_t branch, size_t index, bool value = true);
+  // ACKA_CNT specific members:
+  // TODO: implement ACKA_CNT specific members
 
 private:
-  std::bitset<32> fBits;
+  std::bitset<12> fBits;
 };
 
-#endif // ACTFECLIST_H
+#endif // ACKA_CNT_H

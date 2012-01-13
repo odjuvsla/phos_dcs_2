@@ -21,60 +21,41 @@
 */
 
 
-#ifndef RDOMOD_H
-#define RDOMOD_H
+#ifndef TTCL2_ACNT_H
+#define TTCL2_ACNT_H
 
 #include <register.h>
-#include <bitset>
 
 
-class RDOMOD : public Register
+class TTCL2_ACNT : public Register
 {
 public:
-  RDOMOD(Register::Value value) : fBits(value) {;}
-  RDOMOD(const RDOMOD& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~RDOMOD() {;}
-  
-  const RDOMOD& operator= (const RDOMOD& other) {fBits = other.fBits; return* this;}
-  bool operator== (const RDOMOD& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
-  
+  TTCL2_ACNT(Register::Value value = 0x0) : fBits(value) {;}
+  TTCL2_ACNT(const TTCL2_ACNT& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~TTCL2_ACNT() {;}
+
+  const TTCL2_ACNT& operator= (const TTCL2_ACNT& other) {fBits = other.fBits; return* this;}
+  bool operator== (const TTCL2_ACNT& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
-  Register::Value GetValue() const {return fBits.to_ulong();}	
-  const std::bitset<6>& GetBits() const {return fBits;}
+  Register::Value GetValue() const {return fBits.to_ulong();}
+  const std::bitset<20>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<6>& bits) {fBits = bits;}
-  
-  // RDOMOD specific parameters
-  static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5103;
+  void SetBits(const std::bitset<20>& bits) {fBits = bits;}
+
+  // TTCL2_ACNT specific parameters
+  static const Register::Access Access = Register::R;
+  static const Register::Address Address = 0x511e;
   static const Register::Type Type = Register::RCU;
-  
-  // RDOMOD specific members:
-  bool GetMCheckChannelAddressMismatch() const;
-  void SetMCheckChannelAddressMismatch(bool value);
 
-  bool GetMCheckBlockLengthMismatch() const;
-  void SetMCheckBlockLengthMismatch(bool value);
-
-  bool GetRDYEX() const; // Mask Read to Receive “RDYEX”
-  void SetRDYEX(bool value);
-  
-  bool GetSparseReadoutMode() const;
-  void SetSparseReadoutMode(bool value);
-  
-  bool GetSOEOIEIME() const; // SOE/EOE Instruction Memory Execution
-  void SetSOEOIEIME(bool value);
-  
-  bool GetMultiEventBuffer() const;
-  void SetMultiEventBuffer(bool value);
-
+  // TTCL2_ACNT specific members:
+  // TODO: implement TTCL2_ACNT specific members
 
 private:
-  std::bitset<6> fBits;
-
+  std::bitset<20> fBits;
 };
 
-#endif // RDOMOD_H
+#endif // TTCL2_ACNT_H

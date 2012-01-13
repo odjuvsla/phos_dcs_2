@@ -21,42 +21,41 @@
 */
 
 
-#ifndef ALTROCFG2_H
-#define ALTROCFG2_H
+#ifndef DSTB_NUMA_H
+#define DSTB_NUMA_H
 
 #include <register.h>
-#include <bitset>
 
 
-class ALTROCFG2 : public Register
+class DSTB_NUMA : public Register
 {
 public:
-  ALTROCFG2(Register::Value value) : fBits(value) {;}
-  ALTROCFG2(const ALTROCFG2& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~ALTROCFG2() {;}
-  
-  const ALTROCFG2& operator= (const ALTROCFG2& other) {fBits = other.fBits; return* this;}
-  bool operator== (const ALTROCFG2& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
-  
+  DSTB_NUMA(Register::Value value = 0x0) : fBits(value) {;}
+  DSTB_NUMA(const DSTB_NUMA& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~DSTB_NUMA() {;}
+
+  const DSTB_NUMA& operator= (const DSTB_NUMA& other) {fBits = other.fBits; return* this;}
+  bool operator== (const DSTB_NUMA& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
-  Register::Value GetValue() const {return fBits.to_ulong();}	
-  const std::bitset<25>& GetBits() const {return fBits;}
+  Register::Value GetValue() const {return fBits.to_ulong();}
+  const std::bitset<9>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<25>& bits) {fBits = bits;}
-  
-  // ALTROCFG2 specific parameters
-  static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5105;
+  void SetBits(const std::bitset<9>& bits) {fBits = bits;}
+
+  // DSTB_NUMA specific parameters
+  static const Register::Access Access = Register::R;
+  static const Register::Address Address = 0x5128;
   static const Register::Type Type = Register::RCU;
-  
-  // ALTROCFG2 specific members:
-  //TODO: Implement in ALTROCFG2 specific members
-  
+
+  // DSTB_NUMA specific members:
+  // TODO: implement DSTB_NUMA specific members
+
 private:
-  std::bitset<25> fBits;
+  std::bitset<9> fBits;
 };
 
-#endif // ALTROCFG2_H
+#endif // DSTB_NUMA_H

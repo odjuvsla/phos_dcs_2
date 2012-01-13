@@ -1,7 +1,9 @@
 /*
-    Library for controlling and configuring the electronics for the PHOS
-    detector at the ALICE Experiment
-    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+    Library for controlling and configuring the electronics for
+    the PHOS detector at the ALICE Experiment
+
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
+                                       Henrik Qvigstad <henrik.qvigstad@cern.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,23 +20,5 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "../phosdcsclient.h"
-#include "phosdcstypes.h"
-#include <registers.h>"
 
-int main()
-{
-  phosDcsClient cl("FEESERVER");
-  
-  AltroCh_t ch(3, 2, 1, 0, 0, 0);
- 
-  RDOMOD rdo;
-  cl.writeRcuRegister(&rdo);
-  
-
-//   AltroZSTHR_t thr;
-//   cl.writeFecRegister(&thr, &ch);
-
-  return 0;
-  
-}
+#include "trsfbcnt.h"

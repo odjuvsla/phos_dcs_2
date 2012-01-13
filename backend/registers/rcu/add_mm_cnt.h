@@ -21,51 +21,41 @@
 */
 
 
-#ifndef TRGCONF_H
-#define TRGCONF_H
+#ifndef ADD_MM_CNT_H
+#define ADD_MM_CNT_H
 
 #include <register.h>
-#include <bitset>
 
 
-class TRGCONF : public Register
+class ADD_MM_CNT : public Register
 {
 public:
-  TRGCONF(Register::Value value) : fBits(value) {;}
-  TRGCONF(const TRGCONF& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~TRGCONF() {;}
-  
-  const TRGCONF& operator= (const TRGCONF& other) {        fBits = other.fBits; return* this;}
-  bool operator== (const TRGCONF& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
-  
+  ADD_MM_CNT(Register::Value value = 0x0) : fBits(value) {;}
+  ADD_MM_CNT(const ADD_MM_CNT& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~ADD_MM_CNT() {;}
+
+  const ADD_MM_CNT& operator= (const ADD_MM_CNT& other) {fBits = other.fBits; return* this;}
+  bool operator== (const ADD_MM_CNT& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
-  Register::Value GetValue() const {return fBits.to_ulong();}	
-  const std::bitset<17>& GetBits() const {return fBits;}
-  void SetValue(Register::Value value) { fBits = value;}
-  void SetBits(const std::bitset<17>& bits) { fBits = bits;}
-  
-  // TRGCONF specific parameters
-  static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5102;
+  Register::Value GetValue() const {return fBits.to_ulong();}
+  const std::bitset<12>& GetBits() const {return fBits;}
+  void SetValue(Register::Value value) {fBits = value;}
+  void SetBits(const std::bitset<12>& bits) {fBits = bits;}
+
+  // ADD_MM_CNT specific parameters
+  static const Register::Access Access = Register::R;
+  static const Register::Address Address = 0x512a;
   static const Register::Type Type = Register::RCU;
-  
-  // TRGCONF specific members:
-  unsigned long GetTriggerSource() const;
-  void SetTriggerSource(const std::bitset<3>& value);
-  
-  bool GetTriggerMode() const;
-  void SetTriggerMode(bool value);
-  
-  unsigned long GetTriggerLatency() const;
-  void SetTriggerLatency(const std::bitset<13>& value);
-  
-  
+
+  // ADD_MM_CNT specific members:
+  // TODO: implement ADD_MM_CNT specific members
+
 private:
-  std::bitset<17> fBits;
-  
+  std::bitset<12> fBits;
 };
 
-#endif // TRGCONF_H
+#endif // ADD_MM_CNT_H

@@ -3,7 +3,7 @@
     the PHOS detector at the ALICE Experiment
 
     Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
-                        Henrik Qvigstad <henrik.qvigstad@cern.com>
+                                       Henrik Qvigstad <henrik.qvigstad@cern.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -21,34 +21,5 @@
 */
 
 
-#include "actfeclist.h"
-
-/**
- * @param branch [0,1], A:0, B:1
- * @param index [0,13], TODO: Figure out the indexing
- * @param value value of bit, true equals on.
- */
-bool ACTFECLIST::IsFECActive(size_t branch, size_t index) const
-{
-  if( branch ) // if branch B:
-    return fBits[16+index];
-  else // if branch A:
-    return fBits[index];
-}
-
-
-/**
- * @param branch [0,1], A:0, B:1
- * @param index [0,13], TODO: Figure out the indexing
- * @param value value of bit, true equals on.
- */
-void ACTFECLIST::SetFECActive(size_t branch, size_t index, bool value)
-{
-  
-  if( branch ) // if branch B:
-    fBits[16+index] = value;
-  else // if branch A:
-    fBits[index] = value;
-
-}
+#include "dstb_bcnt.h"
 

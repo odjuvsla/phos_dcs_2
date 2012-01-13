@@ -21,53 +21,42 @@
 */
 
 
-#ifndef ALTROIF_H
-#define ALTROIF_H
+#ifndef ALTROCFG2_H
+#define ALTROCFG2_H
 
 #include <register.h>
 #include <bitset>
 
-class ALTROIF : public Register
+
+class ALTROCFG2 : public Register
 {
 public:
-  ALTROIF(Register::Value value) : fBits(value) {;}
-  ALTROIF(const ALTROIF& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~ALTROIF() {;}
-
-  const ALTROIF& operator= (const ALTROIF& other) {        fBits = other.fBits; return *this;}
-  bool operator== (const ALTROIF& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
-
+  ALTROCFG2(Register::Value value = 0x0) : fBits(value) {;}
+  ALTROCFG2(const ALTROCFG2& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~ALTROCFG2() {;}
+  
+  const ALTROCFG2& operator= (const ALTROCFG2& other) {fBits = other.fBits; return* this;}
+  bool operator== (const ALTROCFG2& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+  
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
-  Register::Value GetValue() const {return fBits.to_ulong();}
-  const std::bitset<18>& GetBits() const {return fBits;}
-  void SetValue(Register::Value value) {        fBits = value;}
-  void SetBits(const std::bitset<18>& bits) {        fBits = bits;}
-
-  // ALTROIF specific parameters
+  Register::Value GetValue() const {return fBits.to_ulong();}	
+  const std::bitset<25>& GetBits() const {return fBits;}
+  void SetValue(Register::Value value) {fBits = value;}
+  void SetBits(const std::bitset<25>& bits) {fBits = bits;}
+  
+  // ALTROCFG2 specific parameters
   static const Register::Access Access = Register::RW;
-  static const Register::Address Address = 0x5101;
+  static const Register::Address Address = 0x5105;
   static const Register::Type Type = Register::RCU;
-
-
-  // ALTROIF specific members:
-  unsigned long GetCSTBDelay() const; // CSTB programmable Delay
-  void SetCSTBDelay(const std::bitset< 2 >& value );
-
-  unsigned long GetIECS() const; // Instruction Error Check Selection
-  void SetIECS(const std::bitset<2>& value);
-
-  unsigned long GetSCDR() const; // Sampeling Clock Dividing Ratio
-  void SetSCDR(const std::bitset<4>& value); // in practice 2 bits
-
-  unsigned long GetNSamples() const;
-  void SetNSamples(const std::bitset<10>& value);
-
-
+  
+  // ALTROCFG2 specific members:
+  //TODO: Implement in ALTROCFG2 specific members
+  
 private:
-  std::bitset<18> fBits;
+  std::bitset<25> fBits;
 };
 
-#endif // ALTROIF_H
+#endif // ALTROCFG2_H

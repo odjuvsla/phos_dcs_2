@@ -39,19 +39,19 @@ phosDcsClient::~phosDcsClient()
 
 }
 
-int phosDcsClient::writeRcuRegister(Register_t* reg)
+int phosDcsClient::writeRcuRegister(Register* reg)
 {
     QMutexLocker locker(_mutex);
     if (reg)
     {
 	std::stringstream log;
-	log << hex << "Writing RCU register: 0x" << reg->GetRegisterAddress() << " with value: 0x" << reg->GetRegisterValue() << dec;
+	log << hex << "Writing RCU register: 0x" << reg->GetAddress() << " with value: 0x" << reg->GetValue() << dec;
 	PIDEBUG("%s", log.str().c_str());
 //        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	
-	_binaryCompiler->MakeWriteReadRcuRegister(reg->GetRegisterAddress(), reg->GetRegisterValue(), binaryData);
+	_binaryCompiler->MakeWriteReadRcuRegister(reg->GetAddress(), reg->GetValue(), binaryData);
 	
 	vector<uint_t> result;
 	executeBinary(binaryData, result);
@@ -61,7 +61,7 @@ int phosDcsClient::writeRcuRegister(Register_t* reg)
     return -1;
 }
 
-int phosDcsClient::writeFecRegister(Register_t* reg, AltroCh_t* ch)
+int phosDcsClient::writeFecRegister(Register* reg, AltroCh_t* ch)
 {
   QMutexLocker locker(_mutex);
     if (ch)
@@ -75,54 +75,54 @@ int phosDcsClient::writeFecRegister(Register_t* reg, AltroCh_t* ch)
     return -1;
 }
 
-int phosDcsClient::readFecRegister(Register_t* reg, AltroCh_t* ch)
+int phosDcsClient::readFecRegister(Register* reg, AltroCh_t* ch)
 {
   QMutexLocker locker(_mutex);
 }
 
-int phosDcsClient::readRcuRegister(Register_t* reg)
+int phosDcsClient::readRcuRegister(Register* reg)
 {
   QMutexLocker locker(_mutex);
   if (reg)
     {
 	std::stringstream log;
-	log << hex << "Reading RCU register: 0x" << reg->GetRegisterAddress() << dec;
+	log << hex << "Reading RCU register: 0x" << reg->GetAddress() << dec;
 	PIDEBUG("%s", log.str().c_str());
         //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	
-	_binaryCompiler->MakeReadRcuRegister(reg->GetRegisterAddress(), binaryData);
+	_binaryCompiler->MakeReadRcuRegister(reg->GetAddress(), binaryData);
 	
 	vector<uint_t> result;
 	executeBinary(binaryData, result);
 	
-	reg->SetByRegisterValue(result[0]);
+	reg->SetValue(result[0]);
 	
 	return 0;
     }
     return -1;
 }
 
-int phosDcsClient::readBcRegister(Register_t* reg, Fec_t* fec)
+int phosDcsClient::readBcRegister(Register* reg, Fec_t* fec)
 {
 QMutexLocker locker(_mutex);
   if (reg)
     {
 	std::stringstream log;
-	log << hex << "Reading BC register: 0x" << reg->GetRegisterAddress() << dec;
+	log << hex << "Reading BC register: 0x" << reg->GetAddress() << dec;
 	PIDEBUG("%s", log.str().c_str());
         //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 
 	vector<uint_t> binaryData;
 	vector<uint_t> regAdds;
-	regAdds.push_back(reg->GetRegisterAddress());
+	regAdds.push_back(reg->GetAddress());
 	_binaryCompiler->MakeReadBcRegister(regAdds, *fec, binaryData);
 	
 	vector<uint_t> result;
 	executeBinary(binaryData, result);
 	
-	reg->SetByRegisterValue(result[0]);
+	reg->SetValue(result[0]);
 	
 	return result[0];
     }

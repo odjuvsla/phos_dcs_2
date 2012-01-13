@@ -44,7 +44,7 @@ public:
     int turnOff() { turnOn(false); }
     
     /** Read a register */
-    int readRegister(Register_t *reg) const;
+    int readRegister(Register *reg) const;
     
 signals:
   

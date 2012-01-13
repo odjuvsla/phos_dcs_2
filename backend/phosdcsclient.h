@@ -21,6 +21,7 @@
 #ifndef PHOSDCSCLIENT_H
 #define PHOSDCSCLIENT_H
 
+#include "register.h"
 #include "phosregisters.h"
 #include "phosdcstypes.h"
 #include "binarycompiler.h"
@@ -45,19 +46,19 @@ public:
     virtual ~phosDcsClient();
 
     /** Write an RCU register */
-    int writeRcuRegister(Register_t *reg);
+    int writeRcuRegister(Register *reg);
 
     /** Write a FEC register */
-    int writeFecRegister(Register_t *reg, AltroCh_t *ch = 0);
+    int writeFecRegister(Register *reg, AltroCh_t *ch = 0);
 
     /** Read an RCU register */
-    int readRcuRegister(Register_t *reg);
+    int readRcuRegister(Register *reg);
 
     /** Read a FEC register */
-    int readFecRegister(Register_t *reg, AltroCh_t *ch = 0);
+    int readFecRegister(Register *reg, AltroCh_t *ch = 0);
 
     /** Read a board contoller register on a FEC */
-    int readBcRegister(Register_t *reg, Fec_t *fec = 0);
+    int readBcRegister(Register *reg, Fec_t *fec = 0);
 
 private:
 

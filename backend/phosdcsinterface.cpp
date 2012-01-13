@@ -89,7 +89,7 @@ int phosDcsInterface::toggleTru(const Tru_t& tru)
 
 }
 
-int phosDcsInterface::readRegister(Register_t* r) const
+int phosDcsInterface::readRegister(Register* r) const
 {
   if(_rcu)
   {

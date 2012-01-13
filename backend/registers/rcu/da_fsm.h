@@ -21,42 +21,41 @@
 */
 
 
-#ifndef RCU_VERSION_H
-#define RCU_VERSION_H
+#ifndef DA_FSM_H
+#define DA_FSM_H
 
 #include <register.h>
-#include <bitset>
 
 
-class RCU_VERSION : public Register
+class DA_FSM : public Register
 {
 public:
-  RCU_VERSION(Register::Value value) : fBits(value) {;}
-  RCU_VERSION(const RCU_VERSION& other) : fBits(other.fBits.to_ulong()) {;}
-  virtual ~RCU_VERSION() {;}
-  
-  const RCU_VERSION& operator= (const RCU_VERSION& other) {fBits = other.fBits; return* this;}
-  bool operator== (const RCU_VERSION& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
-  
+  DA_FSM(Register::Value value = 0x0) : fBits(value) {;}
+  DA_FSM(const DA_FSM& other) : fBits(other.fBits.to_ulong()) {;}
+  virtual ~DA_FSM() {;}
+
+  const DA_FSM& operator= (const DA_FSM& other) {fBits = other.fBits; return* this;}
+  bool operator== (const DA_FSM& other) const {return fBits.to_ulong() == other.fBits.to_ulong();}
+
   // Register members:
   Register::Access GetAccess() const {return Access;}
   Register::Address GetAddress() const {return Address;}
   Register::Type GetType() const {return Type;}
-  Register::Value GetValue() const {return fBits.to_ulong();}	
-  const std::bitset<24>& GetBits() const {return fBits;}
+  Register::Value GetValue() const {return fBits.to_ulong();}
+  const std::bitset<30>& GetBits() const {return fBits;}
   void SetValue(Register::Value value) {fBits = value;}
-  void SetBits(const std::bitset<24>& bits) {fBits = bits;}
-  
-  // RCU_VERSION specific parameters
+  void SetBits(const std::bitset<30>& bits) {fBits = bits;}
+
+  // DA_FSM specific parameters
   static const Register::Access Access = Register::R;
-  static const Register::Address Address = 0x5106;
+  static const Register::Address Address = 0x5130;
   static const Register::Type Type = Register::RCU;
-  
-  // RCU_VERSION specific members:
-  // TODO: implement RCU_VERSION specific members
-  
+
+  // DA_FSM specific members:
+  // TODO: implement DA_FSM specific members
+
 private:
-  std::bitset<24> fBits;
+  std::bitset<30> fBits;
 };
 
-#endif // RCU_VERSION_H
+#endif // DA_FSM_H
