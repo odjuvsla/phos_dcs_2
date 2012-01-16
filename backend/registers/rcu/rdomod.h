@@ -27,7 +27,8 @@
 #include <register.h>
 #include <bitset>
 
-
+/** Readout Mode Configuration Register [3:0]
+ */
 class RDOMOD : public Register
 {
 public:

@@ -23,118 +23,123 @@
 
 #include "rdomod.h"
 
-bool RDOMOD::GetMultiEventBuffer() const
-{
-/* MEB (multi event buffer) Mode [0]
- * ‘0’ ≡ Multi event buffer mode is set to 4
+/** MEB (multi event buffer) Mode [0].
+ * 
+ * ‘0’ ≡ Multi event buffer mode is set to 4 \n
  * ‘1’ ≡ Multi event buffer mode is set to 8
  */
+bool RDOMOD::GetMultiEventBuffer() const
+{
   return fBits[0];
 }
 
-void RDOMOD::SetMultiEventBuffer(bool value)
-{
-/* MEB (multi event buffer) Mode [0]
- * ‘0’ ≡ Multi event buffer mode is set to 4
+/** MEB (multi event buffer) Mode [0].
+ * 
+ * ‘0’ ≡ Multi event buffer mode is set to 4 \n
  * ‘1’ ≡ Multi event buffer mode is set to 8
  */
+void RDOMOD::SetMultiEventBuffer(bool value)
+{
   fBits[0] = value;
 }
 
-bool RDOMOD::GetRDYEX() const
-{
-/* Mask Read to Receive “RDYEX” [3]
+/** Mask Read to Receive “RDYEX” [3].
+ * 
  * “1” ≡ Ready to receive command is masked, means even if the ready to receive
- * command is not given from DDL still data will be delivered from RCU to SIU.
- * {Used for debugging purposes}
- * “0” ≡ Ready to receive command (open link) must be given before data is to be
+ * command is not given from DDL still data will be delivered from RCU to SIU. 
+ * {Used for debugging purposes} \n
+ * “0” ≡ Ready to receive command (open link) must be given before data is to be 
  * received.
  */
+bool RDOMOD::GetRDYEX() const
+{
   return fBits[3];
 }
 
-void RDOMOD::SetRDYEX(bool value)
-{
-/* Mask Read to Receive “RDYEX” [3]
+/** Mask Read to Receive “RDYEX” [3].
  * “1” ≡ Ready to receive command is masked, means even if the ready to receive
  * command is not given from DDL still data will be delivered from RCU to SIU.
- * {Used for debugging purposes}
+ * {Used for debugging purposes} \n
  * “0” ≡ Ready to receive command (open link) must be given before data is to be
  * received.
  */
+void RDOMOD::SetRDYEX(bool value)
+{
   fBits[3] = value;
 }
 
 bool RDOMOD::GetSOEOIEIME() const
 {
-/* SOE/EOE Instruction Memory Execution [1]
- * ‘0’ ≡ Sequence in the instruction memory will not be executed on SOE/EOE.
- * ‘1’ ≡ Sequence in the instruction memory will be executed on SOE/EOE and
- * result from result memory will be sent as payload.
- */
   return fBits[1];
 }
 
-void RDOMOD::SetSOEOIEIME(bool value)
-{
-/* SOE/EOE Instruction Memory Execution [1]
- * ‘0’ ≡ Sequence in the instruction memory will not be executed on SOE/EOE.
+/** SOE/EOE Instruction Memory Execution [1].
+ *
+ * ‘0’ ≡ Sequence in the instruction memory will not be executed on SOE/EOE. \n
  * ‘1’ ≡ Sequence in the instruction memory will be executed on SOE/EOE and
  * result from result memory will be sent as payload.
  */
+void RDOMOD::SetSOEOIEIME(bool value)
+{
   fBits[1] = value;
 }
 
-bool RDOMOD::GetSparseReadoutMode() const
-{
-/* Sparse Readout Mode [2]
- * ‘0’ ≡ Read out mode is “full readout” according to readout list memory.
+/** Sparse Readout Mode [2].
+ *
+ * ‘0’ ≡ Read out mode is “full readout” according to readout list memory. \n
  * ‘1’ ≡ Read out mode is “sparse readout” according to readout list memory.
  */
+bool RDOMOD::GetSparseReadoutMode() const
+{
   return fBits[2];
 }
 
-void RDOMOD::SetSparseReadoutMode(bool value)
-{
-/* Sparse Readout Mode [2]
- * ‘0’ ≡ Read out mode is “full readout” according to readout list memory.
+/** Sparse Readout Mode [2].
+ *
+ * ‘0’ ≡ Read out mode is “full readout” according to readout list memory. \n
  * ‘1’ ≡ Read out mode is “sparse readout” according to readout list memory.
  */
+void RDOMOD::SetSparseReadoutMode(bool value)
+{
   fBits[2] = value;
 }
 
-bool RDOMOD::GetMCheckBlockLengthMismatch() const
-{
-/* Mask Check of [Channel Address / Block Length] Mismatch [5][4]
- * [4] = “1” ≡ check of Block Length mismatch will be masked (not checked)
+/** Mask Check of Block Length Mismatch [4].
+ *
+ * [4] = “1” ≡ check of Block Length mismatch will be masked (not checked) \n
  * [4]= “0” ≡ check of Block Length mismatch will not be masked (checked)
  */
+bool RDOMOD::GetMCheckBlockLengthMismatch() const
+{
 return fBits[4];
 }
 
-void RDOMOD::SetMCheckBlockLengthMismatch(bool value)
-{
-/* Mask Check of [Channel Address / Block Length] Mismatch [5][4]
- * [4] = “1” ≡ check of Block Length mismatch will be masked (not checked)
+/** Mask Check of Block Length Mismatch [4].
+ *
+ * [4] = “1” ≡ check of Block Length mismatch will be masked (not checked) \n
  * [4]= “0” ≡ check of Block Length mismatch will not be masked (checked)
  */
+void RDOMOD::SetMCheckBlockLengthMismatch(bool value)
+{
 fBits[4] = value;
 }
 
-bool RDOMOD::GetMCheckChannelAddressMismatch() const
-{
-/* Mask Check of [Channel Address / Block Length] Mismatch [5][4]
- * [5] = “1” ≡ check of Channel address mismatch will be masked (not checked)
+/** Mask Check of Channel Address Mismatch [5].
+ *
+ * [5] = “1” ≡ check of Channel address mismatch will be masked (not checked) \n
  * [5]= “0” ≡ check of Channel address mismatch will not be masked (checked)
  */
+bool RDOMOD::GetMCheckChannelAddressMismatch() const
+{
 return fBits[5];
 }
 
-void RDOMOD::SetMCheckChannelAddressMismatch(bool value)
-{
-/* Mask Check of [Channel Address / Block Length] Mismatch [5][4]
- * [5] = “1” ≡ check of Channel address mismatch will be masked (not checked)
+/** Mask Check of Channel Address Mismatch [5].
+ *
+ * [5] = “1” ≡ check of Channel address mismatch will be masked (not checked) \n
  * [5]= “0” ≡ check of Channel address mismatch will not be masked (checked)
  */
+void RDOMOD::SetMCheckChannelAddressMismatch(bool value)
+{
 fBits[5] = value;
 }

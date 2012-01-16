@@ -27,10 +27,18 @@
 #include "register.h"
 #include <bitset>
 
+/** Active Front End Card List [31:0]
+ * 
+ * Front end cards are set turned on and off by configuring this register.\n
+ *  FEC – Branch A [15:0]\n
+ *  FEC – Branch B [31:16]
+ */
 class ACTFECLIST : public Register
 {
 public:
+  /** Initilise register as 0x0 */
   ACTFECLIST(Register::Value value = 0x0) : fBits(value) {;}
+  /** Copies the value state of @a other */
   ACTFECLIST(const ACTFECLIST& other) : fBits(other.fBits.to_ulong()) {;}
   virtual ~ACTFECLIST() {;}
 
@@ -52,7 +60,7 @@ public:
   static const Register::Type Type = Register::RCU;
 
   // ACTFECLIST specific members:
-  bool IsFECActive(size_t branch, size_t index) const;
+  bool GetFECActive(size_t branch, size_t index) const;
   void SetFECActive(size_t branch, size_t index, bool value = true);
 
 private:

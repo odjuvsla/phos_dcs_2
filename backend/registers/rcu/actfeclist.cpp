@@ -23,12 +23,13 @@
 
 #include "actfeclist.h"
 
-/**
+/** Get FEC Active Value
+ * 
  * @param branch [0,1], A:0, B:1
  * @param index [0,14], (includes TRU at idx 0) TODO: Figure out the indexing
  * @param value value of bit, true equals on.
  */
-bool ACTFECLIST::IsFECActive(size_t branch, size_t index) const
+bool ACTFECLIST::GetFECActive(size_t branch, size_t index) const
 {
   if( branch ) // if branch B:
     return fBits[16+index];
@@ -37,7 +38,7 @@ bool ACTFECLIST::IsFECActive(size_t branch, size_t index) const
 }
 
 
-/**
+/** Set FEC Active Value
  * @param branch [0,1], A:0, B:1
  * @param index [0,14],(includes TRU at idx 0) TODO: Figure out the indexing
  * @param value value of bit, true equals on.

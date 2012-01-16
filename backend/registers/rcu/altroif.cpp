@@ -24,78 +24,84 @@
 #include "altroif.h"
 #include "assert.h"
 
-unsigned long ALTROIF::GetCSTBDelay() const
-{
-/* CSTB programmable delay, [0,3].
+/** CSTB programmable delay, [0,3].
+ *
  * This is the delay between the assertion of “cstb” and altro bus to avoid any possibility of glitch on hand shake
  * signals due to 40 bit ALTRO bus driving.
  */
+unsigned long ALTROIF::GetCSTBDelay() const
+{
   return Register::ReadValue<14,15>(fBits);
 }
 
-void ALTROIF::SetCSTBDelay(const std::bitset< 2 >& value)
-{
-/* CSTB programmable delay, [15:14]
+/** CSTB programmable delay, [15:14]
+ *
  * This is the delay between the assertion of “cstb” and altro bus to avoid any possibility of glitch on hand shake
  * signals due to 40 bit ALTRO bus driving.
  */
+void ALTROIF::SetCSTBDelay(const std::bitset< 2 >& value)
+{
 
   Register::InsertValue<14>(fBits, value);
 }
 
+/** Instruction error check selection ≡ [17:16]
+ *
+ * “00”:= Contents of Instruction memory are not Checked \n
+ * “01”:= Contents of Instruction memory will be checked against TPC instruction set. \n
+ * “10”:= Contents of Instruction Memory will be checked against PHOS instruction set. \n
+ * “11”:= Contents of Instruction Memory will be checked against FMD instruction set \n
+ */
 unsigned long ALTROIF::GetIECS() const
 {
-/* Instruction error check selection ≡ [17:16]
- * “00”:= Contents of Instruction memory are not Checked
- * “01”:= Contents of Instruction memory will be checked against TPC instruction set.
- * “10”:= Contents of Instruction Memory will be checked against PHOS instruction set.
- * “11”:= Contents of Instruction Memory will be checked against FMD instruction set
- */
   return Register::ReadValue<16,17>(fBits);
 }
 
+/** Instruction error check selection ≡ [17:16]
+ *
+ * “00”:= Contents of Instruction memory are not Checked \n
+ * “01”:= Contents of Instruction memory will be checked against TPC instruction set. \n
+ * “10”:= Contents of Instruction Memory will be checked against PHOS instruction set. \n
+ * “11”:= Contents of Instruction Memory will be checked against FMD instruction set \n
+ */
 void ALTROIF::SetIECS(const std::bitset<2>& value)
 {
-/* Instruction error check selection ≡ [17:16]
- * “00”:= Contents of Instruction memory are not Checked
- * “01”:= Contents of Instruction memory will be checked against TPC instruction set.
- * “10”:= Contents of Instruction Memory will be checked against PHOS instruction set.
- * “11”:= Contents of Instruction Memory will be checked against FMD instruction set
- */
   Register::InsertValue<16>(fBits, value);
 }
 
+/** Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
+ *
+ * “00”:= divide by 2; Period of sampling clock = 50nsec \n
+ * “01”:= divide by 4; Period of sampling clock = 100nsec \n
+ * “10”:= divide by 8; Period of sampling clock = 200nsec \n
+ * “11”:= divide by 16; Period of sampling clock = 400nsec \n
+ */
 unsigned long ALTROIF::GetSCDR() const
 {
-/* Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
- * “00”:= divide by 2; Period of sampling clock = 50nsec
- * “01”:= divide by 4; Period of sampling clock = 100nsec
- * “10”:= divide by 8; Period of sampling clock = 200nsec
- * “11”:= divide by 16; Period of sampling clock = 400nsec
- */
   return Register::ReadValue<10,13>(fBits);
 };
 
-void ALTROIF::SetSCDR(const std::bitset<4>& value)
-{
-/* Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
- * “00”:= divide by 2; Period of sampling clock = 50nsec
- * “01”:= divide by 4; Period of sampling clock = 100nsec
- * “10”:= divide by 8; Period of sampling clock = 200nsec
+/** Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
+ *
+ * “00”:= divide by 2; Period of sampling clock = 50nsec \n
+ * “01”:= divide by 4; Period of sampling clock = 100nsec \n
+ * “10”:= divide by 8; Period of sampling clock = 200nsec \n
  * “11”:= divide by 16; Period of sampling clock = 400nsec
  */
+void ALTROIF::SetSCDR(const std::bitset<4>& value)
+{
   Register::InsertValue<10>(fBits, value);
 }
 
+/** Nr Samples / channel == [9:0] */
 unsigned long ALTROIF::GetNSamples() const
 {
-  // Nr. Samples / channel ≡ [9:0]
   return Register::ReadValue<0,9>(fBits);
 }
 
+/** Nr Samples pr. channel == [9:0] */
 void ALTROIF::SetNSamples(const std::bitset< 10 >& value)
 {
-  // Nr. Samples / channel ≡ [9:0]
   Register::InsertValue<0>(fBits, value);
 }
 

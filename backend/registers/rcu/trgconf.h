@@ -27,7 +27,8 @@
 #include <register.h>
 #include <bitset>
 
-
+/** Trigger Configuration Register [16:0]
+*/
 class TRGCONF : public Register
 {
 public:

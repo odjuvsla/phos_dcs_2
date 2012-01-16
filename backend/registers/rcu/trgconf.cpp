@@ -23,58 +23,64 @@
 
 #include "trgconf.h"
 
-long unsigned int TRGCONF::GetTriggerSource() const
-{
-/* Trigger Source [16:14]
- * “100” ≡ CTP – Triger Enabled
- * “001” ≡ Software Trigger Enable (0x5306)
+/** Trigger Source [16:14].
+ * 
+ * “100” ≡ CTP – Triger Enabled \n
+ * “001” ≡ Software Trigger Enable (0x5306) \n
  * “110” ≡ Auxiliary Trigger Enable
  */
+long unsigned int TRGCONF::GetTriggerSource() const
+{
   return Register::ReadValue<14,16>(fBits);
 }
 
 
-void TRGCONF::SetTriggerSource(const std::bitset< 3 >& value)
-{
-/* Trigger Source [16:14]
- * “100” ≡ CTP – Triger Enabled
- * “001” ≡ Software Trigger Enable (0x5306)
+/** Trigger Source [16:14].
+ * 
+ * “100” ≡ CTP – Triger Enabled \n
+ * “001” ≡ Software Trigger Enable (0x5306) \n
  * “110” ≡ Auxiliary Trigger Enable
  */
+void TRGCONF::SetTriggerSource(const std::bitset< 3 >& value)
+{
   Register::InsertValue<14>(fBits, value);
 }
 
 bool TRGCONF::GetTriggerMode() const
 {
-/* Trigger Mode [13]
- * ‘0’ ≡ Trigger mode is TPC {L1 from CTP is mapped to L1 to FEC}
+/** Trigger Mode [13].
+ * 
+ * ‘0’ ≡ Trigger mode is TPC {L1 from CTP is mapped to L1 to FEC} \n
  * ‘1’ ≡ Trigger mode is PHOS {L0 from CTP is delivered as L1 to FEC}
  */
   return fBits[13];
 }
 
-void TRGCONF::SetTriggerMode(bool value)
-{
-/* Trigger Mode [13]
- * ‘0’ ≡ Trigger mode is TPC {L1 from CTP is mapped to L1 to FEC}
+/** Trigger Mode [13].
+ * 
+ * ‘0’ ≡ Trigger mode is TPC {L1 from CTP is mapped to L1 to FEC} \n
  * ‘1’ ≡ Trigger mode is PHOS {L0 from CTP is delivered as L1 to FEC}
  */
+void TRGCONF::SetTriggerMode(bool value)
+{
   fBits[13] = value;
 }
 
-long unsigned int TRGCONF::GetTriggerLatency() const
-{
-/* L1 – L2 Latency [12:0]
+/** L1 – L2 Latency [12:0].
+ * 
  * When software trigger is issued this latency is used to set the latency between L1 and L2 to FECs.
  */
+long unsigned int TRGCONF::GetTriggerLatency() const
+{
   return Register::ReadValue<0,12>(fBits);
 }
 
-void TRGCONF::SetTriggerLatency(const std::bitset< 13 >& value)
-{
-/* L1 – L2 Latency [12:0]
+/** L1 – L2 Latency [12:0].
+ * 
  * When software trigger is issued this latency is used to set the latency between L1 and L2 to FECs.
  */
+void TRGCONF::SetTriggerLatency(const std::bitset< 13 >& value)
+{
   Register::InsertValue<0>(fBits, value);
 }
 
