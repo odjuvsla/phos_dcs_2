@@ -94,7 +94,7 @@ void phosGui::setupConnections()
   connect(phosDcsLogging::Instance(), SIGNAL(LoggingReceived()), this, SLOT(log()));
   phosDcsLogging::Instance()->Logging ( std::string ( "Connected..." ), LOG_LEVEL_INFO );
   connect ( PiLogger::getInstance(), SIGNAL ( newLog ( LogElement ) ), _logViewer, SLOT ( addElement ( LogElement ) ) );
-  PIERROR("Starting Logger...");
+  //PIERROR("Starting Logger...") //TODO; determin: was this line put here simply for testing, if so, should it be completely removed?
 }
 
 void phosGui::setupMenuBar()
