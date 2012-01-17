@@ -21,9 +21,9 @@
 #ifndef PHOSREGISTERS_H
 #define PHOSREGISTERS_H
 
-#include "registermaps/RcuRegisterMap.h"
-#include "registermaps/AltroRegisterMap.h"
-#include "registermaps/BcRegisterMap.h"
+#include "RcuRegisterMap.h"
+#include "AltroRegisterMap.h"
+#include "BcRegisterMap.h"
 #include <iostream>
 #include <bitset>
 #include <phosdcstypes.h>

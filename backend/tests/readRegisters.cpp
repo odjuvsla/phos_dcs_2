@@ -24,7 +24,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <bitset>
-#include <../phosdcsclient.h>
+#include <phosdcsclient.h>
 #include <../pilogger/backend/pilogger.h>
 using namespace std;
 

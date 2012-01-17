@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "../phosdcsclient.h"
+#include "phosdcsclient.h"
 #include "phosdcstypes.h"
 #include <registers.h>"
 

@@ -19,7 +19,7 @@
 */
 
 #include "binarycompiler.h"
-#include "registermaps/RcuRegisterMap.h"
+#include "RcuRegisterMap.h"
 #include "instructionmaker.h"
 #include "../logger/phosdcslogging.h"
 #include "phosconstants.h"
