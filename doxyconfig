@@ -1,0 +1,40 @@
+# doxyconfig
+# This file describes the settings to be used by the documentation system
+# doxygen (www.doxygen.org) for a project.
+#
+# All text after a hash (#) is considered a comment and will be ignored
+# The format is:
+#       TAG = value [value, ...]
+# For lists items can also be appended using:
+#       TAG += value [value, ...]
+# Values that contain spaces should be placed between quotes (" ")
+
+PROJECT_NAME           = phos_dcs_2
+PROJECT_NUMBER         = "Version 0.1"
+FILE_PATTERNS          = *.cpp *.h q*.doc
+EXCLUDE_SYMBOLS        = std::*
+EXCLUDE_PATTERNS      = *codec.cpp moc_* */compat/*
+RECURSIVE              = YES
+TAB_SIZE               = 4
+ALPHABETICAL_INDEX    = YES
+COLS_IN_ALPHA_INDEX   = 3
+IGNORE_PREFIX         = Q
+ENABLE_PREPROCESSING  = YES
+MACRO_EXPANSION       = YES
+JAVADOC_AUTOBRIEF      = YES
+EXTRACT_ALL            = YES
+BUILTIN_STL_SUPPORT    = YES
+WARNINGS               = YES
+GENERATE_LATEX         = NO
+SORT_MEMBER_DOCS       = NO
+REPEAT_BRIEF           = YES
+PREDEFINED            = Q_PROPERTY(x)= \
+                        Q_OVERRIDE(x)= \
+                        Q_EXPORT= \
+                        Q_ENUMS(x)= \
+                        "QT_STATIC_CONST=static const " \
+                        _WS_X11_ \
+                        INCLUDE_MENUITEM_DEF
+EXPAND_ONLY_PREDEF    = YES
+EXPAND_AS_DEFINED     = Q_OBJECT_FAKE Q_OBJECT ACTIVATE_SIGNAL_WITH_PARAM \
+                        Q_VARIANT_AS
