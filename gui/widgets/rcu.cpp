@@ -24,7 +24,7 @@
 
 using namespace phosConstants;
 
-rcu::rcu(Rcu_t card, QWidget* parent): QWidget(parent) 
+rcu::rcu(RcuID card, QWidget* parent): QWidget(parent) 
 ,_rcuId(card)
 {
   setupWidgets();
@@ -37,11 +37,11 @@ rcu::~rcu()
 
 void rcu::setupWidgets()
 {
-  Branch_t branchB(BRANCH_B,0,0);
+  BranchID branchB(BRANCH_B,0,0);
   branch *bb = new branch(branchB, this);
   bb->setGeometry(10, 10);
   
-  Branch_t branchA(BRANCH_A, 0, 0);
+  BranchID branchA(BRANCH_A, 0, 0);
   branch *ba = new branch(branchA, this);
   ba->setGeometry(bb->x() + bb->width() + 10, bb->y());
   

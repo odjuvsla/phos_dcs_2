@@ -23,7 +23,7 @@
 
 using namespace phosDcs;
 
-fec::fec(Fec_t& fec) :
+fec::fec(FecID& fec) :
 _fecId(fec)
 {
 

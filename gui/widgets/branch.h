@@ -35,7 +35,7 @@ class branch : public QWidget
     
 public:
     /** Constructor */
-    explicit branch ( Branch_t branchId, QWidget* parent = 0, Qt::WindowFlags f = 0 );
+    explicit branch ( BranchID branchId, QWidget* parent = 0, Qt::WindowFlags f = 0 );
 
     /** Destructor */
     virtual ~branch();
@@ -50,7 +50,7 @@ private:
   void setupConnections();
   
   /** Branch id */
-  Branch_t _branch;
+  BranchID _branch;
   
   /** The FECs */
   QVector<feeCard*> _feeCards;

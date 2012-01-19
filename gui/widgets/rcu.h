@@ -31,7 +31,7 @@ class rcu : public QWidget
 public:
   
   /** Constructor must pass RCU definition */
-  explicit rcu (Rcu_t card,  QWidget* parent = 0);
+  explicit rcu (RcuID card,  QWidget* parent = 0);
   
   virtual ~rcu();
   
@@ -40,7 +40,7 @@ public:
 private:
 
   /** RCU definition */
-  Rcu_t _rcuId;
+  RcuID _rcuId;
   
   /** Default constructor, prohibited */
   rcu();

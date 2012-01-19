@@ -32,7 +32,7 @@ Q_OBJECT
 public:
 
     /** Constructor must pass module definition */
-    explicit module (Module_t card,  QWidget* parent = 0);
+    explicit module (ModuleID card,  QWidget* parent = 0);
     
     /** Destructor */
     virtual ~module() {}
@@ -41,7 +41,7 @@ public:
 
 private:
     /** Module definition */
-    Module_t _modId;
+    ModuleID _modId;
   
     /** Prohibited */
     module();

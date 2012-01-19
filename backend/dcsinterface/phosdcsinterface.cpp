@@ -26,7 +26,7 @@
 
 using namespace phosDcs;
 
-phosDcsInterface::phosDcsInterface(Rcu_t rcu, QString feeServerName) :
+phosDcsInterface::phosDcsInterface(RcuID rcu, QString feeServerName) :
 _rcuId(rcu)
 ,_rcu(0)
 ,_feeClient(0)
@@ -49,12 +49,12 @@ int phosDcsInterface::turnOnRcu()
   return _rcu->turnOn();
 }
 
-int phosDcsInterface::turnOnFec(const Fec_t& fec)
+int phosDcsInterface::turnOnFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::turnOnTru(const Tru_t& fec)
+int phosDcsInterface::turnOnTru(const TruID& fec)
 {
 
 }
@@ -64,12 +64,12 @@ int phosDcsInterface::turnOffRcu()
 
 }
 
-int phosDcsInterface::turnOffFec(const Fec_t& fec)
+int phosDcsInterface::turnOffFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::turnOffTru(const Tru_t& tru)
+int phosDcsInterface::turnOffTru(const TruID& tru)
 {
 
 }
@@ -79,12 +79,12 @@ int phosDcsInterface::toggleRcu()
 
 }
 
-int phosDcsInterface::toggleFec(const Fec_t& fec)
+int phosDcsInterface::toggleFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::toggleTru(const Tru_t& tru)
+int phosDcsInterface::toggleTru(const TruID& tru)
 {
 
 }

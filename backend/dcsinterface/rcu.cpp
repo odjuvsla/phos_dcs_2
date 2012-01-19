@@ -25,16 +25,16 @@
 using namespace phosDcs;
 
 
-rcu::rcu(Rcu_t rcu):
+rcu::rcu(RcuID rcu):
 _rcuId(rcu)
 ,_feeClient(0)
 {
   for(int i = 0; i < CARDS_PER_BRANCH; i++)
   {
-    Fec_t fA(i+1, BRANCH_A, _rcuId.getRcuId(), _rcuId.getModuleId());
+    FecID fA(i+1, BRANCH_A, _rcuId.getRcuId(), _rcuId.getModuleId());
     phosDcs::fec cardA(fA);
     _fecsBranchA.push_back(cardA);
-    Fec_t fB(i+1+MAX_CARDS_PER_BRANCH, BRANCH_B, _rcuId.getRcuId(), _rcuId.getModuleId());
+    FecID fB(i+1+MAX_CARDS_PER_BRANCH, BRANCH_B, _rcuId.getRcuId(), _rcuId.getModuleId());
     phosDcs::fec cardB(fB);
     _fecsBranchB.push_back(cardB);
   }
@@ -80,7 +80,7 @@ void rcu::turnOnFecs::run()
     actList.SetFECActive(0, fecCardNumber); // branch 0/A 
     _client->writeRcuRegister(&actList);
     usleep(500000);
-    Fec_t f = (*it).getFecId();
+    FecID f = (*it).getFecId();
     BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 
@@ -107,7 +107,7 @@ void rcu::turnOnFecs::run()
     actList.SetFECActive(1, fecCardNumber); // branch 0/A
     _client->writeRcuRegister(&actList);
     usleep(500000);
-    Fec_t f = (*it).getFecId();
+    FecID f = (*it).getFecId();
     BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 

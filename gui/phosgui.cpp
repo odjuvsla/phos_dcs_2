@@ -40,8 +40,10 @@
 #include <QVBoxLayout>
 //#pragma GCC diagnostic pop
 
-phosGui::phosGui ( QWidget* parent, Qt::WindowFlags flags ) : QMainWindow ( parent, flags )
-,_tabWidget(0)
+phosGui::phosGui ( QWidget* parent, Qt::WindowFlags flags )
+: QMainWindow ( parent, flags ),
+  _tabWidget(0),
+  _logViewer(0)
 {
     init();
 }
@@ -53,7 +55,7 @@ phosGui::~phosGui()
 
 void phosGui::init()
 {
-  setFixedSize(1600, 900);
+  //setFixedSize(1600, 900);
   setupWidgets();
   setupMenuBar();
   setupConnections();
@@ -70,9 +72,10 @@ void phosGui::setupWidgets()
   //mod0->setGeometry(10, menuBar()->y() + menuBar()->height());
   
   moduleTabs *tabs = new moduleTabs();
- // setCentralWidget(tabs);
+  setCentralWidget(tabs);
 
   _logViewer = new LogViewer();
+  
   
 //  QVBoxLayout *tabsLayout = new QVBoxLayout(tabsLayout);
   mainLayout->addWidget(tabs);
@@ -80,7 +83,7 @@ void phosGui::setupWidgets()
   
 //  mainLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
   
-  this->setLayout(mainLayout);
+//   setLayout(mainLayout);
   
   
   //Rcu_t rcu0(0, 0);

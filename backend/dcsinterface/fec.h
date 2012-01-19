@@ -29,13 +29,13 @@ class fec
 
 public:
   
-    fec(Fec_t &fec);
+    fec(FecID &fec);
     virtual ~fec();  
     
     fec(const fec& other);
     fec& operator=(const fec& other);
     
-    Fec_t getFecId() const { return _fecId; }
+    FecID getFecId() const { return _fecId; }
     
     uint_t getCardNumber() { return _fecId.getFecId(); }
     
@@ -43,7 +43,7 @@ public:
     
 private:
   
-    Fec_t _fecId;
+    FecID _fecId;
   
   /** Prohibited */
     fec();

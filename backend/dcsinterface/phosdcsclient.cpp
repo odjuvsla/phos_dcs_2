@@ -61,13 +61,13 @@ int phosDcsClient::writeRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::writeFecRegister(Register* reg, AltroCh_t* ch)
+int phosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
     if (ch)
     {
         std::stringstream log;
-        log << "ALTRO channel: " << ch->getChId() << ", chip: " << ch->getChipId() << ", FEC: " << ch->getFecId() << ", branch: " << ch->getBranchId();
+        log << "ALTRO channel: " << ch->getAltroChannelID() << ", chip: " << ch->getAltroID() << ", FEC: " << ch->getFecId() << ", branch: " << ch->getBranchId();
 	PIDEBUG("%s", log.str().c_str());
         //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 	return 0;
@@ -75,7 +75,7 @@ int phosDcsClient::writeFecRegister(Register* reg, AltroCh_t* ch)
     return -1;
 }
 
-int phosDcsClient::readFecRegister(Register* reg, AltroCh_t* ch)
+int phosDcsClient::readFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
 }
@@ -104,7 +104,7 @@ int phosDcsClient::readRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::readBcRegister(Register* reg, Fec_t* fec)
+int phosDcsClient::readBcRegister(Register* reg, FecID* fec)
 {
 QMutexLocker locker(_mutex);
   if (reg)

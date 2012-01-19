@@ -23,7 +23,7 @@
 #include <QFrame>
 #include "QDebug"
 
-branch::branch( Branch_t branchId, QWidget* parent, Qt::WindowFlags f ) : QWidget ( parent, f )
+branch::branch( BranchID branchId, QWidget* parent, Qt::WindowFlags f ) : QWidget ( parent, f )
 ,_branch(branchId)
 ,_feeCards(0)
 ,_frame()
@@ -50,7 +50,7 @@ void branch::setupWidgets()
   
   for(uint_t c = 0; c < CARDS_PER_BRANCH; c++)
   {
-    Fec_t cardId(c+1, _branch.getBranchId(), _branch.getRcuId(), _branch.getModuleId());
+    FecID cardId(c+1, _branch.getBranchId(), _branch.getRcuId(), _branch.getModuleId());
     feeCard *card = new feeCard(cardId, this);
     if(_branch.getBranchId() == BRANCH_A)
     {

@@ -21,7 +21,7 @@
 #include "module.h"
 #include "rcu.h"
 
-module::module(Module_t module, QWidget* parent): QWidget(parent)
+module::module(ModuleID module, QWidget* parent): QWidget(parent)
 ,_modId(module)
 {
     setupWidgets();
@@ -32,7 +32,7 @@ void module::setupWidgets()
   rcu *r = 0;
   for(uint_t rc = 0; rc < RCUS_PER_MODULE; rc++)
   {
-    Rcu_t tmpRcu(rc, _modId.getModuleId());
+    RcuID tmpRcu(rc, _modId.getModuleId());
     r = new rcu(tmpRcu, this);
     r->setGeometry(10, 10+rc*(r->height()));
   }

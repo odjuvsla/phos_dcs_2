@@ -26,14 +26,11 @@ int main()
 {
   phosDcsClient cl("FEESERVER");
   
-  AltroCh_t ch(3, 2, 1, 0, 0, 0);
+  AltroChannelID ch(3, 2, 1, 0, 0, 0);
  
   RDOMOD rdo;
   cl.writeRcuRegister(&rdo);
   
-
-//   AltroZSTHR_t thr;
-//   cl.writeFecRegister(&thr, &ch);
 
   return 0;
   

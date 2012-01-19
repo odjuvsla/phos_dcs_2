@@ -20,7 +20,7 @@
 
 #include "feecard.h"
 
-feeCard::feeCard (Fec_t card, QWidget* parent) : QPushButton ( parent )
+feeCard::feeCard (FecID card, QWidget* parent) : QPushButton ( parent )
 ,fFecId(card)
 ,_kWidth(15)
 ,_kHeight(80)
@@ -30,6 +30,7 @@ feeCard::feeCard (Fec_t card, QWidget* parent) : QPushButton ( parent )
   QString hexId;
   hexId = hexId.setNum(card.getFecId(), 16);
   setText(hexId.toUpper());
+
 }
 
 feeCard::~feeCard()

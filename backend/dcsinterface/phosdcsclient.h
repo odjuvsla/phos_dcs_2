@@ -49,16 +49,16 @@ public:
     int writeRcuRegister(Register *reg);
 
     /** Write a FEC register */
-    int writeFecRegister(Register *reg, AltroCh_t *ch = 0);
+    int writeFecRegister(Register *reg, AltroChannelID *ch = 0);
 
     /** Read an RCU register */
     int readRcuRegister(Register *reg);
 
     /** Read a FEC register */
-    int readFecRegister(Register *reg, AltroCh_t *ch = 0);
+    int readFecRegister(Register *reg, AltroChannelID *ch = 0);
 
     /** Read a board contoller register on a FEC */
-    int readBcRegister(Register *reg, Fec_t *fec = 0);
+    int readBcRegister(Register *reg, FecID *fec = 0);
 
 private:
 

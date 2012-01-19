@@ -31,7 +31,7 @@ class rcu
 {
 public:
   
-    rcu(Rcu_t rcu);
+    rcu(RcuID rcu);
     virtual ~rcu();
     
     /** Initialise the FEE client */
@@ -72,7 +72,7 @@ private:
 
     signals:
   
-    void cardChangedState(Fec_t card, int state);
+    void cardChangedState(FecID card, int state);
       
     private:
       
@@ -102,7 +102,7 @@ private:
 
     
     /** The RCU id */
-    Rcu_t _rcuId;
+    RcuID _rcuId;
   
     /** DCS client */
     phosDcsClient *_feeClient;

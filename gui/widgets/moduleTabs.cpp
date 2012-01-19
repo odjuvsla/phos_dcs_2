@@ -31,7 +31,7 @@ moduleTabs::moduleTabs(QWidget *parent) : QWidget(parent)
   {
     QString moduleName = QString("Module %1").arg(m);
     
-    Module_t mod(m);
+    ModuleID mod(m);
     newMod = new module(mod);
     tabs->addTab(newMod, moduleName);
   }

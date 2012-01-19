@@ -32,13 +32,15 @@ typedef unsigned long ulong_t;
 
 using namespace phosConstants;
 
-
-class Module_t
+/** Module ID */
+class ModuleID
 {
 public:
 
-    /** Constructor checks value */
-    Module_t(ushort_t id):
+    /** Constructor checks value
+     * @param id [0,4]
+     */
+    ModuleID(ushort_t id):
             fModuleId(id)
     {
         if (id >= PHOS_MODS)
@@ -52,8 +54,9 @@ public:
         fModuleId = id;
     }
 
-    virtual ~Module_t() {}
+    virtual ~ModuleID() {;}
 
+    /** @return Module ID [0,4]*/
     short getModuleId() {
         return fModuleId;
     }
@@ -62,29 +65,35 @@ private:
     short fModuleId;
 
     /** Default constructor disallowed */
-    Module_t();
+    ModuleID();
 
 };
 
-class Rcu_t : public Module_t
+/** ID of RCU and Module */
+class RcuID : public ModuleID
 
 {
 public:
-    /** Constructor checks value */
-    Rcu_t(ushort_t id, short modId) : Module_t(modId),
-            fRcuId(id)
+    /** Constructor checks value
+     * @param rcuID [0,3]
+     * @param modID [0,4]
+     */
+    RcuID(ushort_t rcuID, ushort_t modID)
+    : ModuleID(modID),
+      fRcuId(rcuID)
     {
-        if (id >= RCUS_PER_MODULE)
+        if (rcuID >= RCUS_PER_MODULE)
         {
             std::stringstream log;
 
-            log << "Rcu number: " << id << " is not valid (0 - 4 is allowed), exiting...";
+            log << "Rcu number: " << rcuID << " is not valid (0 - 3 is allowed), exiting...";
             phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
-        fRcuId = id;
+        fRcuId = rcuID;
     }
 
+    /** @return RCU ID [0,3]*/
     short getRcuId() {
         return fRcuId;
     }
@@ -93,15 +102,20 @@ private:
     short fRcuId;
 
     /** Default constructor disallowed */
-    Rcu_t();
+    RcuID();
 
 };
 
-class Branch_t : public Rcu_t
+/** ID of Branch, RCU, and Module */
+class BranchID : public RcuID
 {
 public:
-    /** Constructor checks value */
-    Branch_t(ushort_t id, short rcuId, short modId) : Rcu_t(rcuId, modId),
+    /** Constructor checks value
+      * @param id [0,1]
+      * @param rcuID [0,3]
+      * @param modID [0,4]
+      */
+    BranchID(ushort_t id, ushort_t rcuID, ushort_t modID) : RcuID(rcuID, modID),
             fBranchId(id)
     {
         if (id >= BRANCHES_PER_RCU)
@@ -114,7 +128,7 @@ public:
         }
         fBranchId = id;
     }
-
+    /** @return Branch ID [0,1] */
     ushort_t getBranchId() {
         return fBranchId;
     }
@@ -123,18 +137,24 @@ private:
     ushort_t fBranchId;
 
     /** Default constructor disallowed */
-    Branch_t();
+    BranchID();
 
 };
 
-class Fec_t : public Branch_t
+/** ID of FEC, Branch, RCU, and Module */
+class FecID : public BranchID
 {
 public:
-
-    Fec_t(ushort_t id, ushort_t branch, short rcu, short mod) : Branch_t(branch, rcu, mod),
+    /** Constructor checks value
+     * @param id [1,14]
+     * @param branchID [0,1]
+     * @param rcuID [0,3]
+     * @param modID [0,4]
+     */
+    FecID(ushort_t id, ushort_t branchID, ushort_t rcuID, ushort_t modID) : BranchID(branchID, rcuID, modID),
             fFecId(id)
     {
-        if (id > CARDS_PER_BRANCH)
+        if (id > CARDS_PER_BRANCH && id >0)
         {
             std::stringstream log;
 
@@ -145,6 +165,7 @@ public:
         fFecId = id;
     }
 
+    /** @return FEC ID [1,14] */
     ushort_t getFecId() {
         return fFecId;
     }
@@ -154,13 +175,19 @@ private:
     ushort_t fFecId;
 
     /** Default constructor disallowed */
-    Fec_t();
+    FecID();
 };
 
-class Tru_t : public Fec_t
+/** ID of TRU(Branch), RCU, and Module */
+class TruID : public BranchID
 {
 public:
-    Tru_t(ushort_t id, short rcu, short mod) : Fec_t(id*(CARDS_PER_BRANCH+2), id, rcu, mod),
+      /** Constructor checks value
+       * @param id [1,14], both TRU and Branch
+       * @param rcuID [0,3]
+       * @param modID [0,4]
+       */
+    TruID(ushort_t id, ushort_t rcuID, ushort_t modID) : BranchID(id, rcuID, modID),
             fTruId(id)
     {
         if (id >= TRUS_PER_RCU)
@@ -171,21 +198,35 @@ public:
             exit(-1);
         }
     }
+
+    /** @return TRU ID [0,1] */
     ushort_t getTruId() {
         return fTruId;
+    }
+
+    /** @return Corresponding FEC Register {0,16} */
+    ushort_t getFECRegister() {
+        return fTruId*16;
     }
 private:
 
     ushort_t fTruId;
 
-    Tru_t();
+    TruID();
 };
 
-class Chip_t : public Fec_t
+/** ID of FEC, Branch, RCU, and Module */
+class AltroID : public FecID
 {
 public:
-    /** Constructor checks value */
-    Chip_t(ushort_t id, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Fec_t(fecId, branchId, rcuId, modId),
+    /** Constructor checks value
+     * @param id {0,2,3,4}
+     * @param fecID [1,14]
+     * @param branchID [0,1]
+     * @param rcuID [0,3]
+     * @param modID [0,4]
+     */
+    AltroID(ushort_t id, ushort_t fecID, ushort_t branchID, short rcuID, short modID) : FecID(fecID, branchID, rcuID, modID),
             fChipId(id)
     {
         if (id > ALTROS_PER_FEE || id == 1)
@@ -199,7 +240,8 @@ public:
         fChipId = id;
     }
 
-    ushort_t getChipId() {
+    /** @return ALTRO ID {0,2,3,4} */
+    ushort_t getAltroID() {
         return fChipId;
     }
 
@@ -207,16 +249,23 @@ private:
     ushort_t fChipId;
 
     /** Default constructor disallowed */
-    Chip_t();
+    AltroID();
 
 };
 
-class AltroCh_t : public Chip_t
+class AltroChannelID : public AltroID
 {
 
 public:
-    /** Constructor checks value */
-    AltroCh_t(ushort_t id, ushort_t chipId, ushort_t fecId, ushort_t branchId, short rcuId, short modId) : Chip_t(chipId, fecId, branchId, rcuId, modId),
+    /** Constructor checks value
+     * @param id {0} U [2,16]
+     * @param altroID {0,2,3,4}
+     * @param fecID [1,14]
+     * @param branchID [0,1]
+     * @param rcuID [0,3]
+     * @param modID [0,4]
+     */
+    AltroChannelID(ushort_t id, ushort_t altroID, ushort_t fecID, ushort_t branchID, short rcuID, short modID) : AltroID(altroID, fecID, branchID, rcuID, modID),
             fChannelId(id)
     {
         if (id > CHANNELS_PER_ALTRO || id == 1)
@@ -230,7 +279,8 @@ public:
         fChannelId = id;
     }
 
-    ushort_t getChId() {
+    /** @return ALTRO Channel {0} U [2,16] */
+    ushort_t getAltroChannelID() {
         return fChannelId;
     }
 
@@ -240,7 +290,7 @@ private:
     ushort_t fChannelId;
 
     /** Default constructor disallowed */
-    AltroCh_t();
+    AltroChannelID();
 
 };
 
@@ -254,3 +304,4 @@ struct FeeServer_t
 };
 
 #endif
+

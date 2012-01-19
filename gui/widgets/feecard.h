@@ -31,7 +31,7 @@ class feeCard : public QPushButton
 public:
   
   /** Constructor must pass FEC card definition */
-  explicit feeCard (Fec_t card,  QWidget* parent = 0);
+  explicit feeCard (FecID card,  QWidget* parent = 0);
   
   virtual ~feeCard();
   
@@ -40,11 +40,11 @@ public:
 private:
 
   /** FEC definition */
-  Fec_t fFecId;
+  FecID fFecId;
   
   /** Default constructor, prohibited */
   feeCard();
-
+  
   const int _kWidth;
   const int _kHeight;
   
