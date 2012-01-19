@@ -23,7 +23,7 @@
 
 #include <qwidget.h>
 #include <QTabWidget>
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
   
 class module : public QWidget

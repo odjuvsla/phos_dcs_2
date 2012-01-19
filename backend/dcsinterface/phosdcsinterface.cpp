@@ -19,7 +19,7 @@
 */
 
 #include "phosdcsinterface.h"
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include "rcu.h"
 #include "../pilogger/backend/pilogger.h"
 

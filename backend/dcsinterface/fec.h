@@ -20,7 +20,7 @@
 
 #ifndef FEC_H
 #define FEC_H
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 namespace phosDcs
 {

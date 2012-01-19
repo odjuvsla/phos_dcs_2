@@ -21,7 +21,7 @@
 #ifndef PHOSDCSINTERFACE_H
 #define PHOSDCSINTERFACE_H
 
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include "phosdcsclient.h"
 #include "phosreadoutsettings.h"
 

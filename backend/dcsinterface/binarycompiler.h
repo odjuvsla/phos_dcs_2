@@ -23,7 +23,7 @@
 
 #include <vector>
 #include <string>
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include <qglobal.h>
 
 using namespace std;

@@ -26,7 +26,7 @@
 #include "BcRegisterMap.h"
 #include <iostream>
 #include <bitset>
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 class RcuALTROIF_t;
 class RcuRDOMOD_t;

@@ -22,7 +22,7 @@
 #define BRANCH_H
 
 #include <QtGui/qwidget.h>
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 class QLabel;
 class QFrame;

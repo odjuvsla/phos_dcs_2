@@ -20,7 +20,7 @@
 
 #ifndef INSTRUCTIONMAKER_H
 #define INSTRUCTIONMAKER_H
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 class instructionMaker
   {

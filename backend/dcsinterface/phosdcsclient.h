@@ -23,7 +23,7 @@
 
 #include "register.h"
 #include "phosregisters.h"
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include "binarycompiler.h"
 //#pragma GCC diagnostic ignored "-Weffc++"
 #include "FeeSampleClient.hpp"

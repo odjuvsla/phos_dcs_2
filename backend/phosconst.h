@@ -19,7 +19,7 @@
  * provided "as is" without express or implied warranty.                  *
  **************************************************************************/
 
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 namespace phosConst
   {

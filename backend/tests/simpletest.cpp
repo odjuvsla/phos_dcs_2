@@ -19,7 +19,7 @@
 */
 
 #include "phosdcsclient.h"
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include <registers.h>"
 
 int main()

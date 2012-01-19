@@ -22,7 +22,7 @@
 #define FECCARD_H
 
 #include <QPushButton>
-#include "phosdcstypes.h"
+#include "idtypes.h"
 
 
 class feeCard : public QPushButton

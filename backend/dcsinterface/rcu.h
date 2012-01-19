@@ -20,7 +20,7 @@
 
 #ifndef RCU_H
 #define RCU_H
-#include <phosdcstypes.h>
+#include <idtypes.h>
 #include "phosdcsclient.h"
 #include "fec.h"
 #include <QThread>

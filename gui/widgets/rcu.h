@@ -22,7 +22,7 @@
 #define RCU_H
 
 #include <QtGui/qwidget.h>
-#include "phosdcstypes.h"
+#include "idtypes.h"
 
 
 class rcu : public QWidget
