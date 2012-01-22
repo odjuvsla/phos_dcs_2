@@ -19,7 +19,7 @@
 */
 
 #include "branch.h"
-#include "feecard.h"
+#include "fecbutton.h"
 #include <QFrame>
 #include "QDebug"
 
@@ -51,15 +51,15 @@ void branch::setupWidgets()
   for(uint_t c = 0; c < CARDS_PER_BRANCH; c++)
   {
     FecID cardId(c+1, _branch.getBranchId(), _branch.getRcuId(), _branch.getModuleId());
-    feeCard *card = new feeCard(cardId, this);
-    if(_branch.getBranchId() == BRANCH_A)
-    {
-      card->setGeometry(10+c*15, 10);
-    }
-    if(_branch.getBranchId() == BRANCH_B)
-    {
-      card->setGeometry(_kWidth - c*15 - 25, 10);
-    }
+    FecButton *card = new FecButton(this, cardId);
+//     if(_branch.getBranchId() == BRANCH_A)
+//     {
+//       //card->setGeometry(10+c*15, 10);
+//     }
+//     if(_branch.getBranchId() == BRANCH_B)
+//     {
+//       //card->setGeometry(_kWidth - c*15 - 25, 10);
+//     }
   }
 }
 

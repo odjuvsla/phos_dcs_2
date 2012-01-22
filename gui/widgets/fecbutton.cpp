@@ -18,36 +18,20 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef FECCARD_H
-#define FECCARD_H
+#include "fecbutton.h"
 
-#include <QPushButton>
-#include "idtypes.h"
-
-
-class feeCard : public QPushButton
+FecButton::FecButton (QWidget* parent, FecID fecId)
+: QPushButton ( parent ),
+  fFecId(fecId)
 {
-  Q_OBJECT
-public:
-  
-  /** Constructor must pass FEC card definition */
-  explicit feeCard (FecID card,  QWidget* parent = 0);
-  
-  virtual ~feeCard();
-  
-  void setGeometry(int x, int y) { QPushButton::setGeometry(x, y, _kWidth, _kHeight);}
-  
-private:
+  QString hexId;
+  hexId = hexId.setNum(fecId.getFecId(), 16);
+  setText(hexId.toUpper());
+}
 
-  /** FEC definition */
-  FecID fFecId;
-  
-  /** Default constructor, prohibited */
-  feeCard();
-  
-  const int _kWidth;
-  const int _kHeight;
-  
-};
+QSize FecButton::sizeHint() const
+{
+  return QSize(16, 64);
+}
 
-#endif // FECCARD_H
+#include "fecbutton.moc"

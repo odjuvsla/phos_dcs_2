@@ -1,7 +1,8 @@
 /*
     Library for controlling and configuring the electronics for the PHOS
     detector at the ALICE Experiment
-    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
+			Henrik Qvigstad <henrik.qvigstad@cern.ch>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,25 +19,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "feecard.h"
+#ifndef FECCARD_H
+#define FECCARD_H
 
-feeCard::feeCard (FecID card, QWidget* parent) : QPushButton ( parent )
-,fFecId(card)
-,_kWidth(15)
-,_kHeight(80)
+#include <QPushButton>
+#include "idtypes.h"
+
+
+class FecButton : public QPushButton
 {
-  setFixedHeight(_kHeight);
-  setFixedWidth(_kWidth);
-  QString hexId;
-  hexId = hexId.setNum(card.getFecId(), 16);
-  setText(hexId.toUpper());
+  Q_OBJECT
+public:
+  /** Constructor must pass FEC card definition */
+  FecButton (QWidget* parent, FecID card  );
 
-}
+  QSize sizeHint() const;
+    
+private:
 
-feeCard::~feeCard()
-{
+  /** FEC definition */
+  FecID fFecId;
+  
+  /** Default constructor, prohibited */
+  //FecButton();
+    
+};
 
-}
-
-
-#include "feecard.moc"
+#endif // FECCARD_H

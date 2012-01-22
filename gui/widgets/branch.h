@@ -26,7 +26,7 @@
 
 class QLabel;
 class QFrame;
-class feeCard;
+class FecButton;
 
 class branch : public QWidget
 {
@@ -53,7 +53,7 @@ private:
   BranchID _branch;
   
   /** The FECs */
-  QVector<feeCard*> _feeCards;
+  QVector<FecButton*> _feeCards;
 
   /** The frame */
   QFrame *_frame;

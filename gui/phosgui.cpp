@@ -26,7 +26,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QTabWidget>
 
-#include "widgets/feecard.h"
+#include "widgets/fecbutton.h"
 
 #include "widgets/branch.h"
 #include "widgets/rcu.h"
