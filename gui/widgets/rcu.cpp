@@ -20,12 +20,13 @@
 
 #include "rcu.h"
 #include "phosconstants.h"
-#include "branch.h"
+#include "branchwidget.h"
 
 using namespace phosConstants;
 
-rcu::rcu(RcuID card, QWidget* parent): QWidget(parent) 
-,_rcuId(card)
+rcu::rcu(RcuID rcuID, QWidget* parent)
+: QGroupBox(parent),
+  rcuID(rcuID)
 {
   setupWidgets();
 }
@@ -37,16 +38,29 @@ rcu::~rcu()
 
 void rcu::setupWidgets()
 {
-  BranchID branchB(BRANCH_B,0,0);
-  branch *bb = new branch(branchB, this);
-  bb->setGeometry(10, 10);
+  QHBoxLayout* mainLayout = new QHBoxLayout;
+
+  QVBoxLayout* actionsLayout = new QVBoxLayout;
+  mainLayout->addLayout(actionsLayout);
+
+  QLabel* label = new QLabel(QString("RCU_%1").arg(rcuID.getRcuId()), this);
+  label->setAlignment(Qt::AlignLeft);
+  actionsLayout->addWidget(label);
+  actionsLayout->addWidget(new QPushButton("Update", this));
+  actionsLayout->addWidget(new QPushButton("All On", this));
+  actionsLayout->addWidget(new QPushButton("All Off", this));
+  actionsLayout->addStretch();
+
+  BranchID baID(BRANCH_A, rcuID);
+  BranchWidget *ba = new BranchWidget(baID, this);
+  mainLayout->addWidget(ba);
   
-  BranchID branchA(BRANCH_A, 0, 0);
-  branch *ba = new branch(branchA, this);
-  ba->setGeometry(bb->x() + bb->width() + 10, bb->y());
+
+  BranchID bbID(BRANCH_B, rcuID);
+  BranchWidget *bb = new BranchWidget(bbID, this);
+  mainLayout->addWidget(bb);
   
-  setFixedHeight(bb->height()+20);
-  setFixedWidth(bb->width()*2 + 20);
+  setLayout(mainLayout);
 }
 
 #include "rcu.moc"

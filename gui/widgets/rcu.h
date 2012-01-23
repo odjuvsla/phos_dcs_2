@@ -21,30 +21,31 @@
 #ifndef RCU_H
 #define RCU_H
 
-#include <QtGui/qwidget.h>
+#include <QtGui>
 #include "idtypes.h"
 
 
-class rcu : public QWidget
+class rcu : public QGroupBox
 {
   Q_OBJECT
 public:
   
   /** Constructor must pass RCU definition */
-  explicit rcu (RcuID card,  QWidget* parent = 0);
+  explicit rcu (RcuID rcuID,  QWidget* parent = 0);
   
   virtual ~rcu();
-  
-  void setGeometry(int x, int y) { QWidget::setGeometry(x, y, width(), height());}
+ 
   
 private:
+  void setupWidgets();
+  
 
   /** RCU definition */
-  RcuID _rcuId;
+  RcuID rcuID;
   
   /** Default constructor, prohibited */
   rcu();
-    void setupWidgets();
+    
 
 };
 
