@@ -17,56 +17,40 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#include "branchwidget.h"
 
-#include "branch.h"
+#include <QtGui>
 #include "fecbutton.h"
-#include <QFrame>
-#include "QDebug"
 
-branch::branch( BranchID branchId, QWidget* parent, Qt::WindowFlags f ) : QWidget ( parent, f )
-,_branch(branchId)
-,_feeCards(0)
-,_frame()
-,_label()
-,_kWidth(CARDS_PER_BRANCH*15+20)
-,_kHeight(100)
+BranchWidget::BranchWidget(BranchID branchId, QWidget* parent )
+: QGroupBox ( parent ),
+  branchID(branchId),
+  fecButtons(0)
+
 {
-  setFixedSize(_kWidth, _kHeight);
   setupWidgets();
   setupConnections();
 }
 
-branch::~branch()
-{
-  
-}
 
-void branch::setupWidgets()
+void BranchWidget::setupWidgets()
 {
-  _frame = new QFrame(this);
-  _frame->setFrameShadow(QFrame::Raised);
-  _frame->setFrameShape(QFrame::StyledPanel);
-  _frame->setFixedSize(_kWidth, _kHeight);
-  
-  for(uint_t c = 0; c < CARDS_PER_BRANCH; c++)
+  QHBoxLayout* mainLayout = new QHBoxLayout; 
+
+  for(uint_t cIdx = 1; cIdx <= CARDS_PER_BRANCH; cIdx++)
   {
-    FecID cardId(c+1, _branch.getBranchId(), _branch.getRcuId(), _branch.getModuleId());
-    FecButton *card = new FecButton(this, cardId);
-//     if(_branch.getBranchId() == BRANCH_A)
-//     {
-//       //card->setGeometry(10+c*15, 10);
-//     }
-//     if(_branch.getBranchId() == BRANCH_B)
-//     {
-//       //card->setGeometry(_kWidth - c*15 - 25, 10);
-//     }
+    FecID id(cIdx, branchID);
+    FecButton* fecButton = new FecButton(id, this);
+    mainLayout->addWidget(fecButton);
+    fecButtons.append(fecButton);
   }
+  setLayout(mainLayout);
 }
 
-void branch::setupConnections()
+void BranchWidget::setupConnections()
 {
   
 }
 
 
-#include "branch.moc"
+#include "branchwidget.moc"

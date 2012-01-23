@@ -21,26 +21,21 @@
 #ifndef BRANCH_H
 #define BRANCH_H
 
-#include <QtGui/qwidget.h>
-#include <idtypes.h>
-
-class QLabel;
-class QFrame;
 class FecButton;
 
-class branch : public QWidget
+#include <QtGui>
+#include <idtypes.h>
+
+class BranchWidget : public QGroupBox
 {
 
   Q_OBJECT
     
 public:
     /** Constructor */
-    explicit branch ( BranchID branchId, QWidget* parent = 0, Qt::WindowFlags f = 0 );
+    BranchWidget(BranchID branchId, QWidget* parent = 0);
 
-    /** Destructor */
-    virtual ~branch();
-
-    void setGeometry(int x, int y) { QWidget::setGeometry(x, y, _kWidth, _kHeight);}
+    
 private:
 
   /** Setup the internal widgets */
@@ -50,22 +45,15 @@ private:
   void setupConnections();
   
   /** Branch id */
-  BranchID _branch;
+  BranchID branchID;
   
   /** The FECs */
-  QVector<FecButton*> _feeCards;
-
-  /** The frame */
-  QFrame *_frame;
-
-  /** The label */
-  QLabel *_label;
+  QVector<FecButton*> fecButtons;
   
-  const int _kWidth;
-  const int _kHeight;
-
-  branch(const branch& );
-  branch operator=(const branch&);
+  /** not allowed */
+  BranchWidget();
+  BranchWidget(const BranchWidget& );
+  BranchWidget operator=(const BranchWidget&);
   
 };
 
