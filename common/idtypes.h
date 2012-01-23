@@ -26,6 +26,7 @@
 #include <sstream>
 #include <cstdlib>
 
+
 typedef unsigned int uint_t;
 typedef unsigned short ushort_t;
 typedef unsigned long ulong_t;
@@ -40,29 +41,33 @@ public:
     /** Constructor checks value
      * @param id [0,4]
      */
-    ModuleID(ushort_t id):
-            fModuleId(id)
-    {
-        if (id >= PHOS_MODS)
-        {
+    ModuleID(ushort_t id)
+      : moduleId(id)
+      { testModuleID(moduleId); }
+      
+
+    ModuleID(const ModuleID& other)
+      : moduleId(other.moduleId)
+      {;}
+
+    virtual ~ModuleID() {;}
+
+    /** @return Module ID [0,4]*/
+    ushort_t getModuleId()
+      { return moduleId; }
+
+    static void testModuleID(ushort_t id) {
+        if ( id >= PHOS_MODS) {
             std::stringstream log;
 
             log << "Module number: " << id << " is not valid (0 - 4 is allowed), exiting...";
             phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
-        fModuleId = id;
-    }
-
-    virtual ~ModuleID() {;}
-
-    /** @return Module ID [0,4]*/
-    short getModuleId() {
-        return fModuleId;
     }
 
 private:
-    short fModuleId;
+    ushort_t moduleId;
 
     /** Default constructor disallowed */
     ModuleID();
@@ -79,31 +84,39 @@ public:
      * @param modID [0,4]
      */
     RcuID(ushort_t rcuID, ushort_t modID)
-    : ModuleID(modID),
-      fRcuId(rcuID)
-    {
-        if (rcuID >= RCUS_PER_MODULE)
-        {
-            std::stringstream log;
+      : ModuleID(modID), rcuID(rcuID)
+      {testRcuID(rcuID);}
+    
+    /** Constructor checks value
+     * @param rcuID [0,3]
+     */
+    RcuID(ushort_t rcuID, const ModuleID& modID)
+      : ModuleID(modID), rcuID(rcuID)
+      {testRcuID(rcuID);}
 
-            log << "Rcu number: " << rcuID << " is not valid (0 - 3 is allowed), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
-            exit(-1);
-        }
-        fRcuId = rcuID;
-    }
+    RcuID(const RcuID& other)
+      : ModuleID(other), rcuID(other.rcuID)
+      {;}
 
     /** @return RCU ID [0,3]*/
-    short getRcuId() {
-        return fRcuId;
+    ushort_t getRcuId() {
+        return rcuID;
+    }
+
+    static void testRcuID(bool rcuID) {
+      if (rcuID >= RCUS_PER_MODULE) {
+        std::stringstream log;
+        log << "Rcu number: " << rcuID << " is not valid (0 - 3 is allowed), exiting...";
+        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
+        exit(-1);
+      }
     }
 
 private:
-    short fRcuId;
+    ushort_t rcuID;
 
     /** Default constructor disallowed */
     RcuID();
-
 };
 
 /** ID of Branch, RCU, and Module */
@@ -115,26 +128,37 @@ public:
       * @param rcuID [0,3]
       * @param modID [0,4]
       */
-    BranchID(ushort_t id, ushort_t rcuID, ushort_t modID) : RcuID(rcuID, modID),
-            fBranchId(id)
-    {
-        if (id >= BRANCHES_PER_RCU)
-        {
-            std::stringstream log;
+    BranchID(ushort_t id, ushort_t rcuID, ushort_t modID)
+      : RcuID(rcuID, modID), branchId(id)
+      { testBranchID(branchId);}
 
-            log << "Branch number: " << id << " is not valid (0 or 1 is allowed), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
-            exit(-1);
-        }
-        fBranchId = id;
-    }
+    /** Constructor checks value
+      * @param id [0,1]
+      */
+    BranchID(ushort_t id, const RcuID& other)
+      : RcuID(other), branchId(id)
+      { testBranchID(id); }
+
+    BranchID(const BranchID& other)
+      : RcuID(other), branchId(other.branchId)
+      {;}
+	    
     /** @return Branch ID [0,1] */
     ushort_t getBranchId() {
-        return fBranchId;
+        return branchId;
+    }
+
+    static void testBranchID(ushort_t branchID) {
+      if (branchID >= BRANCHES_PER_RCU) {
+        std::stringstream log;
+        log << "Branch number: " << branchID << " is not valid (0 or 1 is allowed), exiting...";
+        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
+        exit(-1);
+      }
     }
 
 private:
-    ushort_t fBranchId;
+    ushort_t branchId;
 
     /** Default constructor disallowed */
     BranchID();
@@ -151,28 +175,40 @@ public:
      * @param rcuID [0,3]
      * @param modID [0,4]
      */
-    FecID(ushort_t id, ushort_t branchID, ushort_t rcuID, ushort_t modID) : BranchID(branchID, rcuID, modID),
-            fFecId(id)
-    {
-        if (id > CARDS_PER_BRANCH && id >0)
-        {
-            std::stringstream log;
+    FecID(ushort_t id, ushort_t branchID, ushort_t rcuID, ushort_t modID)
+      : BranchID(branchID, rcuID, modID), fecID(id)
+	{testFecID(fecID);}
 
-            log << "Card number: " << id << " is too high (there are " << CARDS_PER_BRANCH << " cards per branch, card 0 is TRU), exiting...";
-            phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
-            exit(-1);
-        }
-        fFecId = id;
-    }
+   /** Constructor checks value
+     * @param id [1,14]
+     */
+    FecID(ushort_t id, const BranchID& other)
+      : BranchID(other), fecID(id)
+	{testFecID(fecID);}
+
+    FecID(const FecID& other)
+      : BranchID(other), fecID(other.fecID)
+      {;}
+
 
     /** @return FEC ID [1,14] */
     ushort_t getFecId() {
-        return fFecId;
+        return fecID;
     }
+
+    static void testFecID(ushort_t id) {
+      if (id > CARDS_PER_BRANCH && id >0) {
+        std::stringstream log;
+        log << "Card number: " << id << " is too high (there are " << CARDS_PER_BRANCH << " cards per branch, card 0 is TRU), exiting...";
+        phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
+        exit(-1);
+      }
+    }
+
 
 private:
   
-    ushort_t fFecId;
+    ushort_t fecID;
 
     /** Default constructor disallowed */
     FecID();
@@ -226,7 +262,7 @@ public:
      * @param rcuID [0,3]
      * @param modID [0,4]
      */
-    AltroID(ushort_t id, ushort_t fecID, ushort_t branchID, short rcuID, short modID) : FecID(fecID, branchID, rcuID, modID),
+    AltroID(ushort_t id, ushort_t fecID, ushort_t branchID, ushort_t rcuID, ushort_t modID) : FecID(fecID, branchID, rcuID, modID),
             fChipId(id)
     {
         if (id > ALTROS_PER_FEE || id == 1)
@@ -265,7 +301,7 @@ public:
      * @param rcuID [0,3]
      * @param modID [0,4]
      */
-    AltroChannelID(ushort_t id, ushort_t altroID, ushort_t fecID, ushort_t branchID, short rcuID, short modID) : AltroID(altroID, fecID, branchID, rcuID, modID),
+    AltroChannelID(ushort_t id, ushort_t altroID, ushort_t fecID, ushort_t branchID, ushort_t rcuID, ushort_t modID) : AltroID(altroID, fecID, branchID, rcuID, modID),
             fChannelId(id)
     {
         if (id > CHANNELS_PER_ALTRO || id == 1)
