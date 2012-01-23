@@ -20,18 +20,30 @@
 
 #include "fecbutton.h"
 
-FecButton::FecButton (QWidget* parent, FecID fecId)
+FecButton::FecButton (FecID fecID, QWidget* parent)
 : QPushButton ( parent ),
-  fFecId(fecId)
+  fecID(fecID)
 {
   QString hexId;
-  hexId = hexId.setNum(fecId.getFecId(), 16);
+  hexId = hexId.setNum(fecID.getFecId(), 16);
   setText(hexId.toUpper());
 }
 
 QSize FecButton::sizeHint() const
 {
+  return QSize(16, 96);
+}
+
+QSize FecButton::minimumSizeHint() const
+{
   return QSize(16, 64);
 }
+
+QSize FecButton::maximumSizeHint() const
+{
+  return QSize(20, 128);
+}
+
+
 
 #include "fecbutton.moc"

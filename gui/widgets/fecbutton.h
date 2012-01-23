@@ -31,14 +31,16 @@ class FecButton : public QPushButton
   Q_OBJECT
 public:
   /** Constructor must pass FEC card definition */
-  FecButton (QWidget* parent, FecID card  );
+  FecButton (FecID fecID, QWidget* parent = 0);
 
-  QSize sizeHint() const;
+  virtual QSize sizeHint() const; 
+  virtual QSize minimumSizeHint() const;
+  virtual QSize maximumSizeHint() const;
     
 private:
 
   /** FEC definition */
-  FecID fFecId;
+  FecID fecID;
   
   /** Default constructor, prohibited */
   //FecButton();
