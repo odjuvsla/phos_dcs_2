@@ -23,26 +23,27 @@
 
 //#pragma GCC diagnostic ignored "-Weffc++"
 #include <QtGui/qwidget.h>
+#include <qtabwidget.h>
 
 
 
 
-class moduleTabs : public QWidget
+class ModuleTabs : public QTabWidget
 {
   Q_OBJECT
 public:
   
-  explicit moduleTabs(QWidget *parent = 0);
-  virtual ~moduleTabs();
+  explicit ModuleTabs(QWidget *parent = 0);
+  virtual ~ModuleTabs();
   
 private:
   
   
   /** Prohibited */
     //moduleTabs();
-    moduleTabs(const moduleTabs& other);
-    moduleTabs& operator=(const moduleTabs& other);
-    bool operator==(const moduleTabs& other) const;
+    ModuleTabs(const ModuleTabs& other);
+    ModuleTabs& operator=(const ModuleTabs& other);
+    bool operator==(const ModuleTabs& other) const;
 };
 //#pragma GCC diagnostic error "-Weffc++"
 #endif // MODULETABS_H

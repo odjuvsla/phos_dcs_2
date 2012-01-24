@@ -18,29 +18,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "moduleTabs.h"
+#include "moduletabs.h"
 #include <QTabWidget>
+#include <iostream>
 
-#include "module.h"
 
-moduleTabs::moduleTabs(QWidget *parent) : QWidget(parent)
+#include "modulewidget.h"
+
+ModuleTabs::ModuleTabs(QWidget *parent)
+: QTabWidget(parent)
 {
-  QTabWidget *tabs = new QTabWidget(this);
-  module *newMod = 0;
+  
   for(uint_t m = 0; m < PHOS_MODS; m++)
   {
     QString moduleName = QString("Module %1").arg(m);
-    
     ModuleID mod(m);
-    newMod = new module(mod);
-    tabs->addTab(newMod, moduleName);
+
+    ModuleWidget * newMod = new ModuleWidget(mod, this);
+    addTab(newMod, moduleName);
   }
-  tabs->setGeometry(10, 10, newMod->width()+10, newMod->height()+20);
 }
 
-moduleTabs::~moduleTabs()
+ModuleTabs::~ModuleTabs()
 {
 
 }
 
-#include "moduleTabs.moc"
+#include "moduletabs.moc"
