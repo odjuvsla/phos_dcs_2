@@ -19,25 +19,25 @@
 */
 
 #include "module.h"
-#include "rcu.h"
+#include "rcuwidget.h"
 
 module::module(ModuleID module, QWidget* parent): QWidget(parent)
-,_modId(module)
+,modID(module)
 {
-    setupWidgets();
+  setupWidgets();
 }
 
 void module::setupWidgets()
 {
-  rcu *r = 0;
-  for(uint_t rc = 0; rc < RCUS_PER_MODULE; rc++)
+  
+  QVBoxLayout* mainLayout = new QVBoxLayout;
+  for(uint_t rIdx = 0; rIdx < RCUS_PER_MODULE; rIdx++)
   {
-    RcuID tmpRcu(rc, _modId.getModuleId());
-    r = new rcu(tmpRcu, this);
-    r->setGeometry(10, 10+rc*(r->height()));
+    RcuID rcuID(rIdx, modID);
+    RcuWidget * r = new RcuWidget(rcuID, this);
+    mainLayout->addWidget(r);
   }
-  setFixedHeight(RCUS_PER_MODULE*r->height() + 20);
-  setFixedWidth(RCUS_PER_MODULE*r->width() + 20);
+  setLayout(mainLayout);
 }
 
 #include "module.moc"

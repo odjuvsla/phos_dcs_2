@@ -32,16 +32,15 @@ Q_OBJECT
 public:
 
     /** Constructor must pass module definition */
-    explicit module (ModuleID card,  QWidget* parent = 0);
+    module (ModuleID card,  QWidget* parent = 0);
     
     /** Destructor */
     virtual ~module() {}
 
-    void setGeometry(int x, int y) { QWidget::setGeometry(x, y, width(), height());}
 
 private:
     /** Module definition */
-    ModuleID _modId;
+    ModuleID modID;
   
     /** Prohibited */
     module();
