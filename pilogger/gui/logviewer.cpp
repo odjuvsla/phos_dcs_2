@@ -107,5 +107,11 @@ void LogViewer::clearLog(){
 
 }
 
+QSize LogViewer::sizeHint() const
+{
+  
+  return QSize(1000, 750);
+}
+
 
 
