@@ -197,9 +197,9 @@ public:
     }
 
     static void testFecID(ushort_t id) {
-      if (id > CARDS_PER_BRANCH && id >0) {
+      if (id > CARDS_PER_BRANCH || id ==0) {
         std::stringstream log;
-        log << "Card number: " << id << " is too high (there are " << CARDS_PER_BRANCH << " cards per branch, card 0 is TRU), exiting...";
+        log << "Card number: " << id << " is out of bounds: [1," << CARDS_PER_BRANCH << "] (card 0 is TRU), exiting...";
         phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
         exit(-1);
       }
