@@ -18,26 +18,37 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "module.h"
-#include "rcuwidget.h"
+#ifndef MODULEWIDGET_H
+#define MODULEWIDGET_H
 
-module::module(ModuleID module, QWidget* parent): QWidget(parent)
-,modID(module)
-{
-  setupWidgets();
-}
+#include <qwidget.h>
+#include <QTabWidget>
+#include <idtypes.h>
 
-void module::setupWidgets()
-{
   
-  QVBoxLayout* mainLayout = new QVBoxLayout;
-  for(uint_t rIdx = 0; rIdx < RCUS_PER_MODULE; rIdx++)
-  {
-    RcuID rcuID(rIdx, modID);
-    RcuWidget * r = new RcuWidget(rcuID, this);
-    mainLayout->addWidget(r);
-  }
-  setLayout(mainLayout);
-}
+class ModuleWidget : public QWidget
+{
+Q_OBJECT
+public:
 
-#include "module.moc"
+    /** Constructor must pass module definition */
+    ModuleWidget (ModuleID card,  QWidget* parent = 0);
+    
+    /** Destructor */
+    virtual ~ModuleWidget() {}
+
+
+private:
+    /** Module definition */
+    ModuleID modID;
+  
+    /** Prohibited */
+    ModuleWidget();
+    ModuleWidget(const ModuleWidget& other);
+    ModuleWidget& operator=(const ModuleWidget& other);
+    bool operator==(const ModuleWidget& other) const;
+    void setupWidgets();
+    
+};
+
+#endif // MODULE_H
