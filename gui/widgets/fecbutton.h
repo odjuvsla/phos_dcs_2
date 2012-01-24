@@ -24,6 +24,7 @@
 
 #include <QPushButton>
 #include "idtypes.h"
+#include <QDate>
 
 
 class FecButton : public QPushButton
@@ -36,11 +37,20 @@ public:
   virtual QSize sizeHint() const; 
   virtual QSize minimumSizeHint() const;
   virtual QSize maximumSizeHint() const;
-    
+
+  const FecID& getFecID() {return fecID;}
+
+  enum Status {On=FEE_STATE_ON, Off=FEE_STATE_OFF, Waiting, Unknown};
+  Status GetStatus() const { return status; }
+  void SetStatus(Status newStatus, const QString& newMessage);
+  
 private:
 
   /** FEC definition */
   FecID fecID;
+  Status status;
+  QString message;
+  QDateTime time;
   
   /** Default constructor, prohibited */
   //FecButton();

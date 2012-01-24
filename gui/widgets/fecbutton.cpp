@@ -22,11 +22,17 @@
 
 FecButton::FecButton (FecID fecID, QWidget* parent)
 : QPushButton ( parent ),
-  fecID(fecID)
+  fecID(fecID),
+  status(Unknown),
+  message("Init value"),
+  time(QDateTime::currentDateTime())
 {
+  setEnabled(false);
+  
   QString hexId;
   hexId = hexId.setNum(fecID.getFecId(), 16);
   setText(hexId.toUpper());
+  
 }
 
 QSize FecButton::sizeHint() const
@@ -42,6 +48,35 @@ QSize FecButton::minimumSizeHint() const
 QSize FecButton::maximumSizeHint() const
 {
   return QSize(20, 128);
+}
+
+void FecButton::SetStatus(FecButton::Status newStatus, const QString& newMessage)
+{
+  status = newStatus;
+  message = newMessage;
+
+
+  if(status == On) {
+    setEnabled(true);
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Button, Qt::green);
+    setPalette(palette);
+  } 
+  else if( status == Off ) {
+    setEnabled(true);
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Button, Qt::red);
+    setPalette(palette);
+  }
+  else if( status == Waiting ) {
+    setEnabled(false);
+  }
+  else if ( status == Unknown ) {
+    setEnabled(false);
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Button, Qt::red);
+    setPalette(palette);
+  }
 }
 
 
