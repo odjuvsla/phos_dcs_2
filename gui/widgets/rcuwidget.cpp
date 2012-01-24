@@ -18,25 +18,25 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "rcu.h"
+#include "rcuwidget.h"
 #include "phosconstants.h"
 #include "branchwidget.h"
 
 using namespace phosConstants;
 
-rcu::rcu(RcuID rcuID, QWidget* parent)
+RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
 : QGroupBox(parent),
   rcuID(rcuID)
 {
   setupWidgets();
 }
 
-rcu::~rcu()
+RcuWidget::~RcuWidget()
 {
 
 }
 
-void rcu::setupWidgets()
+void RcuWidget::setupWidgets()
 {
   QHBoxLayout* mainLayout = new QHBoxLayout;
 
@@ -63,4 +63,4 @@ void rcu::setupWidgets()
   setLayout(mainLayout);
 }
 
-#include "rcu.moc"
+#include "rcuwidget.moc"

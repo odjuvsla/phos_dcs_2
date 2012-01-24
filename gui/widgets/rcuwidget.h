@@ -18,22 +18,22 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef RCU_H
-#define RCU_H
+#ifndef RCUWIDGET_H
+#define RCUWIDGET_H
 
 #include <QtGui>
 #include "idtypes.h"
 
 
-class rcu : public QGroupBox
+class RcuWidget : public QGroupBox
 {
   Q_OBJECT
 public:
   
   /** Constructor must pass RCU definition */
-  explicit rcu (RcuID rcuID,  QWidget* parent = 0);
+  explicit RcuWidget (RcuID rcuID,  QWidget* parent = 0);
   
-  virtual ~rcu();
+  virtual ~RcuWidget();
  
   
 private:
@@ -44,9 +44,9 @@ private:
   RcuID rcuID;
   
   /** Default constructor, prohibited */
-  rcu();
+  RcuWidget();
     
 
 };
 
-#endif // RCU_H
+#endif // RCUWIDGET_H
