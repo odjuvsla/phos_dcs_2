@@ -20,7 +20,7 @@
 
 #include "phosgui.h"
 
-#include <QtGui/QLabel>
+#include <QtGui>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QAction>
@@ -28,96 +28,81 @@
 
 #include "widgets/fecbutton.h"
 
-#include "widgets/branch.h"
-#include "widgets/rcu.h"
+#include "widgets/branchwidget.h"
+#include "widgets/rcuwidget.h"
 
 //#pragma GCC diagnostic ignored "-Weffc++"
 #include <qdebug.h>
-#include "widgets/module.h"
-#include "widgets/moduleTabs.h"
+#include "widgets/modulewidget.h"
+#include "widgets/moduletabs.h"
 #include "../pilogger/gui/logviewer.h"
 #include "../pilogger/backend/pilogger.h"
 #include <QVBoxLayout>
 //#pragma GCC diagnostic pop
 
-phosGui::phosGui ( QWidget* parent, Qt::WindowFlags flags )
+PhosGui::PhosGui ( QWidget* parent, Qt::WindowFlags flags )
 : QMainWindow ( parent, flags ),
-  _tabWidget(0),
-  _logViewer(0)
+  tabs(0),
+  logViewer(0)
 {
     init();
 }
 
-phosGui::~phosGui()
+PhosGui::~PhosGui()
 {
 
 }
 
-void phosGui::init()
+void PhosGui::init()
 {
-  //setFixedSize(1600, 900);
   setupWidgets();
   setupMenuBar();
   setupConnections();
+
 }
 
-void phosGui::setupWidgets()
+void PhosGui::setupWidgets()
 {
-  QVBoxLayout *mainLayout = new QVBoxLayout;
-//  setupTabs();
-//  setCentralWidget(_tabWidget);
- 
-  //Module_t module0(0);
-  //module *mod0 = new module(module0, this);
-  //mod0->setGeometry(10, menuBar()->y() + menuBar()->height());
-  
-  moduleTabs *tabs = new moduleTabs();
-  setCentralWidget(tabs);
+  tabs = new ModuleTabs();
+  logViewer = new LogViewer();
+  logViewer->setMinimumHeight(120);
 
-  _logViewer = new LogViewer();
   
-  
-//  QVBoxLayout *tabsLayout = new QVBoxLayout(tabsLayout);
-  mainLayout->addWidget(tabs);
-  mainLayout->addWidget(_logViewer);
-  
-//  mainLayout->setGeometry(QRect(10, 10, this->width(), this->height()));
-  
-//   setLayout(mainLayout);
-  
-  
-  //Rcu_t rcu0(0, 0);
-  //rcu *r0 = new rcu(rcu0, this);
-  //r0->setGeometry(10, menuBar()->y() + menuBar()->height());
-  
+  logDock = new QDockWidget("LogViewer", this);
+  logDock->setAllowedAreas(Qt::BottomDockWidgetArea);
+  addDockWidget(Qt::BottomDockWidgetArea, logDock);
+
+  setCentralWidget(tabs);
+  logDock->setWidget(logViewer);
 }
 
-void phosGui::setupConnections()
+void PhosGui::setupConnections()
 {
   connect(phosDcsLogging::Instance(), SIGNAL(LoggingReceived()), this, SLOT(log()));
   phosDcsLogging::Instance()->Logging ( std::string ( "Connected..." ), LOG_LEVEL_INFO );
-  connect ( PiLogger::getInstance(), SIGNAL ( newLog ( LogElement ) ), _logViewer, SLOT ( addElement ( LogElement ) ) );
+  connect ( PiLogger::getInstance(), SIGNAL ( newLog ( LogElement ) ), logViewer, SLOT ( addElement ( LogElement ) ) );
   //PIERROR("Starting Logger...") //TODO; determin: was this line put here simply for testing, if so, should it be completely removed?
 }
 
-void phosGui::setupMenuBar()
+void PhosGui::setupMenuBar()
 {
-    QAction* a = new QAction ( this );
-    a->setText ( "Quit" );
-    connect ( a, SIGNAL ( triggered() ), SLOT ( close() ) );
-    menuBar()->addMenu ( "File" )->addAction ( a );
+  quitAct = new QAction ( this );
+  quitAct->setText ( "Quit" );
+  connect ( quitAct, SIGNAL ( triggered() ), SLOT ( close() ) );
+    
 
+  fileMenu = menuBar()->addMenu("&File");
+  fileMenu->addAction ( quitAct );
+
+  viewMenu = menuBar()->addMenu("&View");
+  viewMenu->addAction(logDock->toggleViewAction());
 }
 
-void phosGui::setupTabs()
-{
-  _tabWidget = new QTabWidget(this);
-}
-
-void phosGui::log()
+void PhosGui::log()
 {
   qDebug() << phosDcsLogging::Instance()->GetLogViewerString().data();
 }
+
 
 
 #include "phosgui.moc"

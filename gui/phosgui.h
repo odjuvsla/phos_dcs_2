@@ -22,25 +22,27 @@
 #define PHOSGUI_H
 
 #include <QtGui/QMainWindow>
+#include "widgets/moduletabs.h"
 
 class QTabWidget;
 class LogViewer;
 
-class phosGui : public QMainWindow
+class PhosGui : public QMainWindow
 {
 Q_OBJECT
 public:
   
   /** Constructor */
-  explicit phosGui ( QWidget* parent = 0, Qt::WindowFlags flags = 0 );
+  explicit PhosGui ( QWidget* parent = 0, Qt::WindowFlags flags = 0 );
   
   /** Destructor */
-  virtual ~phosGui();
+  virtual ~PhosGui();
     
   
 public slots:
   
- void log();
+  void log();
+
   
 private:
     
@@ -56,16 +58,20 @@ private:
   /** Setup the menu bar */
   void setupMenuBar();
 
-  /** Setup the tabs */
-  void setupTabs();
-  
   /** Tab widget */
-  QTabWidget *_tabWidget;
+  ModuleTabs *tabs;
+  QDockWidget *logDock;
 
-  LogViewer *_logViewer;
+  LogViewer *logViewer;
 
-  phosGui(const phosGui& );
-  phosGui operator=(const phosGui&);
+  QMenu *fileMenu;
+  QMenu *viewMenu;
+  QAction *quitAct;
+  
+
+  /* not permited */
+  PhosGui(const PhosGui& );
+  PhosGui operator=(const PhosGui&);
   
 };
 
