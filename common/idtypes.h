@@ -25,7 +25,7 @@
 #include "phosdcslogging.h"
 #include <sstream>
 #include <cstdlib>
-
+#include <string.h>
 
 typedef unsigned int uint_t;
 typedef unsigned short ushort_t;
@@ -65,6 +65,12 @@ public:
         }
     }
 
+    virtual std::string toString() {
+      std::stringstream ss;
+      ss << "id_mod:" << moduleId;
+      return ss.str();
+    }
+ 
 private:
     ushort_t moduleId;
 
@@ -111,6 +117,12 @@ public:
       }
     }
 
+    virtual std::string toString() {
+      std::stringstream ss(ModuleID::toString());
+      ss << "_rcu:" << rcuID;
+      return ss.str();
+    }
+
 private:
     ushort_t rcuID;
 
@@ -154,6 +166,12 @@ public:
         phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
         exit(-1);
       }
+    }
+    
+    virtual std::string toString() {
+      std::stringstream ss(RcuID::toString());
+      ss << "_brc:" << branchId;
+      return ss.str();
     }
 
 private:
@@ -204,6 +222,11 @@ public:
       }
     }
 
+    virtual std::string toString() {
+      std::stringstream ss(BranchID::toString());
+      ss << "_fec:" << fecID;
+      return ss.str();
+    }
 
 private:
   
@@ -243,6 +266,13 @@ public:
     ushort_t getFECRegister() {
         return fTruId*16;
     }
+
+    virtual std::string toString() {
+      std::stringstream ss(BranchID::toString());
+      ss << "_tru:" << fTruId;
+      return ss.str();
+    }
+
 private:
 
     ushort_t fTruId;
@@ -278,6 +308,12 @@ public:
     /** @return ALTRO ID {0,2,3,4} */
     ushort_t getAltroID() {
         return fChipId;
+    }
+
+    virtual std::string toString() {
+      std::stringstream ss(FecID::toString());
+      ss << "_altro:" << fChipId;
+      return ss.str();
     }
 
 private:
@@ -317,6 +353,12 @@ public:
     /** @return ALTRO Channel {0} U [2,16] */
     ushort_t getAltroChannelID() {
         return fChannelId;
+    }
+
+    virtual std::string toString() {
+      std::stringstream ss(AltroID::toString());
+      ss << "_cha:" << fChannelId;
+      return ss.str();
     }
 
 private:
