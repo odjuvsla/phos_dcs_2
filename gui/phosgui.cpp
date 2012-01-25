@@ -74,6 +74,8 @@ void PhosGui::setupWidgets()
 
   setCentralWidget(tabs);
   logDock->setWidget(logViewer);
+
+  statusBar();
 }
 
 void PhosGui::setupConnections()
