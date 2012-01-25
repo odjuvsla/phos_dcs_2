@@ -42,15 +42,14 @@ public:
 
   enum Status {On=FEE_STATE_ON, Off=FEE_STATE_OFF, Waiting, Unknown};
   Status GetStatus() const { return status; }
-  void SetStatus(Status newStatus, const QString& newMessage);
+  void SetStatus(Status newStatus, const QString& message);
   
 private:
 
   /** FEC definition */
   FecID fecID;
   Status status;
-  QString message;
-  QDateTime time;
+
   
   /** Default constructor, prohibited */
   //FecButton();

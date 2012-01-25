@@ -23,11 +23,9 @@
 FecButton::FecButton (FecID fecID, QWidget* parent)
 : QPushButton ( parent ),
   fecID(fecID),
-  status(Unknown),
-  message("Init value"),
-  time(QDateTime::currentDateTime())
+  status(Unknown)
 {
-  setEnabled(false);
+  SetStatus(Unknown, "Init value");
   
   QString hexId;
   hexId = hexId.setNum(fecID.getFecId(), 16);
@@ -50,33 +48,39 @@ QSize FecButton::maximumSizeHint() const
   return QSize(20, 128);
 }
 
-void FecButton::SetStatus(FecButton::Status newStatus, const QString& newMessage)
+void FecButton::SetStatus(FecButton::Status newStatus, const QString& message)
 {
-  status = newStatus;
-  message = newMessage;
-
+  QString statusTip = QTime::currentTime().toString();
+  
 
   if(status == On) {
     setEnabled(true);
     QPalette palette = this->palette();
     palette.setColor(QPalette::Button, Qt::green);
     setPalette(palette);
+    statusTip.append(" - Status: On, ");
   } 
   else if( status == Off ) {
     setEnabled(true);
     QPalette palette = this->palette();
     palette.setColor(QPalette::Button, Qt::red);
     setPalette(palette);
+    statusTip.append(" - Status: Off, ");
   }
   else if( status == Waiting ) {
     setEnabled(false);
+    statusTip.append(" - Status: Waiting, ");
   }
   else if ( status == Unknown ) {
     setEnabled(false);
+    QColor defalutColor = QPalette().color(QPalette::Button);
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Button, Qt::red);
+    palette.setColor(QPalette::Button, defalutColor);
     setPalette(palette);
+    statusTip.append(" - Status: Unknown, ");
   }
+
+  setStatusTip(statusTip.append(message));
 }
 
 
