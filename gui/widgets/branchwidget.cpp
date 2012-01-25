@@ -21,15 +21,44 @@
 
 #include <QtGui>
 #include "fecbutton.h"
+#include "rcuwidget.h"
 
-BranchWidget::BranchWidget(BranchID branchId, QWidget* parent )
+/** Constructor */
+BranchWidget::BranchWidget(BranchID id, QWidget* parent )
 : QGroupBox ( parent ),
-  branchID(branchId),
+  branchID(id),
   fecButtons(0)
 
 {
+  if( BRANCH_A == branchID.getBranchId() )
+    setTitle("Branch A");
+  else if( BRANCH_B == branchID.getBranchId() )
+    setTitle("Branch B");
+
+  
   setupWidgets();
   setupConnections();
+}
+
+/** Slot to be used by FecButton instances to request toggle states on/off
+ * , will set button to Waiting and emit setFecState signal.
+ */
+void BranchWidget::fecButtonClicked()
+{
+  FecButton* fecButton = qobject_cast<FecButton *>(sender());
+  if(fecButton->GetStatus() == FecButton::On){
+    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to Off");
+    emit setFecState( fecButton->getFecID(), FEE_STATE_OFF );
+  }
+  else if(fecButton->GetStatus() == FecButton::Off) {
+    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to On");
+    emit setFecState( fecButton->getFecID(), FEE_STATE_ON );
+  }
+  else {
+    phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",
+					LOG_LEVEL_ERROR, __FILE__, __LINE__);
+    exit(-1);
+  }
 }
 
 
@@ -49,7 +78,9 @@ void BranchWidget::setupWidgets()
 
 void BranchWidget::setupConnections()
 {
-  
+  foreach(const FecButton* button, fecButtons) {
+    connect(button, SIGNAL(clicked()), this, SLOT(fecButtonClicked()));
+  };
 }
 
 

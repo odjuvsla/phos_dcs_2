@@ -32,25 +32,26 @@ class BranchWidget : public QGroupBox
   Q_OBJECT
     
 public:
-    /** Constructor */
     BranchWidget(BranchID branchId, QWidget* parent = 0);
 
+public slots:
+  
+private slots:
+  void fecButtonClicked();
+
+signals:
+  /** signal to request FEC state be switched to On/Off */
+  void setFecState(const FecID&, uint_t newState);
     
 private:
-
-  /** Setup the internal widgets */
   void setupWidgets();
-  
-  /** Setup the slot connections */
   void setupConnections();
   
-  /** Branch id */
   BranchID branchID;
   
-  /** The FECs */
   QVector<FecButton*> fecButtons;
   
-  /** not allowed */
+  /* not allowed */
   BranchWidget();
   BranchWidget(const BranchWidget& );
   BranchWidget operator=(const BranchWidget&);
