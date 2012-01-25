@@ -43,6 +43,14 @@ BranchWidget::BranchWidget(BranchID id, QWidget* parent )
   setupConnections();
 }
 
+void BranchWidget::setAll(FecButton::Status status, const QString& message)
+{
+  foreach(FecButton* button, fecButtons) {
+    button->SetStatus(status, message);
+  }
+}
+
+
 /** Slot to be used by FecButton instances to request toggle states on/off
  * , will set button to Waiting and emit setFecState signal.
  */

@@ -21,7 +21,7 @@
 #ifndef BRANCH_H
 #define BRANCH_H
 
-class FecButton;
+#include "fecbutton.h"
 
 #include <QtGui>
 #include <idtypes.h>
@@ -33,6 +33,8 @@ class BranchWidget : public QGroupBox
     
 public:
     BranchWidget(BranchID branchId, QWidget* parent = 0);
+
+    void setAll(FecButton::Status, const QString& message);
 
 public slots:
   
