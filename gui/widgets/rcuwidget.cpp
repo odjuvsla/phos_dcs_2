@@ -22,7 +22,7 @@
 #include "phosconstants.h"
 #include "branchwidget.h"
 
-using namespace phosConstants;
+using namespace PHOS;
 
 RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
 : QGroupBox(parent),
@@ -35,6 +35,13 @@ RcuWidget::~RcuWidget()
 {
 
 }
+
+void RcuWidget::setFecState(const FecID& id, uint_t newState)
+{
+  phosDcsLogging::Instance()->Logging("clickedds", LOG_LEVEL_INFO);
+  return;
+}
+
 
 void RcuWidget::setupWidgets()
 {

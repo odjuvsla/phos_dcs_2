@@ -24,7 +24,6 @@
 #include <QtGui>
 #include "idtypes.h"
 
-
 class RcuWidget : public QGroupBox
 {
   Q_OBJECT
@@ -34,7 +33,9 @@ public:
   explicit RcuWidget (RcuID rcuID,  QWidget* parent = 0);
   
   virtual ~RcuWidget();
- 
+
+public slots:
+  void setFecState(const FecID&, uint_t newState);
   
 private:
   void setupWidgets();
