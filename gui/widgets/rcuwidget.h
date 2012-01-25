@@ -31,6 +31,8 @@ public:
   
   /** Constructor must pass RCU definition */
   explicit RcuWidget (RcuID rcuID,  QWidget* parent = 0);
+
+  const RcuID& getRcuID() { return RcuID; }
   
   virtual ~RcuWidget();
 
