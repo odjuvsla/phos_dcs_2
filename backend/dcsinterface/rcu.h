@@ -59,7 +59,7 @@ private:
     public:
       
       /** Set FEE client to use */
-      void setFeeClient(phosDcsClient *client) { _client = client; }
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
 	
       /** Set the branches */
       void setBranches(std::vector<phosDcs::fec>* branchA, std::vector<phosDcs::fec>* branchB) 
@@ -76,7 +76,7 @@ private:
       
     private:
       
-      phosDcsClient *_client;
+      PhosDcsClient *_client;
       
       std::vector<phosDcs::fec> *_branchA;
       std::vector<phosDcs::fec> *_branchB;
@@ -92,11 +92,11 @@ private:
       void run();
 
       /** Set FEE client to use */
-      void setFeeClient(phosDcsClient *client) { _client = client; }
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
       
     private:
       
-      phosDcsClient *_client;
+      PhosDcsClient *_client;
       
     };
 
@@ -105,7 +105,7 @@ private:
     RcuID _rcuId;
   
     /** DCS client */
-    phosDcsClient *_feeClient;
+    PhosDcsClient *_feeClient;
     
     /** Vector with the FECs on branch A */
     std::vector<phosDcs::fec> _fecsBranchA;

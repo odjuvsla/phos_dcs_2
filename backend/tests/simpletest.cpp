@@ -24,7 +24,7 @@
 
 int main()
 {
-  phosDcsClient cl("FEESERVER");
+  PhosDcsClient cl("FEESERVER");
   
   AltroChannelID ch(3, 2, 1, 0, 0, 0);
  

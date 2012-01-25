@@ -92,7 +92,7 @@ private:
     phosDcs::rcu *_rcu;
     
     /** Pointer to the FEE client */
-    phosDcsClient *_feeClient;
+    PhosDcsClient *_feeClient;
     
     /** Name of the FEE server */
     QString _feeServerName;

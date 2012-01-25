@@ -50,7 +50,7 @@ rcu::~rcu()
 
 int rcu::init(QString feeServerName)
 {
-  _feeClient = new phosDcsClient(feeServerName);
+  _feeClient = new PhosDcsClient(feeServerName);
   _feeClient->registerFeeServerName(feeServerName.toStdString().c_str());
   int nServices = _feeClient->startFeeClient();
   std::stringstream log;

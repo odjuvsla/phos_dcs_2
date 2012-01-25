@@ -34,16 +34,16 @@ class QMutex;
 using namespace dcs;
 using namespace dcs::fee;
 
-class phosDcsClient : public FeeSampleClient
+class PhosDcsClient : public FeeSampleClient
 {
 
 public:
 
     /** Default constructor */
-    phosDcsClient(QString feeServerName);
+    PhosDcsClient(QString feeServerName);
 
     /** Destructor */
-    virtual ~phosDcsClient();
+    virtual ~PhosDcsClient();
 
     /** Write an RCU register */
     int writeRcuRegister(Register *reg);
@@ -74,13 +74,13 @@ private:
     QString _feeServerName;
       
     /** Default constructor, prohibited */
-    phosDcsClient();
+    PhosDcsClient();
     
     /** Copy constructor, prohibited */
-    phosDcsClient(const phosDcsClient& other);
+    PhosDcsClient(const PhosDcsClient& other);
 
     /** Assignement operator, prohibited */
-    phosDcsClient& operator=(const phosDcsClient& other);
+    PhosDcsClient& operator=(const PhosDcsClient& other);
 };
 
 #endif // PHOSDCSCLIENT_H

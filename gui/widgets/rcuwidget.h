@@ -41,8 +41,10 @@ private:
   void setupWidgets();
   
 
-  /** RCU definition */
+  /* RCU definition */
   RcuID rcuID;
+  
+  
   
   /** Default constructor, prohibited */
   RcuWidget();

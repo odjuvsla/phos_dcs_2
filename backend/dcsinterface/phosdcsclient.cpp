@@ -26,7 +26,7 @@
 #include <cstdio>
 #include <QMutex>
 
-phosDcsClient::phosDcsClient(QString feeServerName) : FeeSampleClient()
+PhosDcsClient::PhosDcsClient(QString feeServerName) : FeeSampleClient()
 	,_mutex(new QMutex)
         ,_binaryCompiler(0)
 	,_feeServerName(feeServerName)
@@ -34,12 +34,12 @@ phosDcsClient::phosDcsClient(QString feeServerName) : FeeSampleClient()
 
 }
 
-phosDcsClient::~phosDcsClient()
+PhosDcsClient::~PhosDcsClient()
 {
 
 }
 
-int phosDcsClient::writeRcuRegister(Register* reg)
+int PhosDcsClient::writeRcuRegister(Register* reg)
 {
     QMutexLocker locker(_mutex);
     if (reg)
@@ -61,7 +61,7 @@ int phosDcsClient::writeRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
+int PhosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
     if (ch)
@@ -75,12 +75,12 @@ int phosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
     return -1;
 }
 
-int phosDcsClient::readFecRegister(Register* reg, AltroChannelID* ch)
+int PhosDcsClient::readFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
 }
 
-int phosDcsClient::readRcuRegister(Register* reg)
+int PhosDcsClient::readRcuRegister(Register* reg)
 {
   QMutexLocker locker(_mutex);
   if (reg)
@@ -104,7 +104,7 @@ int phosDcsClient::readRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::readBcRegister(Register* reg, FecID* fec)
+int PhosDcsClient::readBcRegister(Register* reg, FecID* fec)
 {
 QMutexLocker locker(_mutex);
   if (reg)
@@ -130,7 +130,7 @@ QMutexLocker locker(_mutex);
 }
 
 
-int phosDcsClient::executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer )
+int PhosDcsClient::executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer )
 {
   vector<unsigned int> data;
 
