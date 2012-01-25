@@ -32,16 +32,22 @@ public:
   /** Constructor must pass RCU definition */
   explicit RcuWidget (RcuID rcuID,  QWidget* parent = 0);
 
-  const RcuID& getRcuID() { return RcuID; }
+  const RcuID& getRcuID() { return rcuID; }
   
   virtual ~RcuWidget();
 
 public slots:
   void setFecState(const FecID&, uint_t newState);
+
+protected:
+  void closeEvent(QCloseEvent * event);
   
 private:
   void setupWidgets();
-  
+
+  void readSettings();
+  void writeSettings();
+
 
   /* RCU definition */
   RcuID rcuID;

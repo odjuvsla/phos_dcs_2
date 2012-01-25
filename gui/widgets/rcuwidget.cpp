@@ -21,6 +21,7 @@
 #include "rcuwidget.h"
 #include "phosconstants.h"
 #include "branchwidget.h"
+#include <AckData.hpp>
 
 using namespace PHOS;
 
@@ -29,6 +30,8 @@ RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
   rcuID(rcuID)
 {
   setupWidgets();
+
+  readSettings();
 }
 
 RcuWidget::~RcuWidget()
@@ -40,6 +43,14 @@ void RcuWidget::setFecState(const FecID& id, uint_t newState)
 {
   phosDcsLogging::Instance()->Logging("clickedds", LOG_LEVEL_INFO);
   return;
+}
+
+
+void RcuWidget::closeEvent(QCloseEvent* event)
+{
+  writeSettings();
+  
+  QWidget::closeEvent(event);
 }
 
 
@@ -69,5 +80,24 @@ void RcuWidget::setupWidgets()
   
   setLayout(mainLayout);
 }
+
+
+void RcuWidget::readSettings()
+{
+  QSettings settings("ALICE", "phos_dcs_2");
+  QString rcustr(rcuID.toString().c_str());
+  QString dcsName = settings.value( QString("rcuwidget/%1/dcsName").arg(rcustr) ).toString();
+
+  //TODO: add action.
+}
+
+void RcuWidget::writeSettings()
+{
+  QString rcustr(rcuID.toString().c_str());
+  QSettings settings("ALICE", "phos_dcs_2");
+  settings.setValue(QString("rcuwidget/%1/dcsName").arg(rcustr),
+                            "dcsXXXX");//TODO: replace with acctuall value when implemented;  
+}
+
 
 #include "rcuwidget.moc"
