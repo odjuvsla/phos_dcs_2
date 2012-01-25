@@ -31,7 +31,6 @@ typedef unsigned int uint_t;
 typedef unsigned short ushort_t;
 typedef unsigned long ulong_t;
 
-using namespace phosConstants;
 
 /** Module ID */
 class ModuleID
@@ -57,7 +56,7 @@ public:
       { return moduleId; }
 
     static void testModuleID(ushort_t id) {
-        if ( id >= PHOS_MODS) {
+        if ( id >= PHOS::PHOS_MODS) {
             std::stringstream log;
 
             log << "Module number: " << id << " is not valid (0 - 4 is allowed), exiting...";
@@ -104,7 +103,7 @@ public:
     }
 
     static void testRcuID(bool rcuID) {
-      if (rcuID >= RCUS_PER_MODULE) {
+      if (rcuID >= PHOS::RCUS_PER_MODULE) {
         std::stringstream log;
         log << "Rcu number: " << rcuID << " is not valid (0 - 3 is allowed), exiting...";
         phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
@@ -149,7 +148,7 @@ public:
     }
 
     static void testBranchID(ushort_t branchID) {
-      if (branchID >= BRANCHES_PER_RCU) {
+      if (branchID >= PHOS::BRANCHES_PER_RCU) {
         std::stringstream log;
         log << "Branch number: " << branchID << " is not valid (0 or 1 is allowed), exiting...";
         phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
@@ -197,9 +196,9 @@ public:
     }
 
     static void testFecID(ushort_t id) {
-      if (id > CARDS_PER_BRANCH || id ==0) {
+      if (id > PHOS::CARDS_PER_BRANCH || id ==0) {
         std::stringstream log;
-        log << "Card number: " << id << " is out of bounds: [1," << CARDS_PER_BRANCH << "] (card 0 is TRU), exiting...";
+        log << "Card number: " << id << " is out of bounds: [1," << PHOS::CARDS_PER_BRANCH << "] (card 0 is TRU), exiting...";
         phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
         exit(-1);
       }
@@ -226,10 +225,10 @@ public:
     TruID(ushort_t id, ushort_t rcuID, ushort_t modID) : BranchID(id, rcuID, modID),
             fTruId(id)
     {
-        if (id >= TRUS_PER_RCU)
+        if (id >= PHOS::TRUS_PER_RCU)
         {
             std::stringstream log;
-            log << "TRU number: " << id << " is too high (there are " << TRUS_PER_RCU << " TRUs per RCU, card 0 is TRU), exiting...";
+            log << "TRU number: " << id << " is too high (there are " << PHOS::TRUS_PER_RCU << " TRUs per RCU, card 0 is TRU), exiting...";
             phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }
@@ -265,7 +264,7 @@ public:
     AltroID(ushort_t id, ushort_t fecID, ushort_t branchID, ushort_t rcuID, ushort_t modID) : FecID(fecID, branchID, rcuID, modID),
             fChipId(id)
     {
-        if (id > ALTROS_PER_FEE || id == 1)
+        if (id > PHOS::ALTROS_PER_FEE || id == 1)
         {
             std::stringstream log;
 
@@ -304,11 +303,11 @@ public:
     AltroChannelID(ushort_t id, ushort_t altroID, ushort_t fecID, ushort_t branchID, ushort_t rcuID, ushort_t modID) : AltroID(altroID, fecID, branchID, rcuID, modID),
             fChannelId(id)
     {
-        if (id > CHANNELS_PER_ALTRO || id == 1)
+        if (id > PHOS::CHANNELS_PER_ALTRO || id == 1)
         {
             std::stringstream log;
 
-            log << "ALTRO channel: " << id << " is not allowed (must be less than: " << CHANNELS_PER_ALTRO << "), exiting...";
+            log << "ALTRO channel: " << id << " is not allowed (must be less than: " << PHOS::CHANNELS_PER_ALTRO << "), exiting...";
             phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_ERROR, __FILE__, __LINE__);
             exit(-1);
         }

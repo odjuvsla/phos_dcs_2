@@ -24,6 +24,9 @@
 
 using namespace phosDcs;
 
+#include "phosconstants.h"
+using namespace PHOS;
+
 
 rcu::rcu(RcuID rcu):
 _rcuId(rcu)

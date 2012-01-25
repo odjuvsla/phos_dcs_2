@@ -21,6 +21,9 @@
 #include "modulewidget.h"
 #include "rcuwidget.h"
 
+#include "phosconstants.h"
+using namespace PHOS;
+
 ModuleWidget::ModuleWidget(ModuleID module, QWidget* parent)
 : QWidget(parent)
   ,modID(module)

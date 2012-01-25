@@ -23,7 +23,7 @@
 #include "../logger/phosdcslogging.h"
 #include <idtypes.h>
 
-using namespace phosConstants;
+using namespace PHOS;
 using namespace std;
 
 ulong_t

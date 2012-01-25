@@ -23,6 +23,9 @@
 #include "fecbutton.h"
 #include "rcuwidget.h"
 
+#include "phosconstants.h"
+using namespace PHOS;
+
 /** Constructor */
 BranchWidget::BranchWidget(BranchID id, QWidget* parent )
 : QGroupBox ( parent ),

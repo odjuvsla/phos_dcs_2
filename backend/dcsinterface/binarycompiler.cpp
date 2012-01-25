@@ -24,7 +24,7 @@
 #include "../logger/phosdcslogging.h"
 #include "phosconstants.h"
 
-using namespace phosConstants;
+using namespace PHOS;
 
 binaryCompiler::binaryCompiler()
 {

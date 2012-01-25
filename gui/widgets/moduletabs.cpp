@@ -22,6 +22,8 @@
 #include <QTabWidget>
 #include <iostream>
 
+#include "phosconstants.h"
+using namespace PHOS;
 
 #include "modulewidget.h"
 
