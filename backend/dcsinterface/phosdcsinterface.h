@@ -28,17 +28,17 @@
 #include <string>
 #include "rcu.h"
 
-class phosDcsInterface : public QObject
+class PhosDcsInterface : public QObject
 {
 
   Q_OBJECT
 public:
   
     /** Constructor takes RCU id as input */
-    phosDcsInterface(RcuID rcu, QString feeServerName);
+    PhosDcsInterface(RcuID rcu, QString feeServerName);
     
     /** Destructor */
-    virtual ~phosDcsInterface();
+    virtual ~PhosDcsInterface();
 
 public slots:
     /** Initilise the interface */
@@ -98,10 +98,10 @@ private:
     QString _feeServerName;
     
     /** Prohibited */
-    phosDcsInterface();
-    phosDcsInterface(const phosDcsInterface& other);
-    phosDcsInterface& operator=(const phosDcsInterface& other);
-    bool operator==(const phosDcsInterface& other) const;
+    PhosDcsInterface();
+    PhosDcsInterface(const PhosDcsInterface& other);
+    PhosDcsInterface& operator=(const PhosDcsInterface& other);
+    bool operator==(const PhosDcsInterface& other) const;
 };
 
 #endif // PHOSDCSINTERFACE_H
