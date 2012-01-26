@@ -27,6 +27,20 @@ using namespace PHOS;
 
 RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
 : QGroupBox(parent),
+  idLabel(0),
+  dcsNameEdit(0),
+  dcsNameLabel(0),
+  dcsNameStack(0),
+  connectButton(0),
+  updateButton(0),
+  connectUpdateStack(0),
+  menuButton(0),
+  branchA(0),
+  branchB(0),
+  menu(0),
+  disconnectAct(0),
+  allOnAct(0),
+  allOffAct(0),
   rcuID(rcuID)
 {
   setupActions();

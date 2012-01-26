@@ -57,24 +57,26 @@ private:
   void writeSettings();
 
   QLabel* idLabel;
+
   QLineEdit* dcsNameEdit;
   QLabel* dcsNameLabel;
   QStackedWidget* dcsNameStack;
-  QStackedWidget* connectUpdateStack;
+  
   QPushButton* connectButton;
   QPushButton* updateButton;
+  QStackedWidget* connectUpdateStack;
+
   QPushButton* menuButton;
   BranchWidget* branchA;
   BranchWidget* branchB;
   
-
   QMenu* menu;
-  //QAction* connectAct;
   QAction* disconnectAct;
   QAction* allOnAct;
   QAction* allOffAct;
+
   
-  /* RCU definition */
+  /* RCU definition/resources */
   RcuID rcuID;
 
   
