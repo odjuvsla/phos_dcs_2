@@ -24,6 +24,7 @@
 #include <QtGui>
 #include "idtypes.h"
 
+class BranchWidget;
 class RcuWidget : public QGroupBox
 {
   Q_OBJECT
@@ -38,20 +39,44 @@ public:
 
 public slots:
   void setFecState(const FecID&, uint_t newState);
+  void connectDcs(QString dcsName = "");
+  void disconnectDcs();
+  void update();
+  void allOn();
+  void allOff();
 
 protected:
   void closeEvent(QCloseEvent * event);
   
 private:
+  void setupActions();
   void setupWidgets();
-
+  void setupConnections();
+  void setupLayout();
   void readSettings();
   void writeSettings();
 
+  QLabel* idLabel;
+  QLineEdit* dcsNameEdit;
+  QLabel* dcsNameLabel;
+  QStackedWidget* dcsNameStack;
+  QStackedWidget* connectUpdateStack;
+  QPushButton* connectButton;
+  QPushButton* updateButton;
+  QPushButton* menuButton;
+  BranchWidget* branchA;
+  BranchWidget* branchB;
+  
 
+  QMenu* menu;
+  //QAction* connectAct;
+  QAction* disconnectAct;
+  QAction* allOnAct;
+  QAction* allOffAct;
+  
   /* RCU definition */
   RcuID rcuID;
-  
+
   
   
   /** Default constructor, prohibited */
