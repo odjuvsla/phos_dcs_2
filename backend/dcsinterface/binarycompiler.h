@@ -26,7 +26,6 @@
 #include "idtypes.h"
 #include <qglobal.h>
 
-using namespace std;
 
 class binaryCompiler
   {
@@ -97,7 +96,7 @@ class binaryCompiler
      * @param binData will contain the generated code
      * @return 0 if success
      */
-    int MakeReadFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, AltroChannelID channel, vector<uint_t> &binData);
+    int MakeReadFecRegisters(uint_t registerType, std::vector<uint_t> regAdds, AltroChannelID channel, std::vector<uint_t> &binData);
     
     /** 
      * Write to several ALTRO registers
@@ -125,7 +124,7 @@ class binaryCompiler
      * @param binData will contain the generated code
      * @return 0 if success
      */
-    int MakeReadBcRegister(std::vector<uint_t> regAdds, FecID card, vector<uint_t> &binData);
+    int MakeReadBcRegister(std::vector<uint_t> regAdds, FecID card, std::vector<uint_t> &binData);
     
   private:
 

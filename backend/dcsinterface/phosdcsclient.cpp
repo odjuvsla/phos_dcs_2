@@ -26,6 +26,8 @@
 #include <cstdio>
 #include <QMutex>
 
+using namespace std;
+
 PhosDcsClient::PhosDcsClient(QString feeServerName) : FeeSampleClient()
 	,_mutex(new QMutex)
         ,_binaryCompiler(0)

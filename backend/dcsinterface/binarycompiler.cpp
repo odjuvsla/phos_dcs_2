@@ -25,6 +25,7 @@
 #include "phosconstants.h"
 
 using namespace PHOS;
+using namespace std;
 
 binaryCompiler::binaryCompiler()
 {

@@ -31,10 +31,8 @@
 
 class QMutex;
 
-using namespace dcs;
-using namespace dcs::fee;
 
-class PhosDcsClient : public FeeSampleClient
+class PhosDcsClient : public dcs::fee::FeeSampleClient
 {
 
 public:
@@ -62,7 +60,7 @@ public:
 
 private:
 
-    int executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer );
+    int executeBinary(const std::vector<uint_t> & binData, std::vector<uint_t> &  resultBuffer );
     
     /** Mutex lock */
     QMutex *_mutex;
