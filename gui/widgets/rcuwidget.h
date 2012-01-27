@@ -23,6 +23,7 @@
 
 #include <QtGui>
 #include "idtypes.h"
+#include "phosdcsinterface.h"
 
 class BranchWidget;
 class RcuWidget : public QGroupBox
@@ -78,6 +79,7 @@ private:
   
   /* RCU definition/resources */
   RcuID rcuID;
+  PhosDcsInterface* dcsInterface;
 
   
   

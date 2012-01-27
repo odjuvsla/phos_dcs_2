@@ -41,7 +41,8 @@ RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
   disconnectAct(0),
   allOnAct(0),
   allOffAct(0),
-  rcuID(rcuID)
+  rcuID(rcuID),
+  dcsInterface(0)
 {
   setupActions();
   setupWidgets();
