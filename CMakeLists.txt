@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic -Woverloa
 include_directories(SYSTEM ${QT_INCLUDES})
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} logger common $ENV{FEECLIENT})
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} logger common backend/dcsinterface backend/registers backend/registermaps backend/registers )
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} logger common backend backend/dcsinterface backend/registers backend/registermaps backend/registers/rcu )
 
 set(FEECLIENT $ENV{FEECLIENT})
 include_directories(SYSTEM ${FEECLIENT}/include)
@@ -18,5 +18,4 @@ add_subdirectory(pilogger)
 add_subdirectory(gui)
 add_subdirectory(common)
 add_subdirectory(backend)
-add_subdirectory(backend/dcsinterface)
 

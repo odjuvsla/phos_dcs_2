@@ -158,3 +158,5 @@ int rcu::readRegister(Register* reg) const
   PIFATAL("RCU object not initialized.");
   return -1;
 }
+
+#include "rcu.moc"

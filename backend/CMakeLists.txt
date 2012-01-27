@@ -1,4 +1,3 @@
-
 include_directories(dcsinterface)
 include_directories(registers)
 include_directories(registers/rcu)
@@ -58,6 +57,7 @@ set(phosDcsBackend_SRCS ${phosDcsBackend_SRCS}
    )
 
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 qt4_automoc(${phosDcsBackend_SRCS})
 add_library(PhosDcsBackend ${phosDcsBackend_SRCS})
 target_link_libraries(PhosDcsBackend ${FEELIB} ${DIMLIB} PhosDcsLogging PiLogger ${QT_QTCORE_LIBRARY} )

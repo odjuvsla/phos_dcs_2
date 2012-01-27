@@ -26,68 +26,43 @@
 
 using namespace phosDcs;
 
-PhosDcsInterface::PhosDcsInterface(RcuID rcu, QString feeServerName) :
-_rcuId(rcu)
+PhosDcsInterface::PhosDcsInterface(const RcuID& rcu) :
+ _rcuId(rcu)
 ,_rcu(0)
 ,_feeClient(0)
-,_feeServerName(feeServerName)
+,lastACTFECLIST(0)
 {
   _rcu = new phosDcs::rcu(_rcuId);
 }
 
 PhosDcsInterface::~PhosDcsInterface()
 {
+  //TODO: implement cleanup!!!
 }
 
-int PhosDcsInterface::init()
+int PhosDcsInterface::connect(const QString& feeServerName)
 {
-  return _rcu->init(_feeServerName);
+  //int error =_rcu->init(feeServerName);
+  _feeClient = new PhosDcsClient(feeServerName);
 }
 
-int PhosDcsInterface::turnOnRcu()
+int PhosDcsInterface::turnOnOffFec(const FecID& fec, bool turnOn)
 {
-  return _rcu->turnOn();
+  if(lastACTFECLIST == 0 ) {
+    lastACTFECLIST = new ACTFECLIST(0x0);
+    _feeClient->readRcuRegister(lastACTFECLIST);
+    PIINFO("ACTFECLIST Read: 0x%X", lastACTFECLIST->GetValue());
+  }
+  //lastACTFECLIST->SetFECActive(fec.getBranchId(), fec.getFecId(), turnOn);
+  //_feeClient->writeFecRegister();
+    
 }
 
-int PhosDcsInterface::turnOnFec(const FecID& fec)
-{
-
-}
-
-int PhosDcsInterface::turnOnTru(const TruID& fec)
-{
-
-}
-
-int PhosDcsInterface::turnOffRcu()
-{
-
-}
-
-int PhosDcsInterface::turnOffFec(const FecID& fec)
+int PhosDcsInterface::turnOnOffTru(const TruID& tru, bool turnOn)
 {
 
 }
 
-int PhosDcsInterface::turnOffTru(const TruID& tru)
-{
-
-}
-
-int PhosDcsInterface::toggleRcu()
-{
-
-}
-
-int PhosDcsInterface::toggleFec(const FecID& fec)
-{
-
-}
-
-int PhosDcsInterface::toggleTru(const TruID& tru)
-{
-
-}
 
 int PhosDcsInterface::readRegister(Register* r) const
 {
@@ -97,3 +72,5 @@ int PhosDcsInterface::readRegister(Register* r) const
   }
   PIFATAL("RCU object not initialized.");
 }
+
+#include "phosdcsinterface.moc"

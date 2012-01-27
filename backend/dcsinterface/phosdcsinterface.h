@@ -27,50 +27,31 @@
 
 #include <string>
 #include "rcu.h"
+#include <actfeclist.h>
 
 class PhosDcsInterface : public QObject
 {
-
   Q_OBJECT
+  
 public:
   
     /** Constructor takes RCU id as input */
-    PhosDcsInterface(RcuID rcu, QString feeServerName);
+    PhosDcsInterface(const RcuID& rcu);
     
     /** Destructor */
     virtual ~PhosDcsInterface();
 
 public slots:
-    /** Initilise the interface */
-    int init();
-    
-    /** Turn on the FECs on the RCU */
-    int turnOnRcu();
-    
+    /** Connect/Initilise the interface */
+    int connect(const QString& feeServerName);
+
+    /* turn resources on/off*/
     /** Turn on a single FEC on the RCU */
-    int turnOnFec(const FecID &fec);
+    int turnOnOffFec(const FecID &fec, bool turnOn);
     
     /** Turn on a single TRU on the RCU */
-    int turnOnTru(const TruID &tru);
-    
-    /** Turn off the FECs on the RCU */
-    int turnOffRcu();
-    
-    /** Turn off a single FEC on the RCU */
-    int turnOffFec(const FecID &fec);
-    
-    /** Turn off a single TRU on the RCU */
-    int turnOffTru(const TruID &tru);
-    
-    /** Toggle on/off the FECs on the RCU */
-    int toggleRcu();
-    
-    /** Toggle on/off a single FEC on the RCU */
-    int toggleFec(const FecID &fec);
-    
-    /** Toggle on/off a TRU on the RCU */
-    int toggleTru(const TruID &tru);
-    
+    int turnOnOffTru(const TruID &tru, bool turnOn);
+
     /** Apply APD settings for the RCU */
     int applyApdSettings() const;
     
@@ -82,6 +63,7 @@ public slots:
     
     /** Read an  RCU register */
     int readRegister(Register *r) const;
+
     
 private:
 
@@ -93,9 +75,9 @@ private:
     
     /** Pointer to the FEE client */
     PhosDcsClient *_feeClient;
-    
-    /** Name of the FEE server */
-    QString _feeServerName;
+
+    /** Last known ACTFECLIST */
+    ACTFECLIST* lastACTFECLIST;
     
     /** Prohibited */
     PhosDcsInterface();

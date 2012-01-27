@@ -50,6 +50,8 @@ RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
   setupLayout();
 
   readSettings();
+
+  dcsInterface = new PhosDcsInterface(rcuID);
 }
 
 RcuWidget::~RcuWidget()
@@ -68,11 +70,15 @@ void RcuWidget::connectDcs(QString dcsName)
 {
   dcsNameEdit->setEnabled(false);
   connectButton->setEnabled(false);
-  phosDcsLogging::Instance()->Logging("RcuWidget::connectDcs not implemented", LOG_LEVEL_ERROR);
+
   
-  dcsNameLabel->setText(dcsNameEdit->text());
-  dcsNameStack->setCurrentIndex(1);
-  connectUpdateStack->setCurrentIndex(1);
+  int errorCode = dcsInterface->connect(dcsName);
+
+  if( ! errorCode ) {
+    dcsNameLabel->setText(dcsNameEdit->text());
+    dcsNameStack->setCurrentIndex(1);
+    connectUpdateStack->setCurrentIndex(1);
+  }
 }
 
 void RcuWidget::disconnectDcs()
