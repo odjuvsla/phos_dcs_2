@@ -71,14 +71,22 @@ void RcuWidget::connectDcs(QString dcsName)
   dcsNameEdit->setEnabled(false);
   connectButton->setEnabled(false);
 
-  
-  int errorCode = dcsInterface->connect(dcsName);
+  int errorCode = 1;
+  if(dcsName.size() > 0 )
+    errorCode = dcsInterface->connect(dcsName);
+  else
+    errorCode = dcsInterface->connect(dcsNameEdit->text());
 
-  if( ! errorCode ) {
+  if( ! errorCode ) { // if success 
     dcsNameLabel->setText(dcsNameEdit->text());
     dcsNameStack->setCurrentIndex(1);
     connectUpdateStack->setCurrentIndex(1);
   }
+  else { // if error 
+    dcsNameEdit->setEnabled(true);
+    connectButton->setEnabled(true);
+  }
+
 }
 
 void RcuWidget::disconnectDcs()
@@ -100,8 +108,8 @@ void RcuWidget::allOff()
 
 void RcuWidget::update()
 {
-  phosDcsLogging::Instance()->Logging("RcuWidget::update not implemented", LOG_LEVEL_ERROR);
-  //TODO: implement slot
+  //phosDcsLogging::Instance()->Logging("RcuWidget::update not implemented", LOG_LEVEL_ERROR);
+  dcsInterface->updateActiveFec();
 }
 
 void RcuWidget::closeEvent(QCloseEvent* event)

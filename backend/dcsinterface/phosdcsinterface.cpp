@@ -32,7 +32,7 @@ PhosDcsInterface::PhosDcsInterface(const RcuID& rcu) :
 ,_feeClient(0)
 ,lastACTFECLIST(0)
 {
-  _rcu = new phosDcs::rcu(_rcuId);
+  //_rcu = new phosDcs::rcu(_rcuId);
 }
 
 PhosDcsInterface::~PhosDcsInterface()
@@ -43,9 +43,14 @@ PhosDcsInterface::~PhosDcsInterface()
 int PhosDcsInterface::connect(const QString& feeServerName)
 {
   //int error =_rcu->init(feeServerName);
+  PIDEBUG("Initializing _feeClient, PhosDcsClient::PhosDcsClient(\"%s\")", feeServerName.toStdString().c_str());
   _feeClient = new PhosDcsClient(feeServerName);
+
+  phosDcsLogging::Instance()->Logging("PhosDcsInterface::connect does not return error code if appropriate", LOG_LEVEL_WARNING);
+  return 0; 
 }
 
+/** Turn on a single FEC on the RCU */
 int PhosDcsInterface::turnOnOffFec(const FecID& fec, bool turnOn)
 {
   if(lastACTFECLIST == 0 ) {
@@ -58,19 +63,53 @@ int PhosDcsInterface::turnOnOffFec(const FecID& fec, bool turnOn)
     
 }
 
+/** Turn on a single TRU on the RCU */
 int PhosDcsInterface::turnOnOffTru(const TruID& tru, bool turnOn)
 {
 
 }
 
+/** update the List of active FEC */
+int PhosDcsInterface::updateActiveFec()
+{
+  if(lastACTFECLIST == 0 ) {
+    lastACTFECLIST = new ACTFECLIST(0x0);
+  }
+  _feeClient->readRcuRegister(lastACTFECLIST);
+  PIINFO("ACTFECLIST Read: 0x%X", lastACTFECLIST->GetValue());
+}
+
+
+int PhosDcsInterface::applyApdSettings() const
+{
+  phosDcsLogging::Instance()->Logging("PhosDcsInterface::applyApdSettings not implemented", LOG_LEVEL_ERROR);
+  //TODO: implement
+  return 1;
+}
+
+int PhosDcsInterface::applyApdSettings(const FecID& fec) const
+{
+  phosDcsLogging::Instance()->Logging("PhosDcsInterface::applyApdSettings not implemented", LOG_LEVEL_ERROR);
+  //TODO: implement
+    return 1;
+}
+
+int PhosDcsInterface::applyReadoutSettings(const ReadoutSettings_t& readoutSettings) const
+{
+  phosDcsLogging::Instance()->Logging("PhosDcsInterface::applyReadoutSettings not implemented", LOG_LEVEL_ERROR);
+  //TODO: implement 
+    return 1;
+}
+
+
 
 int PhosDcsInterface::readRegister(Register* r) const
 {
-  if(_rcu)
-  {
-    return _rcu->readRegister(r);
-  }
-  PIFATAL("RCU object not initialized.");
+//   if(_rcu)
+//   {
+//     return _rcu->readRegister(r);
+//   }
+//   PIFATAL("RCU object not initialized.");
 }
 
 #include "phosdcsinterface.moc"

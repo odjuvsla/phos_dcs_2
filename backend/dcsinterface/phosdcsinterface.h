@@ -46,11 +46,11 @@ public slots:
     int connect(const QString& feeServerName);
 
     /* turn resources on/off*/
-    /** Turn on a single FEC on the RCU */
     int turnOnOffFec(const FecID &fec, bool turnOn);
     
-    /** Turn on a single TRU on the RCU */
     int turnOnOffTru(const TruID &tru, bool turnOn);
+
+    int updateActiveFec();
 
     /** Apply APD settings for the RCU */
     int applyApdSettings() const;

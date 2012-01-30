@@ -62,7 +62,7 @@ int rcu::init(QString feeServerName)
 
 int rcu::turnOn(bool on)
 {
-  rcu::turnOnFecs t;
+  turnOnFecs t;
   t.setFeeClient(_feeClient);
   t.setBranches(&_fecsBranchA, &_fecsBranchB);
   t.setOn(on);
@@ -70,7 +70,7 @@ int rcu::turnOn(bool on)
   return 0;
 }
 
-void rcu::turnOnFecs::run()
+void turnOnFecs::run()
 {
   ACTFECLIST actList;
   
@@ -134,7 +134,7 @@ void rcu::turnOnFecs::run()
 
 }
 
-void rcu::turnOnTrus::run()
+void turnOnTrus::run()
 {
   ACTFECLIST actList;
   
