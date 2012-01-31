@@ -79,7 +79,7 @@ void ALTROIF::SetIECS(const std::bitset<2>& value)
 unsigned long ALTROIF::GetSCDR() const
 {
   return Register::ReadValue<10,13>(fBits);
-};
+}
 
 /** Sampling Clock Dividing Ratio: T sampling / TLHC ≡ [13:10]
  *
