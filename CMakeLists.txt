@@ -18,5 +18,5 @@ add_subdirectory(pilogger)
 add_subdirectory(gui)
 add_subdirectory(common)
 add_subdirectory(backend)
-add_subdirectory(backend/dcsinterface)
+
 
