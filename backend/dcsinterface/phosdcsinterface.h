@@ -70,9 +70,6 @@ private:
     /** Which RCU do we handle */
     RcuID _rcuId;
   
-    /** Our RCU object */
-    phosDcs::rcu *_rcu;
-    
     /** Pointer to the FEE client */
     PhosDcsClient *_feeClient;
 

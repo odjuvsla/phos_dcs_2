@@ -28,11 +28,9 @@ using namespace phosDcs;
 
 PhosDcsInterface::PhosDcsInterface(const RcuID& rcu) :
  _rcuId(rcu)
-,_rcu(0)
 ,_feeClient(0)
 ,lastACTFECLIST(0)
 {
-  //_rcu = new phosDcs::rcu(_rcuId);
 }
 
 PhosDcsInterface::~PhosDcsInterface()
@@ -42,7 +40,6 @@ PhosDcsInterface::~PhosDcsInterface()
 
 int PhosDcsInterface::connect(const QString& feeServerName)
 {
-  //int error =_rcu->init(feeServerName);
   PIDEBUG("Initializing _feeClient, PhosDcsClient::PhosDcsClient(\"%s\")", feeServerName.toStdString().c_str());
   _feeClient = new PhosDcsClient(feeServerName);
 
@@ -105,11 +102,6 @@ int PhosDcsInterface::applyReadoutSettings(const ReadoutSettings_t& readoutSetti
 
 int PhosDcsInterface::readRegister(Register* r) const
 {
-//   if(_rcu)
-//   {
-//     return _rcu->readRegister(r);
-//   }
-//   PIFATAL("RCU object not initialized.");
 }
 
 #include "phosdcsinterface.moc"
