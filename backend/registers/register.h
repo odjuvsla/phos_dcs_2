@@ -57,12 +57,14 @@ class Register
     virtual void SetValue(Register::Value value) = 0;
 
 
-  // Convenience Functions
-  template<size_t from, size_t to, size_t N>
-  static unsigned long ReadValue(const std::bitset<N>& bits);
+    operator Register::Value() { return GetValue(); }
 
-  template<size_t from, size_t N, size_t M>
-  static unsigned long InsertValue(std::bitset<N>& bits, const std::bitset<M>& inserts);
+    // Convenience Functions
+    template<size_t from, size_t to, size_t N>
+    static unsigned long ReadValue(const std::bitset<N>& bits);
+
+    template<size_t from, size_t N, size_t M>
+    static unsigned long InsertValue(std::bitset<N>& bits, const std::bitset<M>& inserts);
 };
 
 
