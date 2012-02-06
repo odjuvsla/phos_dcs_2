@@ -87,19 +87,19 @@ void turnOnFecs::run()
     BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 
-    int state = FEE_STATE_UNKNOWN;
+    int state = FEC_UNKNOWN;
     
     if(reg.GetValue() == PCMVERSION)
     {
-	state = FEE_STATE_ON;
+	state = FEC_ON;
     }
     else if(reg.GetValue() == OLD_PCMVERSION)
     {
-      state = FEE_STATE_WARNING;
+      state = FEC_STATE_WARNING;
     }
     else
     {
-      state = FEE_STATE_ERROR;
+      state = FEC_ERROR;
     }
   }
   for(it = _branchB->begin(); it < _branchB->end(); ++it)
@@ -114,20 +114,20 @@ void turnOnFecs::run()
     BCVERSION reg(0x0);
     _client->readBcRegister(&reg, &f);
 
-    int state = FEE_STATE_UNKNOWN;
+    int state = FEC_UNKNOWN;
     
     if(reg.GetValue() == PCMVERSION)
     {
-	state = FEE_STATE_ON;
+	state = FEC_ON;
 	
     }
     else if(reg.GetValue() == OLD_PCMVERSION)
     {
-      state = FEE_STATE_WARNING;
+      state = FEC_STATE_WARNING;
     }
     else
     {
-      state = FEE_STATE_ERROR;
+      state = FEC_ERROR;
     }
     emit cardChangedState(f, state);
   }

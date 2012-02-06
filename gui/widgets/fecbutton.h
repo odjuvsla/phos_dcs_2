@@ -40,8 +40,8 @@ public:
 
   const FecID& getFecID() {return fecID;}
 
-  enum Status {On=PHOS::FEE_STATE_ON,
-	       Off=PHOS::FEE_STATE_OFF,
+  enum Status {On=PHOS::FEC_ON,
+	       Off=PHOS::FEC_OFF,
 	       Waiting, Unknown};
   Status GetStatus() const { return status; }
   void SetStatus(Status newStatus, const QString& message);
