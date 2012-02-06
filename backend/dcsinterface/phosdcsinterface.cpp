@@ -44,20 +44,21 @@ int PhosDcsInterface::connect(const QString& feeServerName)
   _feeClient = new PhosDcsClient(feeServerName);
 
   phosDcsLogging::Instance()->Logging("PhosDcsInterface::connect does not return error code if appropriate", LOG_LEVEL_WARNING);
-  return 0; 
+  return 0;
 }
 
 /** Turn on a single FEC on the RCU */
 int PhosDcsInterface::turnOnOffFec(const FecID& fec, bool turnOn)
 {
-  if(lastACTFECLIST == 0 ) {
+  /*if(lastACTFECLIST == 0 ) {
     lastACTFECLIST = new ACTFECLIST(0x0);
     _feeClient->readRcuRegister(lastACTFECLIST);
     PIINFO("ACTFECLIST Read: 0x%X", lastACTFECLIST->GetValue());
   }
-  //lastACTFECLIST->SetFECActive(fec.getBranchId(), fec.getFecId(), turnOn);
+  *///lastACTFECLIST->SetFECActive(fec.getBranchId(), fec.getFecId(), turnOn);
   //_feeClient->writeFecRegister();
-    
+  PIDEBUG("PhosDcsInterface::turnOnOffFec not implemented")
+  exit(1);
 }
 
 /** Turn on a single TRU on the RCU */
