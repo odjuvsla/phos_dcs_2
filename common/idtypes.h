@@ -203,6 +203,10 @@ public:
       : BranchID(other), fecID(id)
 	{testFecID(fecID);}
 
+    FecID(ushort_t fecID, ushort_t branchID, const RcuID& rcuID)
+      : BranchID(branchID ,rcuID), fecID(fecID)
+      {;}
+
     FecID(const FecID& other)
       : BranchID(other), fecID(other.fecID)
       {;}
