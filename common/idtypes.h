@@ -52,7 +52,7 @@ public:
     virtual ~ModuleID() {;}
 
     /** @return Module ID [0,4]*/
-    ushort_t getModuleId()
+    ushort_t getModuleId() const
       { return moduleId; }
 
     static void testModuleID(ushort_t id) {
@@ -104,7 +104,7 @@ public:
       {;}
 
     /** @return RCU ID [0,3]*/
-    ushort_t getRcuId() {
+    ushort_t getRcuId() const {
         return rcuID;
     }
 
@@ -155,7 +155,7 @@ public:
       {;}
 	    
     /** @return Branch ID [0,1] */
-    ushort_t getBranchId() {
+    ushort_t getBranchId() const {
         return branchId;
     }
 
@@ -209,7 +209,7 @@ public:
 
 
     /** @return FEC ID [1,14] */
-    ushort_t getFecId() {
+    ushort_t getFecId() const {
         return fecID;
     }
 
@@ -258,7 +258,7 @@ public:
     }
 
     /** @return TRU ID [0,1] */
-    ushort_t getTruId() {
+    ushort_t getTruId() const {
         return fTruId;
     }
 
@@ -306,7 +306,7 @@ public:
     }
 
     /** @return ALTRO ID {0,2,3,4} */
-    ushort_t getAltroID() {
+    ushort_t getAltroID() const {
         return fChipId;
     }
 
@@ -351,7 +351,7 @@ public:
     }
 
     /** @return ALTRO Channel {0} U [2,16] */
-    ushort_t getAltroChannelID() {
+    ushort_t getAltroChannelID() const {
         return fChannelId;
     }
 

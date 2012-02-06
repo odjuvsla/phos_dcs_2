@@ -41,7 +41,7 @@ PhosDcsClient::~PhosDcsClient()
 
 }
 
-int PhosDcsClient::writeRcuRegister(Register* reg)
+int PhosDcsClient::writeRcuRegister(const Register* reg)
 {
     QMutexLocker locker(_mutex);
     if (reg)
@@ -63,7 +63,7 @@ int PhosDcsClient::writeRcuRegister(Register* reg)
     return -1;
 }
 
-int PhosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
+int PhosDcsClient::writeFecRegister(const Register* reg, const AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
     if (ch)
@@ -77,7 +77,7 @@ int PhosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
     return -1;
 }
 
-int PhosDcsClient::readFecRegister(Register* reg, AltroChannelID* ch)
+int PhosDcsClient::readFecRegister(Register* reg, const AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
 }
@@ -106,7 +106,7 @@ int PhosDcsClient::readRcuRegister(Register* reg)
     return -1;
 }
 
-int PhosDcsClient::readBcRegister(Register* reg, FecID* fec)
+int PhosDcsClient::readBcRegister(Register* reg, const FecID* fec)
 {
 QMutexLocker locker(_mutex);
   if (reg)
