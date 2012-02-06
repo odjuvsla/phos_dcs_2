@@ -43,7 +43,7 @@ BranchWidget::BranchWidget(BranchID id, QWidget* parent )
   setupConnections();
 }
 
-void BranchWidget::setAll(FecButton::Status status, const QString& message)
+void BranchWidget::setAll(FecStatus status, const QString& message)
 {
   foreach(FecButton* button, fecButtons) {
     button->SetStatus(status, message);
@@ -57,12 +57,12 @@ void BranchWidget::setAll(FecButton::Status status, const QString& message)
 void BranchWidget::fecButtonClicked()
 {
   FecButton* fecButton = qobject_cast<FecButton *>(sender());
-  if(fecButton->GetStatus() == FecButton::On){
-    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to Off");
+  if(fecButton->GetStatus() == FEC_ON){
+    fecButton->SetStatus(FEC_UNKNOWN, "sent request to toggle to Off");
     emit setFecState( fecButton->getFecID(), FEC_OFF );
   }
-  else if(fecButton->GetStatus() == FecButton::Off) {
-    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to On");
+  else if(fecButton->GetStatus() == FEC_OFF) {
+    fecButton->SetStatus(FEC_UNKNOWN, "sent request to toggle to On");
     emit setFecState( fecButton->getFecID(), FEC_ON );
   }
   else {

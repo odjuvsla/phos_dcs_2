@@ -20,12 +20,15 @@
 
 #include "fecbutton.h"
 
+#include "phosconstants.h"
+using namespace PHOS;
+
 FecButton::FecButton (FecID fecID, QWidget* parent)
 : QPushButton ( parent ),
   fecID(fecID),
-  status(Unknown)
+  status(FEC_UNKNOWN)
 {
-  SetStatus(Unknown, "Init value");
+  SetStatus(FEC_UNKNOWN, "Init value");
   
   QString hexId;
   hexId = hexId.setNum(fecID.getFecId(), 16);
@@ -48,30 +51,30 @@ QSize FecButton::maximumSizeHint() const
   return QSize(20, 128);
 }
 
-void FecButton::SetStatus(FecButton::Status newStatus, const QString& message)
+void FecButton::SetStatus(FecStatus newStatus, const QString& message)
 {
   QString statusTip = QTime::currentTime().toString();
   
 
-  if(status == On) {
+  if(status == FEC_ON) {
     setEnabled(true);
     QPalette palette = this->palette();
     palette.setColor(QPalette::Button, Qt::green);
     setPalette(palette);
     statusTip.append(" - Status: On, ");
   } 
-  else if( status == Off ) {
+  else if( status == FEC_OFF) {
     setEnabled(true);
     QPalette palette = this->palette();
     palette.setColor(QPalette::Button, Qt::red);
     setPalette(palette);
     statusTip.append(" - Status: Off, ");
   }
-  else if( status == Waiting ) {
-    setEnabled(false);
-    statusTip.append(" - Status: Waiting, ");
-  }
-  else if ( status == Unknown ) {
+  //else if( status == FEC_ ) {
+  //  setEnabled(false);
+  //  statusTip.append(" - Status: Waiting, ");
+  //}
+  else if ( status == FEC_UNKNOWN ) {
     setEnabled(false);
     QColor defalutColor = QPalette().color(QPalette::Button);
     QPalette palette = this->palette();
@@ -79,6 +82,8 @@ void FecButton::SetStatus(FecButton::Status newStatus, const QString& message)
     setPalette(palette);
     statusTip.append(" - Status: Unknown, ");
   }
+  else
+    phosDcsLogging::Instance()->Logging("FecButton::SetStatus, state not handled", LOG_LEVEL_ERROR);
 
   setStatusTip(statusTip.append(message));
 }

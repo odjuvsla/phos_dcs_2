@@ -24,6 +24,7 @@
 
 #include <QPushButton>
 #include "idtypes.h"
+#include "phosconstants.h"
 #include <QDate>
 
 
@@ -40,17 +41,16 @@ public:
 
   const FecID& getFecID() {return fecID;}
 
-  enum Status {On=PHOS::FEC_ON,
-	       Off=PHOS::FEC_OFF,
-	       Waiting, Unknown};
-  Status GetStatus() const { return status; }
-  void SetStatus(Status newStatus, const QString& message);
+  PHOS::FecStatus GetStatus() const { return status; }
+
+public slots:
+  void SetStatus(PHOS::FecStatus newStatus, const QString& message);
   
 private:
 
   /** FEC definition */
   FecID fecID;
-  Status status;
+  PHOS::FecStatus status;
 
   
   /** Default constructor, prohibited */

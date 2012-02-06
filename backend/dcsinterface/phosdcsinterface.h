@@ -22,6 +22,7 @@
 #define PHOSDCSINTERFACE_H
 
 #include "idtypes.h"
+#include "phosconstants.h"
 #include "phosdcsclient.h"
 #include "phosreadoutsettings.h"
 
@@ -63,6 +64,9 @@ public slots:
     
     /** Read an  RCU register */
     int readRegister(Register *r) const;
+
+signals:
+    void updatedFecStatus(const FecID& id, PHOS::FecStatus newState, const QString& message);
 
     
 private:

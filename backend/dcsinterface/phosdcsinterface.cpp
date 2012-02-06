@@ -19,9 +19,16 @@
 */
 
 #include "phosdcsinterface.h"
-#include "idtypes.h"
 #include "rcu.h"
 #include "../pilogger/backend/pilogger.h"
+#include <bc/bcversion.h>
+
+#include "idtypes.h"
+#include "phosconstants.h"
+using namespace PHOS;
+
+#include <sstream>
+using namespace std;
 
 
 using namespace phosDcs;
@@ -75,6 +82,34 @@ int PhosDcsInterface::updateActiveFec()
   }
   _feeClient->readRcuRegister(lastACTFECLIST);
   PIINFO("ACTFECLIST Read: 0x%X", lastACTFECLIST->GetValue());
+
+  // Loop over fec cards
+  for(int bidx = 0; bidx < 2; ++bidx) { // Branch Index
+    for(int fidx = 1; fidx <= CARDS_PER_BRANCH; ++fidx) { // Fec Index
+      FecID fecID(fidx, bidx, _rcuId);
+      if( lastACTFECLIST->GetFECActive(bidx, fidx) )
+      {
+	BCVERSION bcvReg(0x0);
+	_feeClient->readBcRegister(&bcvReg, &fecID);
+
+	// Check BC version
+	if(BC::VERSION != bcvReg ) { // if different, assume card is in state of error.
+	  stringstream message;
+	  message << "FEC (" << ") did not return correct BCVERSION (" << endl;
+	  phosDcsLogging::Instance()->Logging("error", LOG_LEVEL_ERROR);
+	  emit updatedFecStatus(fecID, FEC_ERROR, message.str().c_str());
+	  continue;
+	}
+
+	//if this point is reached, assume card is not in state of error, and thus on
+	emit updatedFecStatus(fecID, FEC_ON, "no error found, assume FEC is on.");
+      }
+      else // if not lastACTFECLIST->GetFECActive
+      {
+	emit updatedFecStatus(fecID, FEC_OFF, "ACTEFLIST of rcu sugest FEC is Off");
+      }
+    }
+  }
 }
 
 
@@ -95,7 +130,7 @@ int PhosDcsInterface::applyApdSettings(const FecID& fec) const
 int PhosDcsInterface::applyReadoutSettings(const ReadoutSettings_t& readoutSettings) const
 {
   phosDcsLogging::Instance()->Logging("PhosDcsInterface::applyReadoutSettings not implemented", LOG_LEVEL_ERROR);
-  //TODO: implement 
+  //TODO: implement
     return 1;
 }
 
@@ -104,5 +139,6 @@ int PhosDcsInterface::applyReadoutSettings(const ReadoutSettings_t& readoutSetti
 int PhosDcsInterface::readRegister(Register* r) const
 {
 }
+
 
 #include "phosdcsinterface.moc"

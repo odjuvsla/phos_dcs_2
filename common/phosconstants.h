@@ -122,8 +122,8 @@ const signed int REG_CRAZY = -3;
 const signed int REG_UNKNOWN = 2;
 
 
-/*FEC state constants*/
-enum FecState { FEC_OFF = 1,
+/*FEC status constants*/
+enum FecStatus{ FEC_OFF = 1,
 		FEC_ON  = 2,
                 DCS_NOT_MASTER = 3,
                 FEC_UNKNOWN  = 4,
@@ -172,6 +172,11 @@ const unsigned int CSPVAL = 0;   //Position of least significant bit of CSP valu
 
 const unsigned int REGVAL = 0;   //Position of least significant bit of CSP value  register (least significant 20 bits)
 
+//PHOS::BC
+namespace BC
+{
+  const unsigned long VERSION = 0x20;
+}
 }
 
 

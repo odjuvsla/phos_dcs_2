@@ -44,14 +44,14 @@ RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
   rcuID(rcuID),
   dcsInterface(0)
 {
+  dcsInterface = new PhosDcsInterface(rcuID);
+  
   setupActions();
   setupWidgets();
   setupConnections();
   setupLayout();
 
   readSettings();
-
-  dcsInterface = new PhosDcsInterface(rcuID);
 }
 
 RcuWidget::~RcuWidget()
@@ -59,7 +59,7 @@ RcuWidget::~RcuWidget()
 
 }
 
-void RcuWidget::setFecState(const FecID& id, uint_t newState)
+void RcuWidget::setFecStatus(const FecID& id, FecStatus newState, const QString& message)
 {
   phosDcsLogging::Instance()->Logging("RcuWidget::setFecState not implemented", LOG_LEVEL_ERROR);
   //TODO: implement slot
@@ -162,6 +162,9 @@ void RcuWidget::setupConnections()
   connect(disconnectAct, SIGNAL(triggered()), this, SLOT(disconnectDcs()));
   connect(allOnAct, SIGNAL(triggered()), this, SLOT(allOn()));
   connect(allOffAct, SIGNAL(triggered()), this, SLOT(allOff()));
+
+  connect(dcsInterface, SIGNAL(updatedFecStatus(FecID,PHOS::FecStatus,QString)),
+	  this, SLOT(setFecStatus(FecID,PHOS::FecStatus,QString)));
 }
 
 
