@@ -59,11 +59,11 @@ void BranchWidget::fecButtonClicked()
   FecButton* fecButton = qobject_cast<FecButton *>(sender());
   if(fecButton->GetStatus() == FecButton::On){
     fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to Off");
-    emit setFecState( fecButton->getFecID(), FEE_STATE_OFF );
+    emit setFecState( fecButton->getFecID(), FEC_OFF );
   }
   else if(fecButton->GetStatus() == FecButton::Off) {
     fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to On");
-    emit setFecState( fecButton->getFecID(), FEE_STATE_ON );
+    emit setFecState( fecButton->getFecID(), FEC_ON );
   }
   else {
     phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",

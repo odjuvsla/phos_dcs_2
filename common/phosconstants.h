@@ -122,15 +122,16 @@ const signed int REG_CRAZY = -3;
 const signed int REG_UNKNOWN = 2;
 
 
-/*FEE state constants*/
-const unsigned int FEE_STATE_OFF = 1;
-const unsigned int FEE_STATE_ON  = 2;
-const unsigned int DCS_NOT_MASTER = 3;
-const unsigned int FEE_STATE_UNKNOWN  = 4;
-const unsigned int FEE_STATE_ERROR    = 5;
-const unsigned int UNKNOWN_PCMVERSION = 6;
-const unsigned int UNKNOWN_ERROR  = 7;
-const unsigned int FEE_STATE_WARNING = 8;
+/*FEC state constants*/
+enum FecState { FEC_OFF = 1,
+		FEC_ON  = 2,
+                DCS_NOT_MASTER = 3,
+                FEC_UNKNOWN  = 4,
+                FEC_ERROR    = 5,
+                UNKNOWN_PCMVERSION = 6,
+                UNKNOWN_ERROR  = 7,
+                FEC_STATE_WARNING = 8 };
+
 
 /*Firmware version of the PHOS boardcontroller*/
 const unsigned long int OLD_PCMVERSION = 0x34;
