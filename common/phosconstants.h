@@ -163,7 +163,7 @@ const unsigned int CMD_TYPE = 20;   //20=Position of the Commmand type LS bit
 const unsigned int PAR = 19;   //19=Position of the parity but
 const unsigned int BCAST = 18;   //18=Position of the broadcast register bit. Broadacst=1, no broadcast=0 (ms 20 bits)
 const unsigned int BC_AL = 17;   //17=Position of command type bit. Boarcontroller=1, Altro=0
-const unsigned int BRANCH = 16;   //Branch A=0, Branch B=1
+const unsigned int BRANCH_SHIFT = 16;   //Branch A=0, Branch B=1
 const unsigned int FAD = 12;   //Poistion of least significant bit of FEE adress register (most significant 20 bits)
 const unsigned int REGAD = 8;     //Position of least significant bit of CSP adress register (most significant 20 bits)
 

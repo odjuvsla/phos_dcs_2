@@ -74,7 +74,7 @@ instructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool 
   // Calculating parity (1 if odd, 0 if even)
   uint_t tmpInstruction = 0;
   int tmpParity = 0;
-  tmpInstruction = ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
+  tmpInstruction = ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH_SHIFT ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
 
   int no_ones = 0;
   while ( tmpInstruction )
@@ -84,7 +84,7 @@ instructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool 
     }
   tmpParity = no_ones & 1;
 
-  int command = ( tmpCommand << CMD_TYPE ) | ( tmpParity << PAR ) | ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
+  int command = ( tmpCommand << CMD_TYPE ) | ( tmpParity << PAR ) | ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH_SHIFT ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
 
   log.str ( "" );
   log << hex << "InstructionMaker::MakeMS20Instruction: Command type: " << tmpCommand << ", parity: " << tmpParity << ", BC or ALTRO: " << tmp_bc_altro << ", broadcast: "
@@ -94,7 +94,7 @@ instructionMaker::MakeMS20Instruction ( const uint_t registerType,   const bool 
   phosDcsLogging::Instance()->Logging ( log.str(), LOG_LEVEL_EXTREME_VERBOSE, __FILE__, __LINE__ );
 
 
-  return ( tmpCommand << CMD_TYPE ) | ( tmpParity << PAR ) | ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
+  return ( tmpCommand << CMD_TYPE ) | ( tmpParity << PAR ) | ( tmp_bc_altro << BC_AL ) | ( tmp_broadcast << BCAST ) | ( branch<<BRANCH_SHIFT ) | ( card<<FAD ) | ( channel <<REGAD ) | reg;
 
 
 }
