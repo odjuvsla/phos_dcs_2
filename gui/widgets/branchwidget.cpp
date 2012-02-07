@@ -43,6 +43,26 @@ BranchWidget::BranchWidget(BranchID id, QWidget* parent )
   setupConnections();
 }
 
+/** returns pointer to FecButton,
+ *
+ * BranchWidget instance retains ownership of FecButton pointed to.
+ * Does NOT test validity of branch, rcu, and mod of fecID.
+ */
+FecButton* BranchWidget::getFecButton(const FecID& fecID)
+{
+  return fecButtons.at(fecID.getFecId() - 1 );
+}
+
+/** returns "vector" of fecbuttons.
+ *
+ * BranchWidget retains ownership of vector and FecButtons pointers point to.
+ */
+QVector< FecButton* >& BranchWidget::getFecButtons()
+{
+  return fecButtons;
+}
+
+
 void BranchWidget::setAll(FecStatus status, const QString& message)
 {
   foreach(FecButton* button, fecButtons) {

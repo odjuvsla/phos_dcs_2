@@ -35,6 +35,9 @@ class BranchWidget : public QGroupBox
 public:
     BranchWidget(BranchID branchId, QWidget* parent = 0);
 
+    FecButton* getFecButton(const FecID& fecID);
+    QVector<FecButton*>& getFecButtons();
+
     void setAll(PHOS::FecStatus, const QString& message);
 
 public slots:
