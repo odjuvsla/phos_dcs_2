@@ -41,10 +41,10 @@ public:
 
   const FecID& getFecID() {return fecID;}
 
-  PHOS::FecStatus GetStatus() const { return status; }
+  PHOS::FecStatus getStatus() const { return status; }
 
 public slots:
-  void SetStatus(PHOS::FecStatus newStatus, const QString& message);
+  void setStatus(PHOS::FecStatus newStatus, const QString& message);
   
 private:
 
