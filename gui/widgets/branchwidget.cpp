@@ -71,26 +71,26 @@ void BranchWidget::setAll(FecStatus status, const QString& message)
 }
 
 
-/** Slot to be used by FecButton instances to request toggle states on/off
- * , will set button to Waiting and emit setFecState signal.
- */
-void BranchWidget::fecButtonClicked()
-{
-  FecButton* fecButton = qobject_cast<FecButton *>(sender());
-  if(fecButton->GetStatus() == FEC_ON){
-    fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to Off");
-    emit setFecState( fecButton->getFecID(), FEC_OFF );
-  }
-  else if(fecButton->GetStatus() == FEC_OFF) {
-    fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to On");
-    emit setFecState( fecButton->getFecID(), FEC_ON );
-  }
-  else {
-    phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",
-					LOG_LEVEL_ERROR, __FILE__, __LINE__);
-    exit(-1);
-  }
-}
+// /** Slot to be used by FecButton instances to request toggle states on/off
+//  * , will set button to Waiting and emit setFecState signal.
+//  */
+// void BranchWidget::fecButtonClicked()
+// {
+//   FecButton* fecButton = qobject_cast<FecButton *>(sender());
+//   if(fecButton->getStatus() == FEC_ON){
+//     fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to Off");
+//     emit setFecState( fecButton->getFecID(), FEC_OFF );
+//   }
+//   else if(fecButton->getStatus() == FEC_OFF) {
+//     fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to On");
+//     emit setFecState( fecButton->getFecID(), FEC_ON );
+//   }
+//   else {
+//     phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",
+// 					LOG_LEVEL_ERROR, __FILE__, __LINE__);
+//     exit(-1);
+//   }
+// }
 
 
 void BranchWidget::setupWidgets()
@@ -109,9 +109,9 @@ void BranchWidget::setupWidgets()
 
 void BranchWidget::setupConnections()
 {
-  foreach(const FecButton* button, fecButtons) {
-    connect(button, SIGNAL(clicked()), this, SLOT(fecButtonClicked()));
-  };
+//   foreach(const FecButton* button, fecButtons) {
+//     connect(button, SIGNAL(clicked()), this, SLOT(fecButtonClicked()));
+//   };
 }
 
 

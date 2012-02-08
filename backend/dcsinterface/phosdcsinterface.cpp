@@ -22,6 +22,7 @@
 #include "rcu.h"
 #include "../pilogger/backend/pilogger.h"
 #include <bc/bcversion.h>
+#include <QString>
 
 #include "idtypes.h"
 #include "phosconstants.h"
@@ -55,17 +56,47 @@ int PhosDcsInterface::connect(const QString& feeServerName)
 }
 
 /** Turn on a single FEC on the RCU */
-int PhosDcsInterface::turnOnOffFec(const FecID& fec, bool turnOn)
+int PhosDcsInterface::turnOnOffFec(const FecID& fec, FecStatus newStatus)
 {
-  /*if(lastACTFECLIST == 0 ) {
+  if(lastACTFECLIST == 0 ) {
     lastACTFECLIST = new ACTFECLIST(0x0);
     _feeClient->readRcuRegister(lastACTFECLIST);
     PIINFO("ACTFECLIST Read: 0x%X", lastACTFECLIST->GetValue());
   }
-  *///lastACTFECLIST->SetFECActive(fec.getBranchId(), fec.getFecId(), turnOn);
-  //_feeClient->writeFecRegister();
-  PIDEBUG("PhosDcsInterface::turnOnOffFec not implemented")
-  exit(1);
+
+  // Warn if last know if same status as last known ACTFECLIST
+  if(FEC_ON == newStatus && lastACTFECLIST->GetFECActive(fec.getBranchId(), fec.getFecId()))
+    phosDcsLogging::Instance()->Logging("PhosDcsInterface::turnOnOffFec: request fec on, when last known fec already on", LOG_LEVEL_WARNING);
+  if(FEC_OFF == newStatus && lastACTFECLIST->GetFECActive(fec.getBranchId(), fec.getFecId()))
+    phosDcsLogging::Instance()->Logging("PhosDcsInterface::turnOnOffFec: request fec off, when last known fec already off", LOG_LEVEL_WARNING);
+
+  // set new status 
+  lastACTFECLIST->SetFECActive(fec.getBranchId(), fec.getFecId(), FEC_ON==newStatus);
+
+  // Write new status
+  int error = _feeClient->writeFecRegister(lastACTFECLIST);
+
+  if( !error ) { // if no error
+    // Check BC version
+    BCVERSION bcvReg(0x0);
+    _feeClient->readBcRegister(&bcvReg, &fecID);
+    if(BC::VERSION == bcvReg ) { // BCVERSION should equal
+      stringstream ss("wrote ACFECLIST(");
+      ss << std::hex << *lastACTFECLIST << ")" << " to rcu" << endl;
+      emit updatedFecStatus(fec, newStatus, QString(ss.str().c_str()));
+    }
+    else { // different, assume card is in state of error.
+      stringstream message;
+      message << "FEC (" << ") did not return correct BCVERSION (" << endl;
+      phosDcsLogging::Instance()->Logging("error", LOG_LEVEL_ERROR);
+      emit updatedFecStatus(fecID, FEC_ERROR, message.str().c_str());
+    }
+  }
+  else { // error in reading of Writing of ACTFECLIST.
+    // TODO: consider error
+    delete lastACTFECLIST;
+    return;
+  }
 }
 
 /** Turn on a single TRU on the RCU */
@@ -135,9 +166,9 @@ int PhosDcsInterface::applyReadoutSettings(const ReadoutSettings_t& readoutSetti
 }
 
 
-
 int PhosDcsInterface::readRegister(Register* r) const
 {
+  //TODO: implement
 }
 
 

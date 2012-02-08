@@ -28,7 +28,7 @@ FecButton::FecButton (FecID fecID, QWidget* parent)
   fecID(fecID),
   status(FEC_UNKNOWN)
 {
-  SetStatus(FEC_UNKNOWN, "Init value");
+  setStatus(FEC_UNKNOWN, "Init value");
   
   QString hexId;
   hexId = hexId.setNum(fecID.getFecId(), 16);
@@ -51,7 +51,7 @@ QSize FecButton::maximumSizeHint() const
   return QSize(20, 128);
 }
 
-void FecButton::SetStatus(FecStatus newStatus, const QString& message)
+void FecButton::setStatus(FecStatus newStatus, const QString& message)
 {
   QString statusTip = QTime::currentTime().toString();
   
@@ -76,10 +76,10 @@ void FecButton::SetStatus(FecStatus newStatus, const QString& message)
   //}
   else if ( status == FEC_UNKNOWN ) {
     setEnabled(false);
-    QColor defalutColor = QPalette().color(QPalette::Button);
-    QPalette palette = this->palette();
-    palette.setColor(QPalette::Button, defalutColor);
-    setPalette(palette);
+//     QColor defalutColor = QPalette().color(QPalette::Button);
+//     QPalette palette = this->palette();
+//     palette.setColor(QPalette::Button, defalutColor);
+//     setPalette(palette);
     statusTip.append(" - Status: Unknown, ");
   }
   else
@@ -87,6 +87,21 @@ void FecButton::SetStatus(FecStatus newStatus, const QString& message)
 
   setStatusTip(statusTip.append(message));
 }
+
+void FecButton::buttenClicked()
+{
+  if( FEC_ON == status ) {
+    setStatus(FEC_UNKNOWN, "requested fec be turned on");
+    emit requestFecStatus(fecID, FEC_OFF);
+  }
+  else if( FEC_OFF == status ) {
+    setStatus(FEC_UNKNOWN, "requested fec be turned off");
+    emit requestFecStatus(fecID, FEC_ON);
+  }
+  else
+    phosDcsLogging::Instance()->Logging("FecButton::SetStatus, button should not be clickable if state not ON or OFF", LOG_LEVEL_ERROR);
+}
+
 
 
 

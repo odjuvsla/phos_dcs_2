@@ -38,17 +38,10 @@ public:
     FecButton* getFecButton(const FecID& fecID);
     QVector<FecButton*>& getFecButtons();
 
-    void setAll(PHOS::FecStatus, const QString& message);
-
 public slots:
-  
-private slots:
-  void fecButtonClicked();
-
-signals:
-  /** signal to request FEC state be switched to On/Off */
-  void setFecState(const FecID&, uint_t newState);
+    void setAll(PHOS::FecStatus, const QString& message);
     
+
 private:
   void setupWidgets();
   void setupConnections();

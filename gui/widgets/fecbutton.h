@@ -45,6 +45,10 @@ public:
 
 public slots:
   void setStatus(PHOS::FecStatus newStatus, const QString& message);
+  void buttenClicked();
+
+signals:
+  void requestFecStatus(const FecID& id, PHOS::FecStatus newStatus);
   
 private:
 

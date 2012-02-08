@@ -59,11 +59,12 @@ RcuWidget::~RcuWidget()
 
 }
 
-void RcuWidget::setFecStatus(const FecID& id, FecStatus newState, const QString& message)
+void RcuWidget::setFecStatus(const FecID& fecID, PHOS::FecStatus newStatus, const QString& message)
 {
-  phosDcsLogging::Instance()->Logging("RcuWidget::setFecState not implemented", LOG_LEVEL_ERROR);
-  //TODO: implement slot
-  
+  if(BRANCH_A == fecID.getBranchId())
+    branchA->getFecButton(fecID)->setStatus(newStatus, message);
+  else
+    branchB->getFecButton(fecID)->setStatus(newStatus, message);
 }
 
 void RcuWidget::connectDcs(QString dcsName)
@@ -157,14 +158,27 @@ void RcuWidget::setupWidgets()
 
 void RcuWidget::setupConnections()
 {
+  // own buttons / actions
   connect(connectButton, SIGNAL(clicked()), this, SLOT(connectDcs()));
   connect(updateButton, SIGNAL(clicked()), this, SLOT(update()));
   connect(disconnectAct, SIGNAL(triggered()), this, SLOT(disconnectDcs()));
   connect(allOnAct, SIGNAL(triggered()), this, SLOT(allOn()));
   connect(allOffAct, SIGNAL(triggered()), this, SLOT(allOff()));
 
+  // DCS interface
   connect(dcsInterface, SIGNAL(updatedFecStatus(FecID,PHOS::FecStatus,QString)),
 	  this, SLOT(setFecStatus(FecID,PHOS::FecStatus,QString)));
+
+  // FEC, TRUs ...
+  foreach(FecButton* button, branchA->getFecButtons()) {
+    connect(button, SIGNAL(requestFecStatus(FecID, PHOS::FecStatus)),
+	    dcsInterface, SLOT(turnOnOffFec(FecID,PHOS::FecStatus)));
+  }
+  foreach(FecButton* button, branchB->getFecButtons()) {
+    connect(button, SIGNAL(requestFecStatus(FecID, PHOS::FecStatus)),
+	    dcsInterface, SLOT(turnOnOffFec(FecID,PHOS::FecStatus)));
+  }
+  
 }
 
 

@@ -47,7 +47,7 @@ public slots:
     int connect(const QString& feeServerName);
 
     /* turn resources on/off*/
-    int turnOnOffFec(const FecID &fec, bool turnOn);
+    int turnOnOffFec(const FecID &fec, PHOS::FecStatus);
     
     int turnOnOffTru(const TruID &tru, bool turnOn);
 
