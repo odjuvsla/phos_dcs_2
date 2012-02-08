@@ -79,23 +79,25 @@ int PhosDcsInterface::turnOnOffFec(const FecID& fec, FecStatus newStatus)
   if( !error ) { // if no error
     // Check BC version
     BCVERSION bcvReg(0x0);
-    _feeClient->readBcRegister(&bcvReg, &fecID);
+    _feeClient->readBcRegister(&bcvReg, &fec);
     if(BC::VERSION == bcvReg ) { // BCVERSION should equal
       stringstream ss("wrote ACFECLIST(");
       ss << std::hex << *lastACTFECLIST << ")" << " to rcu" << endl;
       emit updatedFecStatus(fec, newStatus, QString(ss.str().c_str()));
+      return 0; // sucess;
     }
     else { // different, assume card is in state of error.
       stringstream message;
       message << "FEC (" << ") did not return correct BCVERSION (" << endl;
       phosDcsLogging::Instance()->Logging("error", LOG_LEVEL_ERROR);
-      emit updatedFecStatus(fecID, FEC_ERROR, message.str().c_str());
+      emit updatedFecStatus(fec, FEC_ERROR, message.str().c_str());
+      return 1; // error
     }
   }
   else { // error in reading of Writing of ACTFECLIST.
     // TODO: consider error
     delete lastACTFECLIST;
-    return;
+    return error;
   }
 }
 
