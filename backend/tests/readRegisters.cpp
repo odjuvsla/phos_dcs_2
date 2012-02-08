@@ -24,7 +24,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <bitset>
-#include <../phosdcsclient.h>
+#include <phosdcsclient.h>
 #include <../pilogger/backend/pilogger.h>
 using namespace std;
 
@@ -41,7 +41,7 @@ int main(int argc, char ** argv)
 {
   if(argc < 2 )
     assert(false);
-  phosDcsClient cl(argv[1]);
+  PhosDcsClient cl(argv[1]);
 
   Register* reg = new ACTFECLIST(0x1234);
   cl.readRcuRegister(reg);

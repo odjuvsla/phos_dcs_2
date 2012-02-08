@@ -18,38 +18,32 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MODULE_H
-#define MODULE_H
-
-#include <qwidget.h>
+#include "moduletabs.h"
 #include <QTabWidget>
-#include <phosdcstypes.h>
+#include <iostream>
 
-  
-class module : public QWidget
+#include "phosconstants.h"
+using namespace PHOS;
+
+#include "modulewidget.h"
+
+ModuleTabs::ModuleTabs(QWidget *parent)
+: QTabWidget(parent)
 {
-Q_OBJECT
-public:
-
-    /** Constructor must pass module definition */
-    explicit module (Module_t card,  QWidget* parent = 0);
-    
-    /** Destructor */
-    virtual ~module() {}
-
-    void setGeometry(int x, int y) { QWidget::setGeometry(x, y, width(), height());}
-
-private:
-    /** Module definition */
-    Module_t _modId;
   
-    /** Prohibited */
-    module();
-    module(const module& other);
-    module& operator=(const module& other);
-    bool operator==(const module& other) const;
-    void setupWidgets();
-    
-};
+  for(uint_t m = 0; m < PHOS_MODS; m++)
+  {
+    QString moduleName = QString("Module %1").arg(m);
+    ModuleID mod(m);
 
-#endif // MODULE_H
+    ModuleWidget * newMod = new ModuleWidget(mod, this);
+    addTab(newMod, moduleName);
+  }
+}
+
+ModuleTabs::~ModuleTabs()
+{
+
+}
+
+#include "moduletabs.moc"

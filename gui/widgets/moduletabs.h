@@ -18,19 +18,32 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef phos_dcs_2_H
-#define phos_dcs_2_H
+#ifndef MODULETABS_H
+#define MODULETABS_H
 
-#include <QtCore/QObject>
+//#pragma GCC diagnostic ignored "-Weffc++"
+#include <QtGui/qwidget.h>
+#include <qtabwidget.h>
 
-class phos_dcs_2 : public QObject
+
+
+
+class ModuleTabs : public QTabWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    phos_dcs_2();
-    virtual ~phos_dcs_2();
-private slots:
-    void output();
+  
+  explicit ModuleTabs(QWidget *parent = 0);
+  virtual ~ModuleTabs();
+  
+private:
+  
+  
+  /** Prohibited */
+    //moduleTabs();
+    ModuleTabs(const ModuleTabs& other);
+    ModuleTabs& operator=(const ModuleTabs& other);
+    bool operator==(const ModuleTabs& other) const;
 };
-
-#endif // phos_dcs_2_H
+//#pragma GCC diagnostic error "-Weffc++"
+#endif // MODULETABS_H

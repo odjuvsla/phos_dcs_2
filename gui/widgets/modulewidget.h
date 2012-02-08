@@ -18,27 +18,37 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef INSTRUCTIONMAKER_H
-#define INSTRUCTIONMAKER_H
-#include <phosdcstypes.h>
+#ifndef MODULEWIDGET_H
+#define MODULEWIDGET_H
 
-class instructionMaker
-  {
-  public:
+#include <qwidget.h>
+#include <QTabWidget>
+#include <idtypes.h>
 
-    instructionMaker() {}
-    ~instructionMaker() {}
+  
+class ModuleWidget : public QWidget
+{
+Q_OBJECT
+public:
 
-    /** changed for RCU_fw2 (maybe incomplete/incorrect) */
-    static ulong_t  MakeMS20Instruction ( const uint_t registerType, const bool read,
-        const ulong_t reg, const ulong_t  branch = 0,
-        const ulong_t card = 0, const ulong_t chip = 0, const ulong_t channel = 0 );
+    /** Constructor must pass module definition */
+    ModuleWidget (ModuleID card,  QWidget* parent = 0);
+    
+    /** Destructor */
+    virtual ~ModuleWidget() {}
 
 
-    /**
-     * @param read flag if this is a read operation
-     * @param registerValue the value too write
-     */
-    static ulong_t  MakeLS20Instruction ( const bool read,  const ulong_t registerValue );
-  };
-#endif
+private:
+    /** Module definition */
+    ModuleID modID;
+  
+    /** Prohibited */
+    ModuleWidget();
+    ModuleWidget(const ModuleWidget& other);
+    ModuleWidget& operator=(const ModuleWidget& other);
+    bool operator==(const ModuleWidget& other) const;
+    void setupWidgets();
+    
+};
+
+#endif // MODULE_H

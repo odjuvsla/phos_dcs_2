@@ -18,35 +18,27 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "rcu.h"
-#include "phosconstants.h"
-#include "branch.h"
+#ifndef INSTRUCTIONMAKER_H
+#define INSTRUCTIONMAKER_H
+#include <idtypes.h>
 
-using namespace phosConstants;
+class instructionMaker
+  {
+  public:
 
-rcu::rcu(Rcu_t card, QWidget* parent): QWidget(parent) 
-,_rcuId(card)
-{
-  setupWidgets();
-}
+    instructionMaker() {}
+    ~instructionMaker() {}
 
-rcu::~rcu()
-{
+    /** changed for RCU_fw2 (maybe incomplete/incorrect) */
+    static ulong_t  MakeMS20Instruction ( const uint_t registerType, const bool read,
+        const ulong_t reg, const ulong_t  branch = 0,
+        const ulong_t card = 0, const ulong_t chip = 0, const ulong_t channel = 0 );
 
-}
 
-void rcu::setupWidgets()
-{
-  Branch_t branchB(BRANCH_B,0,0);
-  branch *bb = new branch(branchB, this);
-  bb->setGeometry(10, 10);
-  
-  Branch_t branchA(BRANCH_A, 0, 0);
-  branch *ba = new branch(branchA, this);
-  ba->setGeometry(bb->x() + bb->width() + 10, bb->y());
-  
-  setFixedHeight(bb->height()+20);
-  setFixedWidth(bb->width()*2 + 20);
-}
-
-#include "rcu.moc"
+    /**
+     * @param read flag if this is a read operation
+     * @param registerValue the value too write
+     */
+    static ulong_t  MakeLS20Instruction ( const bool read,  const ulong_t registerValue );
+  };
+#endif

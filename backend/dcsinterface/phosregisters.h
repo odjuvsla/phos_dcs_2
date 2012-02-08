@@ -21,12 +21,12 @@
 #ifndef PHOSREGISTERS_H
 #define PHOSREGISTERS_H
 
-#include "registermaps/RcuRegisterMap.h"
-#include "registermaps/AltroRegisterMap.h"
-#include "registermaps/BcRegisterMap.h"
+#include "RcuRegisterMap.h"
+#include "AltroRegisterMap.h"
+#include "BcRegisterMap.h"
 #include <iostream>
 #include <bitset>
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
 class RcuALTROIF_t;
 class RcuRDOMOD_t;

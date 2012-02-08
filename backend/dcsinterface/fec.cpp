@@ -18,29 +18,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "moduleTabs.h"
-#include <QTabWidget>
+#include "fec.h"
+#include "rcu.h"
 
-#include "module.h"
+using namespace phosDcs;
 
-moduleTabs::moduleTabs(QWidget *parent) : QWidget(parent)
-{
-  QTabWidget *tabs = new QTabWidget(this);
-  module *newMod = 0;
-  for(uint_t m = 0; m < PHOS_MODS; m++)
-  {
-    QString moduleName = QString("Module %1").arg(m);
-    
-    Module_t mod(m);
-    newMod = new module(mod);
-    tabs->addTab(newMod, moduleName);
-  }
-  tabs->setGeometry(10, 10, newMod->width()+10, newMod->height()+20);
-}
-
-moduleTabs::~moduleTabs()
+fec::fec(FecID& fec) :
+_fecId(fec)
 {
 
 }
 
-#include "moduleTabs.moc"
+fec::~fec()
+{
+
+}
+
+fec::fec(const phosDcs::fec& other) :
+_fecId(other.getFecId())
+{
+  
+}
+
+fec& fec::operator=(const phosDcs::fec& other) 
+
+{
+  return *this;
+}

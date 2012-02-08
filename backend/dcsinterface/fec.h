@@ -18,24 +18,37 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "feecard.h"
+#ifndef FEC_H
+#define FEC_H
+#include <idtypes.h>
 
-feeCard::feeCard (Fec_t card, QWidget* parent) : QPushButton ( parent )
-,fFecId(card)
-,_kWidth(15)
-,_kHeight(80)
+namespace phosDcs
 {
-  setFixedHeight(_kHeight);
-  setFixedWidth(_kWidth);
-  QString hexId;
-  hexId = hexId.setNum(card.getFecId(), 16);
-  setText(hexId.toUpper());
-}
-
-feeCard::~feeCard()
+class fec
 {
 
+public:
+  
+    fec(FecID &fec);
+    virtual ~fec();  
+    
+    fec(const fec& other);
+    fec& operator=(const fec& other);
+    
+    FecID getFecId() const { return _fecId; }
+    
+    uint_t getCardNumber() { return _fecId.getFecId(); }
+    
+    
+    
+private:
+  
+    FecID _fecId;
+  
+  /** Prohibited */
+    fec();
+    bool operator==(const fec& other) const;
+};
 }
 
-
-#include "feecard.moc"
+#endif // FEC_H

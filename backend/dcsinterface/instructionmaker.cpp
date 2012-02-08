@@ -21,9 +21,9 @@
 #include "instructionmaker.h"
 #include "phosconstants.h"
 #include "../logger/phosdcslogging.h"
-#include <phosdcstypes.h>
+#include <idtypes.h>
 
-using namespace phosConstants;
+using namespace PHOS;
 using namespace std;
 
 ulong_t

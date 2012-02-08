@@ -20,7 +20,7 @@
 
 #ifndef RCU_H
 #define RCU_H
-#include <phosdcstypes.h>
+#include <idtypes.h>
 #include "phosdcsclient.h"
 #include "fec.h"
 #include <QThread>
@@ -31,7 +31,7 @@ class rcu
 {
 public:
   
-    rcu(Rcu_t rcu);
+    rcu(RcuID rcu);
     virtual ~rcu();
     
     /** Initialise the FEE client */
@@ -59,7 +59,7 @@ private:
     public:
       
       /** Set FEE client to use */
-      void setFeeClient(phosDcsClient *client) { _client = client; }
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
 	
       /** Set the branches */
       void setBranches(std::vector<phosDcs::fec>* branchA, std::vector<phosDcs::fec>* branchB) 
@@ -72,11 +72,11 @@ private:
 
     signals:
   
-    void cardChangedState(Fec_t card, int state);
+    void cardChangedState(FecID card, int state);
       
     private:
       
-      phosDcsClient *_client;
+      PhosDcsClient *_client;
       
       std::vector<phosDcs::fec> *_branchA;
       std::vector<phosDcs::fec> *_branchB;
@@ -92,20 +92,20 @@ private:
       void run();
 
       /** Set FEE client to use */
-      void setFeeClient(phosDcsClient *client) { _client = client; }
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
       
     private:
       
-      phosDcsClient *_client;
+      PhosDcsClient *_client;
       
     };
 
     
     /** The RCU id */
-    Rcu_t _rcuId;
+    RcuID _rcuId;
   
     /** DCS client */
-    phosDcsClient *_feeClient;
+    PhosDcsClient *_feeClient;
     
     /** Vector with the FECs on branch A */
     std::vector<phosDcs::fec> _fecsBranchA;

@@ -18,34 +18,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef RCU_H
-#define RCU_H
+#include "modulewidget.h"
+#include "rcuwidget.h"
 
-#include <QtGui/qwidget.h>
-#include "phosdcstypes.h"
+#include "phosconstants.h"
+using namespace PHOS;
 
-
-class rcu : public QWidget
+ModuleWidget::ModuleWidget(ModuleID module, QWidget* parent)
+: QWidget(parent)
+  ,modID(module)
 {
-  Q_OBJECT
-public:
-  
-  /** Constructor must pass RCU definition */
-  explicit rcu (Rcu_t card,  QWidget* parent = 0);
-  
-  virtual ~rcu();
-  
-  void setGeometry(int x, int y) { QWidget::setGeometry(x, y, width(), height());}
-  
-private:
+  setupWidgets();
+}
 
-  /** RCU definition */
-  Rcu_t _rcuId;
+void ModuleWidget::setupWidgets()
+{
   
-  /** Default constructor, prohibited */
-  rcu();
-    void setupWidgets();
+  QVBoxLayout* mainLayout = new QVBoxLayout;
+  for(uint_t rIdx = 0; rIdx < RCUS_PER_MODULE; rIdx++)
+  {
+    RcuID rcuID(rIdx, modID);
+    RcuWidget * r = new RcuWidget(rcuID, this);
+    mainLayout->addWidget(r);
+  }
+  setLayout(mainLayout);
+}
 
-};
-
-#endif // RCU_H
+#include "modulewidget.moc"

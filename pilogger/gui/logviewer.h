@@ -35,6 +35,8 @@ public slots:
     */
     void clearLog();
 
+    virtual QSize sizeHint() const;
+
 private:
     QVector<LogElement> allElements;
     QVector<LogElement> currentElements;

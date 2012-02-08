@@ -27,6 +27,8 @@
 #include <register.h>
 #include <bitset>
 
+/** ALTRO Interface Register [17:0]
+ */
 class ALTROIF : public Register
 {
 public:
@@ -53,18 +55,17 @@ public:
 
 
   // ALTROIF specific members:
-  unsigned long GetCSTBDelay() const; // CSTB programmable Delay
+  unsigned long GetCSTBDelay() const; 
   void SetCSTBDelay(const std::bitset< 2 >& value );
 
-  unsigned long GetIECS() const; // Instruction Error Check Selection
+  unsigned long GetIECS() const; 
   void SetIECS(const std::bitset<2>& value);
 
-  unsigned long GetSCDR() const; // Sampeling Clock Dividing Ratio
-  void SetSCDR(const std::bitset<4>& value); // in practice 2 bits
+  unsigned long GetSCDR() const; 
+  void SetSCDR(const std::bitset<4>& value); 
 
   unsigned long GetNSamples() const;
   void SetNSamples(const std::bitset<10>& value);
-
 
 private:
   std::bitset<18> fBits;

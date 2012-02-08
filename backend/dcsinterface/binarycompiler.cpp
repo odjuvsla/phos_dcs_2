@@ -19,12 +19,13 @@
 */
 
 #include "binarycompiler.h"
-#include "registermaps/RcuRegisterMap.h"
+#include "RcuRegisterMap.h"
 #include "instructionmaker.h"
 #include "../logger/phosdcslogging.h"
 #include "phosconstants.h"
 
-using namespace phosConstants;
+using namespace PHOS;
+using namespace std;
 
 binaryCompiler::binaryCompiler()
 {
@@ -103,7 +104,7 @@ int binaryCompiler::MakeReadResultMemory ( vector<uint_t> & binData, uint_t nVal
   return MakeReadRcuBlock ( RcuRegisterMap::Result_MEM, binData, nVal );
 }
 
-int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroCh_t channel, vector< uint_t > &binData)
+int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > regAdds, vector< uint_t >& regVals, AltroChannelID channel, vector< uint_t > &binData)
 {
   int ret = 0;
 
@@ -117,7 +118,7 @@ int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > 
 
       for ( uint_t i=0; i<regAdds.size(); i++ )
         {
-          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, false, regAdds[i], channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
+          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, false, regAdds[i], channel.getBranchId(), channel.getFecId(), channel.getAltroID(), channel.getAltroChannelID() ) );
           binData.push_back ( instructionMaker::MakeLS20Instruction ( false, regVals[j] ) );
           j++;
         }
@@ -138,7 +139,7 @@ int binaryCompiler::MakeWriteFecRegisters(uint_t registerType, vector< uint_t > 
 
 }
 
-int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > regAdds, AltroCh_t channel, vector< uint_t > &binData)
+int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > regAdds, AltroChannelID channel, vector< uint_t > &binData)
 {
   binData.push_back ( RcuRegisterMap::RCU_WRITE_MEMBLOCK| ( regAdds.size()+2 ) );
   binData.push_back ( RcuRegisterMap::Instruction_MEM );
@@ -147,7 +148,7 @@ int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > r
     {
       if ( registerType == REGTYPE_ALTRO )
         {
-          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i],  channel.getBranchId(), channel.getFecId(), channel.getChipId(), channel.getChId() ) );
+          binData.push_back ( instructionMaker::MakeMS20Instruction ( registerType, true, regAdds[i],  channel.getBranchId(), channel.getFecId(), channel.getAltroID(), channel.getAltroChannelID() ) );
         }
       else
         {
@@ -172,18 +173,18 @@ int binaryCompiler::MakeReadFecRegisters(uint_t registerType, vector< uint_t > r
 
 }
 
-int binaryCompiler::MakeWriteReadAltroRegisters(vector< uint_t >& regAdds, std::vector<uint_t >& regVals, AltroCh_t channel, vector< uint_t > &binData)
+int binaryCompiler::MakeWriteReadAltroRegisters(vector< uint_t >& regAdds, std::vector<uint_t >& regVals, AltroChannelID channel, vector< uint_t > &binData)
 {
   return 0;
 }
 
-int binaryCompiler::MakeWriteReadBCRegisters(vector< uint_t > regAdds, vector< uint_t >& regVals, Fec_t card, vector< uint_t > &binData)
+int binaryCompiler::MakeWriteReadBCRegisters(vector< uint_t > regAdds, vector< uint_t >& regVals, FecID card, vector< uint_t > &binData)
 {
   return 0;
 }
 
-int binaryCompiler::MakeReadBcRegister(vector< uint_t > regAdds, Fec_t card, vector< uint_t >& binData)
+int binaryCompiler::MakeReadBcRegister(vector< uint_t > regAdds, FecID card, vector< uint_t >& binData)
 {
-  AltroCh_t channel(0, 0, card.getFecId(), card.getBranchId(), card.getRcuId(), card.getModuleId());
+  AltroChannelID channel(0, 0, card.getFecId(), card.getBranchId(), card.getRcuId(), card.getModuleId());
   return MakeReadFecRegisters(REGTYPE_BC, regAdds, channel, binData);
 }

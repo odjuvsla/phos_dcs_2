@@ -26,7 +26,9 @@
 #include <cstdio>
 #include <QMutex>
 
-phosDcsClient::phosDcsClient(QString feeServerName) : FeeSampleClient()
+using namespace std;
+
+PhosDcsClient::PhosDcsClient(QString feeServerName) : FeeSampleClient()
 	,_mutex(new QMutex)
         ,_binaryCompiler(0)
 	,_feeServerName(feeServerName)
@@ -34,12 +36,12 @@ phosDcsClient::phosDcsClient(QString feeServerName) : FeeSampleClient()
 
 }
 
-phosDcsClient::~phosDcsClient()
+PhosDcsClient::~PhosDcsClient()
 {
 
 }
 
-int phosDcsClient::writeRcuRegister(Register* reg)
+int PhosDcsClient::writeRcuRegister(Register* reg)
 {
     QMutexLocker locker(_mutex);
     if (reg)
@@ -61,13 +63,13 @@ int phosDcsClient::writeRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::writeFecRegister(Register* reg, AltroCh_t* ch)
+int PhosDcsClient::writeFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
     if (ch)
     {
         std::stringstream log;
-        log << "ALTRO channel: " << ch->getChId() << ", chip: " << ch->getChipId() << ", FEC: " << ch->getFecId() << ", branch: " << ch->getBranchId();
+        log << "ALTRO channel: " << ch->getAltroChannelID() << ", chip: " << ch->getAltroID() << ", FEC: " << ch->getFecId() << ", branch: " << ch->getBranchId();
 	PIDEBUG("%s", log.str().c_str());
         //phosDcsLogging::Instance()->Logging(log.str(), LOG_LEVEL_VERBOSE, __FILE__, __LINE__);
 	return 0;
@@ -75,12 +77,12 @@ int phosDcsClient::writeFecRegister(Register* reg, AltroCh_t* ch)
     return -1;
 }
 
-int phosDcsClient::readFecRegister(Register* reg, AltroCh_t* ch)
+int PhosDcsClient::readFecRegister(Register* reg, AltroChannelID* ch)
 {
   QMutexLocker locker(_mutex);
 }
 
-int phosDcsClient::readRcuRegister(Register* reg)
+int PhosDcsClient::readRcuRegister(Register* reg)
 {
   QMutexLocker locker(_mutex);
   if (reg)
@@ -104,7 +106,7 @@ int phosDcsClient::readRcuRegister(Register* reg)
     return -1;
 }
 
-int phosDcsClient::readBcRegister(Register* reg, Fec_t* fec)
+int PhosDcsClient::readBcRegister(Register* reg, FecID* fec)
 {
 QMutexLocker locker(_mutex);
   if (reg)
@@ -130,7 +132,7 @@ QMutexLocker locker(_mutex);
 }
 
 
-int phosDcsClient::executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer )
+int PhosDcsClient::executeBinary(const vector<uint_t> & binData, vector<uint_t> &  resultBuffer )
 {
   vector<unsigned int> data;
 

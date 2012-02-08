@@ -38,9 +38,15 @@ class Register
     virtual ~Register() {;}
 
     // Register namespace types
-    enum Access { R=4, RW=6};
+    /** The Register Access */
+    enum Access { /** Read */       R=4,
+		  /** Write */      W=2,
+		  /** Read/Write */ RW=6  };
     enum Type { ALTRO, BC, RCU, TRU};
     typedef int16_t Address;
+    /** Value of Register,
+     *
+     * may represent value to be written, or value read from Register */
     typedef int32_t Value;
 
     // Register Interface:

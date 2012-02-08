@@ -21,51 +21,42 @@
 #ifndef BRANCH_H
 #define BRANCH_H
 
-#include <QtGui/qwidget.h>
-#include <phosdcstypes.h>
+#include "fecbutton.h"
 
-class QLabel;
-class QFrame;
-class feeCard;
+#include <QtGui>
+#include <idtypes.h>
 
-class branch : public QWidget
+class BranchWidget : public QGroupBox
 {
 
   Q_OBJECT
     
 public:
-    /** Constructor */
-    explicit branch ( Branch_t branchId, QWidget* parent = 0, Qt::WindowFlags f = 0 );
+    BranchWidget(BranchID branchId, QWidget* parent = 0);
 
-    /** Destructor */
-    virtual ~branch();
+    void setAll(FecButton::Status, const QString& message);
 
-    void setGeometry(int x, int y) { QWidget::setGeometry(x, y, _kWidth, _kHeight);}
-private:
-
-  /** Setup the internal widgets */
-  void setupWidgets();
+public slots:
   
-  /** Setup the slot connections */
+private slots:
+  void fecButtonClicked();
+
+signals:
+  /** signal to request FEC state be switched to On/Off */
+  void setFecState(const FecID&, uint_t newState);
+    
+private:
+  void setupWidgets();
   void setupConnections();
   
-  /** Branch id */
-  Branch_t _branch;
+  BranchID branchID;
   
-  /** The FECs */
-  QVector<feeCard*> _feeCards;
-
-  /** The frame */
-  QFrame *_frame;
-
-  /** The label */
-  QLabel *_label;
+  QVector<FecButton*> fecButtons;
   
-  const int _kWidth;
-  const int _kHeight;
-
-  branch(const branch& );
-  branch operator=(const branch&);
+  /* not allowed */
+  BranchWidget();
+  BranchWidget(const BranchWidget& );
+  BranchWidget operator=(const BranchWidget&);
   
 };
 

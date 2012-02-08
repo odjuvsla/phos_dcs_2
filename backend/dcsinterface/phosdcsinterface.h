@@ -21,24 +21,24 @@
 #ifndef PHOSDCSINTERFACE_H
 #define PHOSDCSINTERFACE_H
 
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include "phosdcsclient.h"
 #include "phosreadoutsettings.h"
 
 #include <string>
 #include "rcu.h"
 
-class phosDcsInterface : public QObject
+class PhosDcsInterface : public QObject
 {
 
   Q_OBJECT
 public:
   
     /** Constructor takes RCU id as input */
-    phosDcsInterface(Rcu_t rcu, QString feeServerName);
+    PhosDcsInterface(RcuID rcu, QString feeServerName);
     
     /** Destructor */
-    virtual ~phosDcsInterface();
+    virtual ~PhosDcsInterface();
 
 public slots:
     /** Initilise the interface */
@@ -48,34 +48,34 @@ public slots:
     int turnOnRcu();
     
     /** Turn on a single FEC on the RCU */
-    int turnOnFec(const Fec_t &fec);
+    int turnOnFec(const FecID &fec);
     
     /** Turn on a single TRU on the RCU */
-    int turnOnTru(const Tru_t &tru);
+    int turnOnTru(const TruID &tru);
     
     /** Turn off the FECs on the RCU */
     int turnOffRcu();
     
     /** Turn off a single FEC on the RCU */
-    int turnOffFec(const Fec_t &fec);
+    int turnOffFec(const FecID &fec);
     
     /** Turn off a single TRU on the RCU */
-    int turnOffTru(const Tru_t &tru);
+    int turnOffTru(const TruID &tru);
     
     /** Toggle on/off the FECs on the RCU */
     int toggleRcu();
     
     /** Toggle on/off a single FEC on the RCU */
-    int toggleFec(const Fec_t &fec);
+    int toggleFec(const FecID &fec);
     
     /** Toggle on/off a TRU on the RCU */
-    int toggleTru(const Tru_t &tru);
+    int toggleTru(const TruID &tru);
     
     /** Apply APD settings for the RCU */
     int applyApdSettings() const;
     
     /** Apply APD settings for a FEC on the RCU */
-    int applyApdSettings(const Fec_t &fec) const;
+    int applyApdSettings(const FecID &fec) const;
     
     /** Apply the read out registers */
     int applyReadoutSettings(const ReadoutSettings_t &readoutSettings ) const;
@@ -86,22 +86,22 @@ public slots:
 private:
 
     /** Which RCU do we handle */
-    Rcu_t _rcuId;
+    RcuID _rcuId;
   
     /** Our RCU object */
     phosDcs::rcu *_rcu;
     
     /** Pointer to the FEE client */
-    phosDcsClient *_feeClient;
+    PhosDcsClient *_feeClient;
     
     /** Name of the FEE server */
     QString _feeServerName;
     
     /** Prohibited */
-    phosDcsInterface();
-    phosDcsInterface(const phosDcsInterface& other);
-    phosDcsInterface& operator=(const phosDcsInterface& other);
-    bool operator==(const phosDcsInterface& other) const;
+    PhosDcsInterface();
+    PhosDcsInterface(const PhosDcsInterface& other);
+    PhosDcsInterface& operator=(const PhosDcsInterface& other);
+    bool operator==(const PhosDcsInterface& other) const;
 };
 
 #endif // PHOSDCSINTERFACE_H

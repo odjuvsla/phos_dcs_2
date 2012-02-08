@@ -1,0 +1,7 @@
+PHOS DCS GUI
+A GUI tool for Configuration And control of PHOS Electronics
+
+documentation:
+build documentation by running doxygen, i.e.
+$ doxygen doxyconfig
+in project root.

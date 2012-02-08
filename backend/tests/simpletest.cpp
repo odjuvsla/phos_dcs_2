@@ -18,22 +18,19 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "../phosdcsclient.h"
-#include "phosdcstypes.h"
+#include "phosdcsclient.h"
+#include "idtypes.h"
 #include <registers.h>"
 
 int main()
 {
-  phosDcsClient cl("FEESERVER");
+  PhosDcsClient cl("FEESERVER");
   
-  AltroCh_t ch(3, 2, 1, 0, 0, 0);
+  AltroChannelID ch(3, 2, 1, 0, 0, 0);
  
   RDOMOD rdo;
   cl.writeRcuRegister(&rdo);
   
-
-//   AltroZSTHR_t thr;
-//   cl.writeFecRegister(&thr, &ch);
 
   return 0;
   

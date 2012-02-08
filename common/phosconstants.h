@@ -21,7 +21,7 @@
 #ifndef PHOSCONST_H
 #define PHOSCONST_H
 
-namespace phosConstants
+namespace PHOS
 {
 
 const int RAMP_PATTERN = 0;
@@ -82,8 +82,9 @@ const unsigned int Z_0         = 0;
 const unsigned int Z_1         = 1;
 const unsigned int X_0         = 0;
 const unsigned int X_1         = 1;
-const unsigned int BRANCH_A    = 0;
-const unsigned int BRANCH_B    = 1;
+enum Branch { BRANCH_A=0, BRANCH_B=0 };
+// const unsigned int BRANCH_A    = 0;
+// const unsigned int BRANCH_B    = 1;
 
 
 /*Electronics/Hardware constatns*/

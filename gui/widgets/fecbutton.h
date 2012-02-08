@@ -1,7 +1,8 @@
 /*
     Library for controlling and configuring the electronics for the PHOS
     detector at the ALICE Experiment
-    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>
+    Copyright (C) 2011  Oystein Djuvsland <oystein.djuvsland@gmail.com>,
+			Henrik Qvigstad <henrik.qvigstad@cern.ch>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,31 +19,43 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MODULETABS_H
-#define MODULETABS_H
+#ifndef FECCARD_H
+#define FECCARD_H
 
-//#pragma GCC diagnostic ignored "-Weffc++"
-#include <QtGui/qwidget.h>
+#include <QPushButton>
+#include "idtypes.h"
+#include <QDate>
 
 
-
-
-class moduleTabs : public QWidget
+class FecButton : public QPushButton
 {
   Q_OBJECT
 public:
-  
-  explicit moduleTabs(QWidget *parent = 0);
-  virtual ~moduleTabs();
+  /** Constructor must pass FEC card definition */
+  FecButton (FecID fecID, QWidget* parent = 0);
+
+  virtual QSize sizeHint() const; 
+  virtual QSize minimumSizeHint() const;
+  virtual QSize maximumSizeHint() const;
+
+  const FecID& getFecID() {return fecID;}
+
+  enum Status {On=PHOS::FEE_STATE_ON,
+	       Off=PHOS::FEE_STATE_OFF,
+	       Waiting, Unknown};
+  Status GetStatus() const { return status; }
+  void SetStatus(Status newStatus, const QString& message);
   
 private:
+
+  /** FEC definition */
+  FecID fecID;
+  Status status;
+
   
-  
-  /** Prohibited */
-    //moduleTabs();
-    moduleTabs(const moduleTabs& other);
-    moduleTabs& operator=(const moduleTabs& other);
-    bool operator==(const moduleTabs& other) const;
+  /** Default constructor, prohibited */
+  //FecButton();
+    
 };
-//#pragma GCC diagnostic error "-Weffc++"
-#endif // MODULETABS_H
+
+#endif // FECCARD_H

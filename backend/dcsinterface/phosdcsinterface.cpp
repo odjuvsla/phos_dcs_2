@@ -19,14 +19,14 @@
 */
 
 #include "phosdcsinterface.h"
-#include "phosdcstypes.h"
+#include "idtypes.h"
 #include "rcu.h"
 #include "../pilogger/backend/pilogger.h"
 
 
 using namespace phosDcs;
 
-phosDcsInterface::phosDcsInterface(Rcu_t rcu, QString feeServerName) :
+PhosDcsInterface::PhosDcsInterface(RcuID rcu, QString feeServerName) :
 _rcuId(rcu)
 ,_rcu(0)
 ,_feeClient(0)
@@ -35,61 +35,61 @@ _rcuId(rcu)
   _rcu = new phosDcs::rcu(_rcuId);
 }
 
-phosDcsInterface::~phosDcsInterface()
+PhosDcsInterface::~PhosDcsInterface()
 {
 }
 
-int phosDcsInterface::init()
+int PhosDcsInterface::init()
 {
   return _rcu->init(_feeServerName);
 }
 
-int phosDcsInterface::turnOnRcu()
+int PhosDcsInterface::turnOnRcu()
 {
   return _rcu->turnOn();
 }
 
-int phosDcsInterface::turnOnFec(const Fec_t& fec)
+int PhosDcsInterface::turnOnFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::turnOnTru(const Tru_t& fec)
+int PhosDcsInterface::turnOnTru(const TruID& fec)
 {
 
 }
 
-int phosDcsInterface::turnOffRcu()
+int PhosDcsInterface::turnOffRcu()
 {
 
 }
 
-int phosDcsInterface::turnOffFec(const Fec_t& fec)
+int PhosDcsInterface::turnOffFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::turnOffTru(const Tru_t& tru)
+int PhosDcsInterface::turnOffTru(const TruID& tru)
 {
 
 }
 
-int phosDcsInterface::toggleRcu()
+int PhosDcsInterface::toggleRcu()
 {
 
 }
 
-int phosDcsInterface::toggleFec(const Fec_t& fec)
+int PhosDcsInterface::toggleFec(const FecID& fec)
 {
 
 }
 
-int phosDcsInterface::toggleTru(const Tru_t& tru)
+int PhosDcsInterface::toggleTru(const TruID& tru)
 {
 
 }
 
-int phosDcsInterface::readRegister(Register* r) const
+int PhosDcsInterface::readRegister(Register* r) const
 {
   if(_rcu)
   {
