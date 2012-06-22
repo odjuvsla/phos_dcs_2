@@ -1,4 +1,3 @@
-
 include_directories(dcsinterface)
 include_directories(registers)
 include_directories(registers/rcu)
@@ -56,6 +55,8 @@ set(phosDcsBackend_SRCS ${phosDcsBackend_SRCS}
 			registers/rcu/ttcl2_rcnt.cpp
 			registers/register.cpp
    )
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 qt4_automoc(${phosDcsBackend_SRCS})
 add_library(PhosDcsBackend ${phosDcsBackend_SRCS})

@@ -25,6 +25,55 @@
 #include "fec.h"
 #include <QThread>
 
+
+class turnOnFecs : public QThread
+    {
+      Q_OBJECT
+    public:
+
+      /** Set FEE client to use */
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
+
+      /** Set the branches */
+      void setBranches(std::vector<phosDcs::fec>* branchA, std::vector<phosDcs::fec>* branchB)
+      { _branchA = branchA;  _branchB  = branchB; }
+
+      /** on is false if we turn off... */
+      void setOn(bool on) { _on = on; }
+
+      void run();
+
+    signals:
+
+    void cardChangedState(FecID card, int state);
+
+    private:
+
+      PhosDcsClient *_client;
+
+      std::vector<phosDcs::fec> *_branchA;
+      std::vector<phosDcs::fec> *_branchB;
+
+      bool _on;
+
+    };
+
+    class turnOnTrus : public QThread
+    {
+      Q_OBJECT
+    public:
+      void run();
+
+      /** Set FEE client to use */
+      void setFeeClient(PhosDcsClient *client) { _client = client; }
+
+    private:
+
+      PhosDcsClient *_client;
+
+    };
+
+
 namespace phosDcs
 {
 class rcu
@@ -46,61 +95,11 @@ public:
     /** Read a register */
     int readRegister(Register *reg) const;
     
-signals:
+/*signals:
   
     void cardChangedState(phosDcs::fec card, int state);
-    
+ */   
 private:
-  
-
-    class turnOnFecs : public QThread
-    {
-      Q_OBJECT
-    public:
-      
-      /** Set FEE client to use */
-      void setFeeClient(PhosDcsClient *client) { _client = client; }
-	
-      /** Set the branches */
-      void setBranches(std::vector<phosDcs::fec>* branchA, std::vector<phosDcs::fec>* branchB) 
-      { _branchA = branchA;  _branchB  = branchB; }
-      
-      /** on is false if we turn off... */
-      void setOn(bool on) { _on = on; }
-      
-      void run();
-
-    signals:
-  
-    void cardChangedState(FecID card, int state);
-      
-    private:
-      
-      PhosDcsClient *_client;
-      
-      std::vector<phosDcs::fec> *_branchA;
-      std::vector<phosDcs::fec> *_branchB;
-      
-      bool _on;
-      
-    };
-
-    class turnOnTrus : public QThread
-    {
-      Q_OBJECT
-    public:
-      void run();
-
-      /** Set FEE client to use */
-      void setFeeClient(PhosDcsClient *client) { _client = client; }
-      
-    private:
-      
-      PhosDcsClient *_client;
-      
-    };
-
-    
     /** The RCU id */
     RcuID _rcuId;
   

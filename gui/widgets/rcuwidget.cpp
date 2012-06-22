@@ -44,6 +44,8 @@ RcuWidget::RcuWidget(RcuID rcuID, QWidget* parent)
   rcuID(rcuID),
   dcsInterface(0)
 {
+  dcsInterface = new PhosDcsInterface(rcuID);
+  
   setupActions();
   setupWidgets();
   setupConnections();
@@ -57,22 +59,35 @@ RcuWidget::~RcuWidget()
 
 }
 
-void RcuWidget::setFecState(const FecID& id, uint_t newState)
+void RcuWidget::setFecStatus(const FecID& fecID, PHOS::FecStatus newStatus, const QString& message)
 {
-  phosDcsLogging::Instance()->Logging("RcuWidget::setFecState not implemented", LOG_LEVEL_ERROR);
-  //TODO: implement slot
-  
+  if(BRANCH_A == fecID.getBranchId())
+    branchA->getFecButton(fecID)->setStatus(newStatus, message);
+  else
+    branchB->getFecButton(fecID)->setStatus(newStatus, message);
 }
 
 void RcuWidget::connectDcs(QString dcsName)
 {
   dcsNameEdit->setEnabled(false);
   connectButton->setEnabled(false);
-  phosDcsLogging::Instance()->Logging("RcuWidget::connectDcs not implemented", LOG_LEVEL_ERROR);
-  
-  dcsNameLabel->setText(dcsNameEdit->text());
-  dcsNameStack->setCurrentIndex(1);
-  connectUpdateStack->setCurrentIndex(1);
+
+  int errorCode = 1;
+  if(dcsName.size() > 0 )
+    errorCode = dcsInterface->connect(dcsName);
+  else
+    errorCode = dcsInterface->connect(dcsNameEdit->text());
+
+  if( ! errorCode ) { // if success 
+    dcsNameLabel->setText(dcsNameEdit->text());
+    dcsNameStack->setCurrentIndex(1);
+    connectUpdateStack->setCurrentIndex(1);
+  }
+  else { // if error 
+    dcsNameEdit->setEnabled(true);
+    connectButton->setEnabled(true);
+  }
+
 }
 
 void RcuWidget::disconnectDcs()
@@ -94,8 +109,8 @@ void RcuWidget::allOff()
 
 void RcuWidget::update()
 {
-  phosDcsLogging::Instance()->Logging("RcuWidget::update not implemented", LOG_LEVEL_ERROR);
-  //TODO: implement slot
+  //phosDcsLogging::Instance()->Logging("RcuWidget::update not implemented", LOG_LEVEL_ERROR);
+  dcsInterface->updateActiveFec();
 }
 
 void RcuWidget::closeEvent(QCloseEvent* event)
@@ -143,11 +158,27 @@ void RcuWidget::setupWidgets()
 
 void RcuWidget::setupConnections()
 {
+  // own buttons / actions
   connect(connectButton, SIGNAL(clicked()), this, SLOT(connectDcs()));
   connect(updateButton, SIGNAL(clicked()), this, SLOT(update()));
   connect(disconnectAct, SIGNAL(triggered()), this, SLOT(disconnectDcs()));
   connect(allOnAct, SIGNAL(triggered()), this, SLOT(allOn()));
   connect(allOffAct, SIGNAL(triggered()), this, SLOT(allOff()));
+
+  // DCS interface
+  connect(dcsInterface, SIGNAL(updatedFecStatus(FecID,PHOS::FecStatus,QString)),
+	  this, SLOT(setFecStatus(FecID,PHOS::FecStatus,QString)));
+
+  // FEC, TRUs ...
+  foreach(FecButton* button, branchA->getFecButtons()) {
+    connect(button, SIGNAL(requestFecStatus(FecID, PHOS::FecStatus)),
+	    dcsInterface, SLOT(turnOnOffFec(FecID,PHOS::FecStatus)));
+  }
+  foreach(FecButton* button, branchB->getFecButtons()) {
+    connect(button, SIGNAL(requestFecStatus(FecID, PHOS::FecStatus)),
+	    dcsInterface, SLOT(turnOnOffFec(FecID,PHOS::FecStatus)));
+  }
+  
 }
 
 

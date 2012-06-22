@@ -43,34 +43,54 @@ BranchWidget::BranchWidget(BranchID id, QWidget* parent )
   setupConnections();
 }
 
-void BranchWidget::setAll(FecButton::Status status, const QString& message)
+/** returns pointer to FecButton,
+ *
+ * BranchWidget instance retains ownership of FecButton pointed to.
+ * Does NOT test validity of branch, rcu, and mod of fecID.
+ */
+FecButton* BranchWidget::getFecButton(const FecID& fecID)
+{
+  return fecButtons.at(fecID.getFecId() - 1 );
+}
+
+/** returns "vector" of fecbuttons.
+ *
+ * BranchWidget retains ownership of vector and FecButtons pointers point to.
+ */
+QVector< FecButton* >& BranchWidget::getFecButtons()
+{
+  return fecButtons;
+}
+
+
+void BranchWidget::setAll(FecStatus status, const QString& message)
 {
   foreach(FecButton* button, fecButtons) {
-    button->SetStatus(status, message);
+    button->setStatus(status, message);
   }
 }
 
 
-/** Slot to be used by FecButton instances to request toggle states on/off
- * , will set button to Waiting and emit setFecState signal.
- */
-void BranchWidget::fecButtonClicked()
-{
-  FecButton* fecButton = qobject_cast<FecButton *>(sender());
-  if(fecButton->GetStatus() == FecButton::On){
-    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to Off");
-    emit setFecState( fecButton->getFecID(), FEE_STATE_OFF );
-  }
-  else if(fecButton->GetStatus() == FecButton::Off) {
-    fecButton->SetStatus(FecButton::Waiting, "sent request to toggle to On");
-    emit setFecState( fecButton->getFecID(), FEE_STATE_ON );
-  }
-  else {
-    phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",
-					LOG_LEVEL_ERROR, __FILE__, __LINE__);
-    exit(-1);
-  }
-}
+// /** Slot to be used by FecButton instances to request toggle states on/off
+//  * , will set button to Waiting and emit setFecState signal.
+//  */
+// void BranchWidget::fecButtonClicked()
+// {
+//   FecButton* fecButton = qobject_cast<FecButton *>(sender());
+//   if(fecButton->getStatus() == FEC_ON){
+//     fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to Off");
+//     emit setFecState( fecButton->getFecID(), FEC_OFF );
+//   }
+//   else if(fecButton->getStatus() == FEC_OFF) {
+//     fecButton->setStatus(FEC_UNKNOWN, "sent request to toggle to On");
+//     emit setFecState( fecButton->getFecID(), FEC_ON );
+//   }
+//   else {
+//     phosDcsLogging::Instance()->Logging("fec button should not be clickable if other state then On/Off",
+// 					LOG_LEVEL_ERROR, __FILE__, __LINE__);
+//     exit(-1);
+//   }
+// }
 
 
 void BranchWidget::setupWidgets()
@@ -89,9 +109,9 @@ void BranchWidget::setupWidgets()
 
 void BranchWidget::setupConnections()
 {
-  foreach(const FecButton* button, fecButtons) {
-    connect(button, SIGNAL(clicked()), this, SLOT(fecButtonClicked()));
-  };
+//   foreach(const FecButton* button, fecButtons) {
+//     connect(button, SIGNAL(clicked()), this, SLOT(fecButtonClicked()));
+//   };
 }
 
 

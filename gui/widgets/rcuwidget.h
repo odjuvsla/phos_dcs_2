@@ -23,6 +23,7 @@
 
 #include <QtGui>
 #include "idtypes.h"
+#include "phosconstants.h"
 #include "phosdcsinterface.h"
 
 class BranchWidget;
@@ -39,7 +40,7 @@ public:
   virtual ~RcuWidget();
 
 public slots:
-  void setFecState(const FecID&, uint_t newState);
+  void setFecStatus(const FecID&, PHOS::FecStatus newState, const QString& message);
   void connectDcs(QString dcsName = "");
   void disconnectDcs();
   void update();

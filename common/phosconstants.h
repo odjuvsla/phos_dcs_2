@@ -122,15 +122,16 @@ const signed int REG_CRAZY = -3;
 const signed int REG_UNKNOWN = 2;
 
 
-/*FEE state constants*/
-const unsigned int FEE_STATE_OFF = 1;
-const unsigned int FEE_STATE_ON  = 2;
-const unsigned int DCS_NOT_MASTER = 3;
-const unsigned int FEE_STATE_UNKNOWN  = 4;
-const unsigned int FEE_STATE_ERROR    = 5;
-const unsigned int UNKNOWN_PCMVERSION = 6;
-const unsigned int UNKNOWN_ERROR  = 7;
-const unsigned int FEE_STATE_WARNING = 8;
+/*FEC status constants*/
+enum FecStatus{ FEC_OFF = 1,
+		FEC_ON  = 2,
+                DCS_NOT_MASTER = 3,
+                FEC_UNKNOWN  = 4,
+                FEC_ERROR    = 5,
+                UNKNOWN_PCMVERSION = 6,
+                UNKNOWN_ERROR  = 7,
+                FEC_STATE_WARNING = 8 };
+
 
 /*Firmware version of the PHOS boardcontroller*/
 const unsigned long int OLD_PCMVERSION = 0x34;
@@ -162,7 +163,7 @@ const unsigned int CMD_TYPE = 20;   //20=Position of the Commmand type LS bit
 const unsigned int PAR = 19;   //19=Position of the parity but
 const unsigned int BCAST = 18;   //18=Position of the broadcast register bit. Broadacst=1, no broadcast=0 (ms 20 bits)
 const unsigned int BC_AL = 17;   //17=Position of command type bit. Boarcontroller=1, Altro=0
-const unsigned int BRANCH = 16;   //Branch A=0, Branch B=1
+const unsigned int BRANCH_SHIFT = 16;   //Branch A=0, Branch B=1
 const unsigned int FAD = 12;   //Poistion of least significant bit of FEE adress register (most significant 20 bits)
 const unsigned int REGAD = 8;     //Position of least significant bit of CSP adress register (most significant 20 bits)
 
@@ -171,6 +172,11 @@ const unsigned int CSPVAL = 0;   //Position of least significant bit of CSP valu
 
 const unsigned int REGVAL = 0;   //Position of least significant bit of CSP value  register (least significant 20 bits)
 
+//PHOS::BC
+namespace BC
+{
+  const unsigned long VERSION = 0x20;
+}
 }
 
 
