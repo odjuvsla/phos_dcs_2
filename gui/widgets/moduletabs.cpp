@@ -26,6 +26,7 @@
 using namespace PHOS;
 
 #include "modulewidget.h"
+#include "feetester.h"
 
 ModuleTabs::ModuleTabs(QWidget *parent)
 : QTabWidget(parent)
@@ -39,6 +40,8 @@ ModuleTabs::ModuleTabs(QWidget *parent)
     ModuleWidget * newMod = new ModuleWidget(mod, this);
     addTab(newMod, moduleName);
   }
+  FeeTester *tester = new FeeTester(this);
+  addTab(tester, "FEE Tester");
 }
 
 ModuleTabs::~ModuleTabs()
